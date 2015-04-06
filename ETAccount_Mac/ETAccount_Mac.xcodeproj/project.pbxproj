@@ -18,11 +18,10 @@
 		DF337E4E1AD2EF70001CA285 /* ETHTTPUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337E3B1AD2EF70001CA285 /* ETHTTPUtility.m */; };
 		DF337E4F1AD2EF70001CA285 /* ETUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337E3D1AD2EF70001CA285 /* ETUtility.m */; };
 		DF337E501AD2EF70001CA285 /* ETXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337E3F1AD2EF70001CA285 /* ETXMLParser.m */; };
-		DF337E511AD2EF70001CA285 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337E421AD2EF70001CA285 /* FMDatabase.m */; };
-		DF337E521AD2EF70001CA285 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337E441AD2EF70001CA285 /* FMResultSet.m */; };
-		DF337E531AD2EF70001CA285 /* MapTileOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337E471AD2EF70001CA285 /* MapTileOverlay.m */; };
-		DF337E541AD2EF70001CA285 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337E4A1AD2EF70001CA285 /* MKMapView+ZoomLevel.m */; };
+		DF337E511AD2EF70001CA285 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337E421AD2EF70001CA285 /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		DF337E521AD2EF70001CA285 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337E441AD2EF70001CA285 /* FMResultSet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DF337E551AD2EF70001CA285 /* PODataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337E4C1AD2EF70001CA285 /* PODataManager.m */; };
+		DF337E581AD2F172001CA285 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DF337E571AD2F172001CA285 /* libsqlite3.0.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,12 +60,10 @@
 		DF337E421AD2EF70001CA285 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		DF337E431AD2EF70001CA285 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		DF337E441AD2EF70001CA285 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
-		DF337E461AD2EF70001CA285 /* MapTileOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapTileOverlay.h; sourceTree = "<group>"; };
-		DF337E471AD2EF70001CA285 /* MapTileOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapTileOverlay.m; sourceTree = "<group>"; };
-		DF337E491AD2EF70001CA285 /* MKMapView+ZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+ZoomLevel.h"; sourceTree = "<group>"; };
-		DF337E4A1AD2EF70001CA285 /* MKMapView+ZoomLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+ZoomLevel.m"; sourceTree = "<group>"; };
 		DF337E4B1AD2EF70001CA285 /* PODataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PODataManager.h; sourceTree = "<group>"; };
 		DF337E4C1AD2EF70001CA285 /* PODataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PODataManager.m; sourceTree = "<group>"; };
+		DF337E561AD2F04E001CA285 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		DF337E571AD2F172001CA285 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF337E581AD2F172001CA285 /* libsqlite3.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,8 +114,10 @@
 				DF337E1C1AD2EF0F001CA285 /* Document.m */,
 				DF337E1E1AD2EF0F001CA285 /* Images.xcassets */,
 				DF337E201AD2EF0F001CA285 /* Main.storyboard */,
+				DF337E561AD2F04E001CA285 /* Constants.h */,
 				DF337E371AD2EF70001CA285 /* Resources */,
 				DF337E391AD2EF70001CA285 /* Utility */,
+				DF337E591AD2F18E001CA285 /* Framework */,
 				DF337E111AD2EF0F001CA285 /* Supporting Files */,
 			);
 			path = ETAccount_Mac;
@@ -167,8 +167,6 @@
 				DF337E3E1AD2EF70001CA285 /* ETXMLParser.h */,
 				DF337E3F1AD2EF70001CA285 /* ETXMLParser.m */,
 				DF337E401AD2EF70001CA285 /* FMDatabase */,
-				DF337E451AD2EF70001CA285 /* MapTileOverlay */,
-				DF337E481AD2EF70001CA285 /* MKMapView+ZoomLevel */,
 				DF337E4B1AD2EF70001CA285 /* PODataManager.h */,
 				DF337E4C1AD2EF70001CA285 /* PODataManager.m */,
 			);
@@ -186,22 +184,12 @@
 			path = FMDatabase;
 			sourceTree = "<group>";
 		};
-		DF337E451AD2EF70001CA285 /* MapTileOverlay */ = {
+		DF337E591AD2F18E001CA285 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
-				DF337E461AD2EF70001CA285 /* MapTileOverlay.h */,
-				DF337E471AD2EF70001CA285 /* MapTileOverlay.m */,
+				DF337E571AD2F172001CA285 /* libsqlite3.0.dylib */,
 			);
-			path = MapTileOverlay;
-			sourceTree = "<group>";
-		};
-		DF337E481AD2EF70001CA285 /* MKMapView+ZoomLevel */ = {
-			isa = PBXGroup;
-			children = (
-				DF337E491AD2EF70001CA285 /* MKMapView+ZoomLevel.h */,
-				DF337E4A1AD2EF70001CA285 /* MKMapView+ZoomLevel.m */,
-			);
-			path = "MKMapView+ZoomLevel";
+			name = Framework;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -312,10 +300,8 @@
 				DF337E4F1AD2EF70001CA285 /* ETUtility.m in Sources */,
 				DF337E521AD2EF70001CA285 /* FMResultSet.m in Sources */,
 				DF337E501AD2EF70001CA285 /* ETXMLParser.m in Sources */,
-				DF337E541AD2EF70001CA285 /* MKMapView+ZoomLevel.m in Sources */,
 				DF337E511AD2EF70001CA285 /* FMDatabase.m in Sources */,
 				DF337E551AD2EF70001CA285 /* PODataManager.m in Sources */,
-				DF337E531AD2EF70001CA285 /* MapTileOverlay.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,6 +488,7 @@
 				DF337E331AD2EF10001CA285 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DF337E341AD2EF10001CA285 /* Build configuration list for PBXNativeTarget "ETAccount_MacTests" */ = {
 			isa = XCConfigurationList;
@@ -510,6 +497,7 @@
 				DF337E361AD2EF10001CA285 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

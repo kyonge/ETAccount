@@ -75,68 +75,68 @@
     return documentPath;
 }
 
-+ (UIImage *)loadImage:(NSString *)imageName
-{
-    NSString *fileName = [imageName stringByDeletingPathExtension];
-    NSString *fileExtension = [imageName pathExtension];
-    UIImage *tempImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:fileName ofType:fileExtension]];
-    if (tempImage) return tempImage;
-    
-    NSString *documentPath = [ETUtility documentString:imageName];
-    UIImage *loadedImage;
-    
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    BOOL exist = [fileManager fileExistsAtPath:documentPath];
-    
-    if (exist) loadedImage = [UIImage imageWithContentsOfFile:documentPath];
-    else loadedImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:[imageName stringByDeletingPathExtension] ofType:[imageName pathExtension]]];
-    
-    return loadedImage;
-}
+//+ (NSImage *)loadImage:(NSString *)imageName
+//{
+//    NSString *fileName = [imageName stringByDeletingPathExtension];
+//    NSString *fileExtension = [imageName pathExtension];
+//    NSImage *tempImage = [NSImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:fileName ofType:fileExtension]];
+//    if (tempImage) return tempImage;
+//    
+//    NSString *documentPath = [ETUtility documentString:imageName];
+//    NSImage *loadedImage;
+//    
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    BOOL exist = [fileManager fileExistsAtPath:documentPath];
+//    
+//    if (exist) loadedImage = [NSImage imageWithContentsOfFile:documentPath];
+//    else loadedImage = [NSImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:[imageName stringByDeletingPathExtension] ofType:[imageName pathExtension]]];
+//    
+//    return loadedImage;
+//}
 
-+ (UIImage *)loadImageFromTempDocuments:(NSString *)imageName
-{
-    NSString *fileName = [imageName stringByDeletingPathExtension];
-    NSString *fileExtension = [imageName pathExtension];
-    UIImage *tempImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:fileName ofType:fileExtension]];
-    
-    if (tempImage) return tempImage;
-    
-    NSString *documentPath = [ETUtility tempDocumentString:imageName];
-    UIImage *loadedImage;
-    
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    BOOL exist = [fileManager fileExistsAtPath:documentPath];
-    
-    
-    if (exist) loadedImage = [UIImage imageWithContentsOfFile:documentPath];
-    else {
-        loadedImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:[imageName stringByDeletingPathExtension] ofType:[imageName pathExtension]]];
-    }
-    return loadedImage;
-}
+//+ (NSImage *)loadImageFromTempDocuments:(NSString *)imageName
+//{
+//    NSString *fileName = [imageName stringByDeletingPathExtension];
+//    NSString *fileExtension = [imageName pathExtension];
+//    NSImage *tempImage = [NSImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:fileName ofType:fileExtension]];
+//    
+//    if (tempImage) return tempImage;
+//    
+//    NSString *documentPath = [ETUtility tempDocumentString:imageName];
+//    NSImage *loadedImage;
+//    
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    BOOL exist = [fileManager fileExistsAtPath:documentPath];
+//    
+//    
+//    if (exist) loadedImage = [NSImage imageWithContentsOfFile:documentPath];
+//    else {
+//        loadedImage = [NSImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:[imageName stringByDeletingPathExtension] ofType:[imageName pathExtension]]];
+//    }
+//    return loadedImage;
+//}
 
-+ (UIImage *)loadImageFileFromDocumentCache:(NSString *)fileName
-{
-    NSString *savedName = [fileName stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
-    
-    BOOL hasCacheFile = [[NSFileManager defaultManager] fileExistsAtPath:[ETUtility documentString:savedName]];
-    if (hasCacheFile) {
-        return [ETUtility loadImage:savedName];
-    }
-    else {
-        NSData *tempData = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileName]];
-        UIImage *tempImage = [UIImage imageWithData:tempData];
-        
-//        NSData *imageData = UIImagePNGRepresentation(tempImage);
-        NSData *imageData = UIImageJPEGRepresentation(tempImage, 0.5);
-        [imageData writeToFile:[ETUtility documentString:savedName] atomically:YES];
-        
-        return tempImage;
-    }
-}
+//+ (NSImage *)loadImageFileFromDocumentCache:(NSString *)fileName
+//{
+//    NSString *savedName = [fileName stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+//    
+//    BOOL hasCacheFile = [[NSFileManager defaultManager] fileExistsAtPath:[ETUtility documentString:savedName]];
+//    if (hasCacheFile) {
+//        return [ETUtility loadImage:savedName];
+//    }
+//    else {
+//        NSData *tempData = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileName]];
+//        NSImage *tempImage = [NSImage imageWithData:tempData];
+//        
+////        NSData *imageData = NSImagePNGRepresentation(tempImage);
+//        NSData *imageData = NSImageJPEGRepresentation(tempImage, 0.5);
+//        [imageData writeToFile:[ETUtility documentString:savedName] atomically:YES];
+//        
+//        return tempImage;
+//    }
+//}
 
-+ (void)downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock
++ (void)downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, NSImage *image))completionBlock
 {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request
@@ -144,7 +144,7 @@
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                if ( !error )
                                {
-                                   UIImage *image = [[UIImage alloc] initWithData:data];
+                                   NSImage *image = [[NSImage alloc] initWithData:data];
                                    completionBlock(YES,image);
                                } else{
                                    completionBlock(NO,nil);
@@ -152,25 +152,25 @@
                            }];
 }
 
-+ (void)loadAndSetImageToImageView:(UIImageView *)targetImageView FromDocumentCacheAsynchronized:(NSString *)fileName
-{
-    NSString *savedName = [fileName stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
-    
-    BOOL hasCacheFile = [[NSFileManager defaultManager] fileExistsAtPath:[ETUtility documentString:savedName]];
-    if (hasCacheFile) {
-        [targetImageView setImage:[ETUtility loadImage:savedName]];
-    }
-    else {
-        [ETUtility downloadImageWithURL:[NSURL URLWithString:fileName] completionBlock:^(BOOL succeeded, UIImage *downloadedImage) {
-            if (succeeded) {
-                NSData *imageData = UIImageJPEGRepresentation(downloadedImage, 0.5);
-                [imageData writeToFile:[ETUtility documentString:savedName] atomically:YES];
-                
-                [targetImageView setImage:downloadedImage];
-            }
-        }];
-    }
-}
+//+ (void)loadAndSetImageToImageView:(NSImageView *)targetImageView FromDocumentCacheAsynchronized:(NSString *)fileName
+//{
+//    NSString *savedName = [fileName stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+//    
+//    BOOL hasCacheFile = [[NSFileManager defaultManager] fileExistsAtPath:[ETUtility documentString:savedName]];
+//    if (hasCacheFile) {
+//        [targetImageView setImage:[ETUtility loadImage:savedName]];
+//    }
+//    else {
+//        [ETUtility downloadImageWithURL:[NSURL URLWithString:fileName] completionBlock:^(BOOL succeeded, NSImage *downloadedImage) {
+//            if (succeeded) {
+//                NSData *imageData = NSImageJPEGRepresentation(downloadedImage, 0.5);
+//                [imageData writeToFile:[ETUtility documentString:savedName] atomically:YES];
+//                
+//                [targetImageView setImage:downloadedImage];
+//            }
+//        }];
+//    }
+//}
 
 
 #pragma mark - NSArray 내에서 NSDictionary 탐색
@@ -190,38 +190,38 @@
 #pragma mark - Alert
 
 // iOS8.0 이후 Alert 처리
-+ (void)showAlert:(NSString *)titleString Message:(NSString *)messageString atViewController:(UIViewController *)viewController
++ (void)showAlert:(NSString *)titleString Message:(NSString *)messageString atViewController:(NSViewController *)viewController
 {
-    UIAlertController *alertController = [UIAlertController
-                                          alertControllerWithTitle:titleString
-                                          message:messageString
-                                          preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *okAction = [UIAlertAction
-                               actionWithTitle:NSLocalizedString(@"OK", @"OK action")
-                               style:UIAlertActionStyleDefault
-                               handler:nil];
-    
-    [alertController addAction:okAction];
-    [viewController presentViewController:alertController animated:YES completion:nil];
+//    UIAlertController *alertController = [UIAlertController
+//                                          alertControllerWithTitle:titleString
+//                                          message:messageString
+//                                          preferredStyle:UIAlertControllerStyleAlert];
+//    
+//    UIAlertAction *okAction = [UIAlertAction
+//                               actionWithTitle:NSLocalizedString(@"OK", @"OK action")
+//                               style:UIAlertActionStyleDefault
+//                               handler:nil];
+//    
+//    [alertController addAction:okAction];
+//    [viewController presentViewController:alertController animated:YES completion:nil];
 }
 
 
-#pragma mark - UIViewAnimation
+#pragma mark - NSViewAnimation
 
-// UIViewAnimation
-+ (void)AnimationView:(UIView *)view toFrame:(CGRect)frame toAlpha:(float)alpha inTime:(float)time toTarget:(id)target WithSelector:(SEL)selector
+// NSViewAnimation
++ (void)AnimationView:(NSView *)view toFrame:(CGRect)frame toAlpha:(float)alpha inTime:(float)time toTarget:(id)target WithSelector:(SEL)selector
 {
-    [UIView animateWithDuration:time animations:^{
-        [view setFrame:frame];
-        [view setAlpha:alpha];
-    } completion:^(BOOL finished) {
-        if (selector)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            [target performSelector:selector];
-#pragma clang diagnostic pop
-    }];
+//    [NSView animateWithDuration:time animations:^{
+//        [view setFrame:frame];
+//        [view setAlpha:alpha];
+//    } completion:^(BOOL finished) {
+//        if (selector)
+//#pragma clang diagnostic push
+//#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+//            [target performSelector:selector];
+//#pragma clang diagnostic pop
+//    }];
 }
 
 
@@ -268,8 +268,8 @@
 @implementation ETPushNoAnimationSegue
 
 -(void) perform{
-    UIViewController *vc = self.sourceViewController;
-    [vc.navigationController pushViewController:self.destinationViewController animated:NO];
+//    NSViewController *vc = self.sourceViewController;
+//    [vc.navigationController pushViewController:self.destinationViewController animated:NO];
 }
 
 @end

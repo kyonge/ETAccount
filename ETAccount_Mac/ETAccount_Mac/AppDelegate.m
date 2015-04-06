@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+#import "ETUtility.h"
+
 @interface AppDelegate ()
 
 @end
@@ -15,7 +17,7 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    // Insert code here to initialize your application
+    [ETUtility copyBundleToDocumentsWithFileName:@"ETAccount.sqlite"];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
