@@ -35,6 +35,9 @@
 // UIViewAnimation
 + (void)AnimationView:(UIView *)view toFrame:(CGRect)frame toAlpha:(float)alpha inTime:(float)time toTarget:(id)target WithSelector:(SEL)selector;
 
+// sqlite (ALL)
++ (NSMutableArray *)selectAllSQliteDatasFromFile:(NSString *)sqliteFileName Table:(NSString *)tableName WithColumn:(NSArray *)columns;
+
 // sqlite (LIKE)
 + (NSMutableArray *)selectSQliteDatasOfColumns:(NSArray *)columns FromFile:(NSString *)sqliteFileName Table:(NSString *)tableName LikeKeys:(NSArray *)keys OfColumns:(NSArray *)columns_;
 

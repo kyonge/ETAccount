@@ -227,6 +227,37 @@
 
 #pragma mark - FMDatabase : SQLite
 
+// sqlite (ALL)
++ (NSMutableArray *)selectAllSQliteDatasFromFile:(NSString *)sqliteFileName Table:(NSString *)tableName WithColumn:(NSArray *)columns
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:sqliteFileName];
+    FMDatabase *db = [FMDatabase databaseWithPath:documentPath];
+    [db open];
+    
+    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM %@", tableName];
+    
+    FMResultSet *rs = [db executeQuery:sql];
+    
+//    NSLog(@"sql : %@", sql);
+    
+    NSInteger countOfColumn = [columns count];
+    NSMutableArray *returnArray = [NSMutableArray array];
+    
+    while ([rs next]) {
+        NSMutableDictionary *tempDB = [NSMutableDictionary dictionary];
+        for (int i = 0; i < countOfColumn; i++) {
+            NSString *tempKey = [columns objectAtIndex:i];
+            NSString *tempValue = [rs stringForColumn:tempKey];
+            [tempDB setValue:tempValue forKey:tempKey];
+        }
+        [returnArray addObject:tempDB];
+    }
+    [db close];
+    
+    return returnArray;
+}
+
 // sqlite (LIKE)
 + (NSMutableArray *)selectSQliteDatasOfColumns:(NSArray *)columns FromFile:(NSString *)sqliteFileName Table:(NSString *)tableName LikeKeys:(NSArray *)keys OfColumns:(NSArray *)columns_
 {

@@ -32,6 +32,8 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    
+    [self initStatData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -61,6 +63,14 @@
     }
 }
 
+#pragma mark - 데이터 초기화
+
+- (void)initStatData
+{
+    statDataArray = [ETUtility selectAllSQliteDatasFromFile:@"ETAccount.sqlite" Table:@"StatTable" WithColumn:[NSArray arrayWithObjects:@"idx", @"name", nil]];
+    [self setObjects:statDataArray];
+}
+
 #pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -74,8 +84,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-    NSDate *object = self.objects[indexPath.row];
-    cell.textLabel.text = [object description];
+//    NSDate *object = self.objects[indexPath.row];
+//    cell.textLabel.text = [object description];
+    
+    NSDictionary *object = [self.objects objectAtIndex:[indexPath row]];
+    [[cell textLabel] setText:[object objectForKey:@"name"]];
     return cell;
 }
 

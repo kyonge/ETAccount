@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ETUtility.h"
+
 @class DetailViewController;
 
-@interface MasterViewController : UITableViewController
+@interface MasterViewController : UITableViewController {
+    NSMutableArray *statDataArray;
+}
 
 @property (strong, nonatomic) DetailViewController *detailViewController;
 
