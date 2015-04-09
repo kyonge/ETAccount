@@ -25,6 +25,8 @@
 		DF337EAC1AD2F63E001CA285 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337EA31AD2F63E001CA285 /* MKMapView+ZoomLevel.m */; };
 		DF337EAD1AD2F63E001CA285 /* PODataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337EA51AD2F63E001CA285 /* PODataManager.m */; };
 		DF337EB01AD2F659001CA285 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DF337EAF1AD2F659001CA285 /* libsqlite3.0.dylib */; };
+		DF9D2E531AD58883003DDC1D /* ETAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9D2E521AD58883003DDC1D /* ETAccountViewController.m */; };
+		DF9D2E571AD58A41003DDC1D /* ETAccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9D2E561AD58A41003DDC1D /* ETAccountTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +74,10 @@
 		DF337EA51AD2F63E001CA285 /* PODataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PODataManager.m; sourceTree = "<group>"; };
 		DF337EAE1AD2F646001CA285 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		DF337EAF1AD2F659001CA285 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		DF9D2E511AD58883003DDC1D /* ETAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountViewController.h; path = Account/ETAccountViewController.h; sourceTree = "<group>"; };
+		DF9D2E521AD58883003DDC1D /* ETAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountViewController.m; path = Account/ETAccountViewController.m; sourceTree = "<group>"; };
+		DF9D2E551AD58A41003DDC1D /* ETAccountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountTableViewCell.h; path = Account/ETAccountTableViewCell.h; sourceTree = "<group>"; };
+		DF9D2E561AD58A41003DDC1D /* ETAccountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountTableViewCell.m; path = Account/ETAccountTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +126,7 @@
 				DF337E6E1AD2F5F9001CA285 /* MasterViewController.m */,
 				DF337E701AD2F5F9001CA285 /* DetailViewController.h */,
 				DF337E711AD2F5F9001CA285 /* DetailViewController.m */,
+				DF9D2E541AD58889003DDC1D /* Account */,
 				DF337E731AD2F5F9001CA285 /* Main.storyboard */,
 				DF337E761AD2F5F9001CA285 /* Images.xcassets */,
 				DF337E781AD2F5F9001CA285 /* LaunchScreen.xib */,
@@ -219,6 +226,17 @@
 				DF337EAF1AD2F659001CA285 /* libsqlite3.0.dylib */,
 			);
 			name = Framework;
+			sourceTree = "<group>";
+		};
+		DF9D2E541AD58889003DDC1D /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				DF9D2E511AD58883003DDC1D /* ETAccountViewController.h */,
+				DF9D2E521AD58883003DDC1D /* ETAccountViewController.m */,
+				DF9D2E551AD58A41003DDC1D /* ETAccountTableViewCell.h */,
+				DF9D2E561AD58A41003DDC1D /* ETAccountTableViewCell.m */,
+			);
+			name = Account;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -326,6 +344,7 @@
 				DF337E6F1AD2F5F9001CA285 /* MasterViewController.m in Sources */,
 				DF337E691AD2F5F9001CA285 /* main.m in Sources */,
 				DF337E721AD2F5F9001CA285 /* DetailViewController.m in Sources */,
+				DF9D2E531AD58883003DDC1D /* ETAccountViewController.m in Sources */,
 				DF337EA61AD2F63E001CA285 /* ETHTTPUtility.m in Sources */,
 				DF337EA71AD2F63E001CA285 /* ETUtility.m in Sources */,
 				DF337EAA1AD2F63E001CA285 /* FMResultSet.m in Sources */,
@@ -333,6 +352,7 @@
 				DF337EAC1AD2F63E001CA285 /* MKMapView+ZoomLevel.m in Sources */,
 				DF337EA91AD2F63E001CA285 /* FMDatabase.m in Sources */,
 				DF337EAD1AD2F63E001CA285 /* PODataManager.m in Sources */,
+				DF9D2E571AD58A41003DDC1D /* ETAccountTableViewCell.m in Sources */,
 				DF337EAB1AD2F63E001CA285 /* MapTileOverlay.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -526,6 +546,7 @@
 				DF337E8B1AD2F5FA001CA285 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DF337E8C1AD2F5FA001CA285 /* Build configuration list for PBXNativeTarget "ETAccount_iOSTests" */ = {
 			isa = XCConfigurationList;
@@ -534,6 +555,7 @@
 				DF337E8E1AD2F5FA001CA285 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
