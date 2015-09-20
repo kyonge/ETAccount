@@ -11,6 +11,8 @@
 
 #define TEST_FOR_DEV if (NO)
 
+#define _DB @"ETAccount.sqlite"
+
 //#define URL_POPOP_PRE @"http://54.183.205.145/v1"
 //#define URL_POPOP_PRE @"http://ec2-54-183-94-75.us-west-1.compute.amazonaws.com"
 #define URL_POPOP_PRE @"http://solrcloud0-320055289.us-west-1.elb.amazonaws.com"

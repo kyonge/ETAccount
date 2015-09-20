@@ -12,6 +12,7 @@
 #import "ETAccountTableViewCell.h"
 
 #import "ETUtility.h"
+#import "ETFormatter.h"
 
 @interface ETAccountViewController : DetailViewController <UITableViewDataSource, UITableViewDelegate> {
     NSMutableArray *accountArray;

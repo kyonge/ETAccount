@@ -227,6 +227,33 @@
 
 #pragma mark - FMDatabase : SQLite
 
++ (NSMutableArray *)selectDataWithQuerry:(NSString *)querryString FromFile:(NSString *)sqliteFileName WithColumn:(NSArray *)columns
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:sqliteFileName];
+    FMDatabase *db = [FMDatabase databaseWithPath:documentPath];
+    [db open];
+    
+    FMResultSet *rs = [db executeQuery:querryString];
+    
+    NSInteger countOfColumn = [columns count];
+    NSMutableArray *returnArray = [NSMutableArray array];
+    
+    while ([rs next]) {
+        NSMutableDictionary *tempDB = [NSMutableDictionary dictionary];
+        for (int i = 0; i < countOfColumn; i++) {
+            NSString *tempKey = [columns objectAtIndex:i];
+            NSString *tempValue = [rs stringForColumn:tempKey];
+//            NSLog(@"%@", tempValue);
+            [tempDB setValue:tempValue forKey:tempKey];
+        }
+        [returnArray addObject:tempDB];
+    }
+    [db close];
+    
+    return returnArray;
+}
+
 // sqlite (ALL)
 + (NSMutableArray *)selectAllSQliteDatasFromFile:(NSString *)sqliteFileName Table:(NSString *)tableName WithColumn:(NSArray *)columns
 {

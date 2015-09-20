@@ -30,7 +30,12 @@
 
 - (void)initAccount
 {
-    accountArray = [ETUtility selectAllSQliteDatasFromFile:@"ETAccount.sqlite" Table:@"AccountTable" WithColumn:[NSArray arrayWithObjects:@"idx", @"date", @"item_left", @"value_left", @"item_right", @"description", nil]];
+    //현재는 전체 로드 : 날짜순 조건 추가, 동적 로딩 추가
+    
+    NSString *qerryString = @"SELECT Deal.id, Deal.name, Account_1.name account_1, Account_2.name account_2, money, description, Deal.date FROM Deal JOIN Account Account_1 ON Deal.account_id_1 = Account_1.id JOIN Account Account_2 ON Deal.account_id_2 = Account_2.id";
+    NSArray *columnArray = [NSArray arrayWithObjects:@"id", @"name", @"account_1", @"account_2", @"money", @"description", @"date", nil];
+    
+    accountArray = [ETUtility selectDataWithQuerry:qerryString FromFile:_DB WithColumn:columnArray];
 }
 
 
@@ -68,11 +73,14 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(ETAccountTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *tempAccountDictionary = [accountArray objectAtIndex:indexPath.row];
-    [[cell accountDateLabel] setText:[tempAccountDictionary objectForKey:@"date"]];
+    NSString *tempDateString = [tempAccountDictionary objectForKey:@"date"];
+    NSString *finalDateString = [ETFormatter dateColumnFormat:tempDateString];
+    
+    [[cell accountDateLabel] setText:finalDateString];
     [[cell accountNameLabel] setText:[tempAccountDictionary objectForKey:@"description"]];
-    [[cell accountIncomeLabel] setText:[tempAccountDictionary objectForKey:@"item_left"]];
-    [[cell accountExpenseLabel] setText:[tempAccountDictionary objectForKey:@"item_right"]];
-    [[cell accountPriceLabel] setText:[tempAccountDictionary objectForKey:@"value_left"]];
+    [[cell accountIncomeLabel] setText:[tempAccountDictionary objectForKey:@"account_1"]];
+    [[cell accountExpenseLabel] setText:[tempAccountDictionary objectForKey:@"account_2"]];
+    [[cell accountPriceLabel] setText:[tempAccountDictionary objectForKey:@"money"]];
 //    NSInteger tempRank = [[currentRankArray objectAtIndex:indexPath.row] integerValue];
 //    
 //    [POVenueSummaryCellController setVenueSummaryCell:cell dictionary:tempVenueDictionary withRank:tempRank BigSize:NO];
