@@ -14,6 +14,8 @@
 
 @implementation ETAccountViewController
 
+@synthesize addViewController;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -36,6 +38,19 @@
     NSArray *columnArray = [NSArray arrayWithObjects:@"id", @"name", @"account_1", @"account_2", @"money", @"description", @"date", nil];
     
     accountArray = [ETUtility selectDataWithQuerry:qerryString FromFile:_DB WithColumn:columnArray];
+}
+
+
+#pragma mark - 추가
+
+- (IBAction)addAccount:(id)sender
+{
+    [sender setEnabled:NO];
+    
+    addViewController = [[ETAccountAddViewController alloc] init];
+    [addViewController setSuperViewController:self];
+    [addViewController setAddDelegate:self];
+    [[self view] addSubview:[addViewController view]];
 }
 
 
@@ -89,7 +104,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView reloadData];
-    //    [challengerDelegate searchChallengerNick:[challengerListArray objectAtIndex:indexPath.row]];
+//    [challengerDelegate searchChallengerNick:[challengerListArray objectAtIndex:indexPath.row]];
+}
+
+#pragma mark ETAccountAddDelegate
+
+- (void)closeAddView
+{
+    [addItem setEnabled:YES];
+    
+    [self initAccount];
 }
 
 @end

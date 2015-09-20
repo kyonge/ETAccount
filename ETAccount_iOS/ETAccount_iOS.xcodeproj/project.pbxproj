@@ -11,6 +11,7 @@
 		DF0CFB301BAC48FE00A98D88 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0CFB2F1BAC48FE00A98D88 /* DetailViewController.m */; };
 		DF0CFB341BAE56F800A98D88 /* ETAccount.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = DF0CFB331BAE56F800A98D88 /* ETAccount.sqlite */; };
 		DF0CFB371BAE5D6800A98D88 /* ETFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0CFB361BAE5D6800A98D88 /* ETFormatter.m */; };
+		DF0CFB3A1BAE736D00A98D88 /* ETAccountAddTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0CFB391BAE736D00A98D88 /* ETAccountAddTableViewController.m */; };
 		DF337E691AD2F5F9001CA285 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337E681AD2F5F9001CA285 /* main.m */; };
 		DF337E6C1AD2F5F9001CA285 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337E6B1AD2F5F9001CA285 /* AppDelegate.m */; };
 		DF337E751AD2F5F9001CA285 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF337E731AD2F5F9001CA285 /* Main.storyboard */; };
@@ -50,6 +51,8 @@
 		DF0CFB331BAE56F800A98D88 /* ETAccount.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; name = ETAccount.sqlite; path = ../ETAccount.sqlite; sourceTree = "<group>"; };
 		DF0CFB351BAE5D6800A98D88 /* ETFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ETFormatter.h; sourceTree = "<group>"; };
 		DF0CFB361BAE5D6800A98D88 /* ETFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ETFormatter.m; sourceTree = "<group>"; };
+		DF0CFB381BAE736D00A98D88 /* ETAccountAddTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountAddTableViewController.h; path = Account/ETAccountAddTableViewController.h; sourceTree = "<group>"; };
+		DF0CFB391BAE736D00A98D88 /* ETAccountAddTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountAddTableViewController.m; path = Account/ETAccountAddTableViewController.m; sourceTree = "<group>"; };
 		DF337E631AD2F5F9001CA285 /* ETAccount_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ETAccount_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF337E671AD2F5F9001CA285 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DF337E681AD2F5F9001CA285 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -114,6 +117,16 @@
 				DF0CFB2B1BAC41FE00A98D88 /* ETAccountHomeViewController.m */,
 			);
 			name = Home;
+			sourceTree = "<group>";
+		};
+		DF0CFB3B1BAE749900A98D88 /* deprecated (addView) */ = {
+			isa = PBXGroup;
+			children = (
+				DF358D421AD7479000972F9B /* ETAccountAddViewController.h */,
+				DF358D431AD7479000972F9B /* ETAccountAddViewController.m */,
+				DF358D441AD7479000972F9B /* ETAccountAddViewController.xib */,
+			);
+			name = "deprecated (addView)";
 			sourceTree = "<group>";
 		};
 		DF337E5A1AD2F5F9001CA285 = {
@@ -253,9 +266,9 @@
 				DF9D2E521AD58883003DDC1D /* ETAccountViewController.m */,
 				DF9D2E551AD58A41003DDC1D /* ETAccountTableViewCell.h */,
 				DF9D2E561AD58A41003DDC1D /* ETAccountTableViewCell.m */,
-				DF358D421AD7479000972F9B /* ETAccountAddViewController.h */,
-				DF358D431AD7479000972F9B /* ETAccountAddViewController.m */,
-				DF358D441AD7479000972F9B /* ETAccountAddViewController.xib */,
+				DF0CFB381BAE736D00A98D88 /* ETAccountAddTableViewController.h */,
+				DF0CFB391BAE736D00A98D88 /* ETAccountAddTableViewController.m */,
+				DF0CFB3B1BAE749900A98D88 /* deprecated (addView) */,
 			);
 			name = Account;
 			sourceTree = "<group>";
@@ -367,6 +380,7 @@
 				DF9D2E531AD58883003DDC1D /* ETAccountViewController.m in Sources */,
 				DF337EA61AD2F63E001CA285 /* ETHTTPUtility.m in Sources */,
 				DF337EA71AD2F63E001CA285 /* ETUtility.m in Sources */,
+				DF0CFB3A1BAE736D00A98D88 /* ETAccountAddTableViewController.m in Sources */,
 				DF0CFB371BAE5D6800A98D88 /* ETFormatter.m in Sources */,
 				DF0CFB301BAC48FE00A98D88 /* DetailViewController.m in Sources */,
 				DF337EAA1AD2F63E001CA285 /* FMResultSet.m in Sources */,

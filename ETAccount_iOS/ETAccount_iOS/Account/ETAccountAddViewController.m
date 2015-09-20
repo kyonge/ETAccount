@@ -14,6 +14,9 @@
 
 @implementation ETAccountAddViewController
 
+@synthesize superViewController;
+@synthesize addDelegate;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -22,6 +25,47 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - 기본 컨트롤
+
+- (IBAction)close:(id)sender
+{
+    UIAlertController *alertController = [ETUtility showAlert:@"ETAccount" Message:@"입력 창을 닫으시겠습니까?" atViewController:superViewController withBlank:YES];
+    
+    UIAlertAction *okAction = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"닫기", @"Close action")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action)
+                               {
+                                   [self close];
+                               }];
+    [alertController addAction:okAction];
+    
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"취소", @"Cancel action")
+                                   style:UIAlertActionStyleCancel
+                                   handler:nil];
+    [alertController addAction:cancelAction];
+}
+
+- (IBAction)closeKeyboards:(id)sender
+{
+    [inputNameTextField resignFirstResponder];
+    [inputDescriptionTextField resignFirstResponder];
+    [inputValueTextField resignFirstResponder];
+}
+
+- (void)close
+{
+    [[self view] removeFromSuperview];
+    [addDelegate closeAddView];
+}
+
+- (IBAction)confirm:(id)sender
+{
+    
 }
 
 

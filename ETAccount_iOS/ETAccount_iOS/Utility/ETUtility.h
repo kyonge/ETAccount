@@ -30,7 +30,7 @@
 + (NSDictionary *)selectDictionaryWithValue:(id)value OfKey:(NSString *)key inArray:(NSArray *)array;
 
 // iOS8.0 이후 Alert 처리
-+ (void)showAlert:(NSString *)titleString Message:(NSString *)messageString atViewController:(UIViewController *)viewController;
++ (UIAlertController *)showAlert:(NSString *)titleString Message:(NSString *)messageString atViewController:(UIViewController *)viewController withBlank:(BOOL)blank;
 
 // UIViewAnimation
 + (void)AnimationView:(UIView *)view toFrame:(CGRect)frame toAlpha:(float)alpha inTime:(float)time toTarget:(id)target WithSelector:(SEL)selector;

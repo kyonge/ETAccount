@@ -10,12 +10,19 @@
 
 #import "DetailViewController.h"
 #import "ETAccountTableViewCell.h"
+#import "ETAccountAddViewController.h"
 
 #import "ETUtility.h"
 #import "ETFormatter.h"
 
-@interface ETAccountViewController : DetailViewController <UITableViewDataSource, UITableViewDelegate> {
+@interface ETAccountViewController : DetailViewController <UITableViewDataSource, UITableViewDelegate, ETAccountAddDelegate> {
     NSMutableArray *accountArray;
+    
+    IBOutlet UIBarButtonItem *addItem;
+    
+    ETAccountAddViewController *addViewController;
 }
+
+@property (strong) ETAccountAddViewController *addViewController;
 
 @end

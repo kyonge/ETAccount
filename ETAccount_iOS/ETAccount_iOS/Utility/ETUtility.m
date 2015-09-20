@@ -190,20 +190,23 @@
 #pragma mark - Alert
 
 // iOS8.0 이후 Alert 처리
-+ (void)showAlert:(NSString *)titleString Message:(NSString *)messageString atViewController:(UIViewController *)viewController
++ (UIAlertController *)showAlert:(NSString *)titleString Message:(NSString *)messageString atViewController:(UIViewController *)viewController withBlank:(BOOL)blank
 {
     UIAlertController *alertController = [UIAlertController
                                           alertControllerWithTitle:titleString
                                           message:messageString
                                           preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction *okAction = [UIAlertAction
-                               actionWithTitle:NSLocalizedString(@"OK", @"OK action")
-                               style:UIAlertActionStyleDefault
-                               handler:nil];
+    if (!blank) {
+        UIAlertAction *okAction = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"OK", @"OK action")
+                                   style:UIAlertActionStyleDefault
+                                   handler:nil];
+        [alertController addAction:okAction];
+    }
     
-    [alertController addAction:okAction];
     [viewController presentViewController:alertController animated:YES completion:nil];
+    return alertController;
 }
 
 
