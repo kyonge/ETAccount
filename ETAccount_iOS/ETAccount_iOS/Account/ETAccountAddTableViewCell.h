@@ -9,15 +9,21 @@
 #import <UIKit/UIKit.h>
 
 #import "ETUtility.h"
+#import "ETFormatter.h"
 #import "Constants.h"
 
 @interface ETAccountAddTableViewCell : UITableViewCell {
     IBOutlet UILabel *titleLabel;
     IBOutlet UITextField *titleTextField;
+    IBOutlet UIButton *plusMinusButton;
+    
+    UIDatePicker *datePicker;
 }
 
 - (void)setType:(ADD_DEAL_CELL_TYPE)type;
 - (void)setTitle:(NSString *)titleString;
 - (void)setPlaceholder:(NSString *)placeholderString;
+
+- (void)setDatePicker;
 
 @end

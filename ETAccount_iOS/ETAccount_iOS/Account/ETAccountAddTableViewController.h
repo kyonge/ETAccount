@@ -10,6 +10,8 @@
 
 #import "ETAccountAddTableViewCell.h"
 
-@interface ETAccountAddTableViewController : UITableViewController <UINavigationControllerDelegate>
+@interface ETAccountAddTableViewController : UITableViewController <UINavigationControllerDelegate> {
+    
+}
 
 @end

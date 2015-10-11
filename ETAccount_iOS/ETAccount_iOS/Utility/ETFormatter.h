@@ -11,5 +11,6 @@
 @interface ETFormatter : NSObject
 
 + (NSString *)dateColumnFormat:(NSString *)tempDateString;
++ (NSString *)dateStringForDeal:(NSDate *)date;
 
 @end

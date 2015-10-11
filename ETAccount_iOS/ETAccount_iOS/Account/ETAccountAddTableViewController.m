@@ -69,8 +69,10 @@
 
     switch (indexPath.row) {
         case 0:
-            [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
-            [cell setTitle:@"날짜"];
+            [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
+            [cell setPlaceholder:@"날짜"];
+            
+            [cell setDatePicker];
             break;
         case 1:
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
@@ -112,6 +114,42 @@
 - (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
     [[tableView cellForRowAtIndexPath:indexPath] resignFirstResponder];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    switch (indexPath.row) {
+        case 0:
+//            [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
+//            [cell setTitle:@"날짜"];
+            break;
+        case 1:
+//            [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
+//            [cell setPlaceholder:@"거래명"];
+            break;
+        case 2:
+//            [cell setType:ADD_DEAL_CELL_TYPE_NUMBERS];
+//            [cell setPlaceholder:@"금액"];
+            break;
+        case 3:
+//            [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
+//            [cell setTitle:@"좌변"];
+            break;
+        case 4:
+//            [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
+//            [cell setTitle:@"우변"];
+            break;
+        case 5:
+//            [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
+//            [cell setPlaceholder:@"설명"];
+            break;
+        case 6:
+//            [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
+//            [cell setTitle:@"Tags"];
+            break;
+    }
+    
+    [tableView reloadData];
 }
 
 /*

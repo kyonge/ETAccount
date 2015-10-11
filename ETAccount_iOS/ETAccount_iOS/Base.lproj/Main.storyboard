@@ -186,21 +186,42 @@
                                                 <action selector="closeKeyboard:" destination="MQT-l1-dzO" eventType="editingDidEndOnExit" id="cwR-sq-aJW"/>
                                             </connections>
                                         </textField>
+                                        <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Zv-kx-PIA">
+                                            <rect key="frame" x="546" y="7" width="46" height="30"/>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="46" id="CcL-Lq-bTI"/>
+                                                <constraint firstAttribute="height" constant="30" id="SLs-rc-dWu"/>
+                                            </constraints>
+                                            <state key="normal" title="+/-"/>
+                                            <connections>
+                                                <action selector="changePlusMinus:" destination="MQT-l1-dzO" eventType="touchUpInside" id="1kH-hV-F3F"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <animations/>
                                     <constraints>
+                                        <constraint firstItem="9Zv-kx-PIA" firstAttribute="top" secondItem="Gv6-ae-niW" secondAttribute="top" constant="7" id="8dS-4Y-U0V"/>
                                         <constraint firstItem="6O5-DG-Mnh" firstAttribute="top" secondItem="Gv6-ae-niW" secondAttribute="top" constant="7" id="8xK-54-asQ"/>
                                         <constraint firstAttribute="trailing" secondItem="Ga3-jS-zSs" secondAttribute="trailing" constant="8" id="BwG-Uh-pvj"/>
                                         <constraint firstAttribute="bottom" secondItem="Ga3-jS-zSs" secondAttribute="bottom" constant="11" id="JPM-lc-gTu"/>
                                         <constraint firstAttribute="trailing" secondItem="6O5-DG-Mnh" secondAttribute="trailing" constant="8" id="P2s-MC-jxM"/>
                                         <constraint firstItem="Ga3-jS-zSs" firstAttribute="leading" secondItem="Gv6-ae-niW" secondAttribute="leading" constant="8" id="XtQ-MO-g6x"/>
                                         <constraint firstItem="6O5-DG-Mnh" firstAttribute="leading" secondItem="Gv6-ae-niW" secondAttribute="leading" constant="8" id="dpb-fm-RVf"/>
+                                        <constraint firstAttribute="trailing" secondItem="9Zv-kx-PIA" secondAttribute="trailing" constant="8" id="fLs-ah-1gA"/>
                                         <constraint firstItem="Ga3-jS-zSs" firstAttribute="top" secondItem="Gv6-ae-niW" secondAttribute="top" constant="11" id="jum-Dj-3Fw"/>
                                         <constraint firstAttribute="bottom" secondItem="6O5-DG-Mnh" secondAttribute="bottom" constant="6" id="rDT-Cv-Enx"/>
+                                        <constraint firstAttribute="bottom" secondItem="9Zv-kx-PIA" secondAttribute="bottom" constant="6" id="v6T-R1-udT"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="v6T-R1-udT"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <animations/>
                                 <connections>
+                                    <outlet property="plusMinusButton" destination="9Zv-kx-PIA" id="oF1-TO-GJN"/>
                                     <outlet property="titleLabel" destination="Ga3-jS-zSs" id="l2o-6b-O6l"/>
                                     <outlet property="titleTextField" destination="6O5-DG-Mnh" id="xez-rx-d0K"/>
                                 </connections>

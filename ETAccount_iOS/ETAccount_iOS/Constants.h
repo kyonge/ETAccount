@@ -22,6 +22,7 @@
 #define INIT_ITEM_LOAD_COUNT 9
 
 #define SCREEN_SIZE [[UIScreen mainScreen] bounds].size.height
+#define DEVICE_SIZE [[[[UIApplication sharedApplication] keyWindow] rootViewController].view convertRect:[[UIScreen mainScreen] bounds] fromView:nil].size
 
 typedef enum : NSUInteger {
     API_HOME,
@@ -52,5 +53,10 @@ typedef enum : NSUInteger {
     ADD_DEAL_CELL_TYPE_TEXT = 200,
     ADD_DEAL_CELL_TYPE_NUMBERS = 300
 } ADD_DEAL_CELL_TYPE;
+
+typedef enum : NSUInteger {
+    NUMBER_PLUS = 100,
+    NUMBER_MINUS = 200
+};
 
 #endif
