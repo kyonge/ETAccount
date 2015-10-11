@@ -47,4 +47,10 @@ typedef enum : NSUInteger {
     SCREEN_HEIGHT_IPHONE4 = 480,
 } DEVICE_SCREEN_SIZE;
 
+typedef enum : NSUInteger {
+    ADD_DEAL_CELL_TYPE_BUTTON = 100,
+    ADD_DEAL_CELL_TYPE_TEXT = 200,
+    ADD_DEAL_CELL_TYPE_NUMBERS = 300
+} ADD_DEAL_CELL_TYPE;
+
 #endif

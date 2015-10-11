@@ -29,6 +29,7 @@
 		DF337EB01AD2F659001CA285 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DF337EAF1AD2F659001CA285 /* libsqlite3.0.dylib */; };
 		DF358D451AD7479000972F9B /* ETAccountAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF358D431AD7479000972F9B /* ETAccountAddViewController.m */; };
 		DF358D461AD7479000972F9B /* ETAccountAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF358D441AD7479000972F9B /* ETAccountAddViewController.xib */; };
+		DF783EF11BAE8B5D00ADCB66 /* ETAccountAddTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DF783EF01BAE8B5D00ADCB66 /* ETAccountAddTableViewCell.m */; };
 		DF9D2E531AD58883003DDC1D /* ETAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9D2E521AD58883003DDC1D /* ETAccountViewController.m */; };
 		DF9D2E571AD58A41003DDC1D /* ETAccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9D2E561AD58A41003DDC1D /* ETAccountTableViewCell.m */; };
 /* End PBXBuildFile section */
@@ -85,6 +86,8 @@
 		DF358D421AD7479000972F9B /* ETAccountAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountAddViewController.h; path = Account/ETAccountAddViewController.h; sourceTree = "<group>"; };
 		DF358D431AD7479000972F9B /* ETAccountAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountAddViewController.m; path = Account/ETAccountAddViewController.m; sourceTree = "<group>"; };
 		DF358D441AD7479000972F9B /* ETAccountAddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ETAccountAddViewController.xib; path = Account/ETAccountAddViewController.xib; sourceTree = "<group>"; };
+		DF783EEF1BAE8B5D00ADCB66 /* ETAccountAddTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountAddTableViewCell.h; path = Account/ETAccountAddTableViewCell.h; sourceTree = "<group>"; };
+		DF783EF01BAE8B5D00ADCB66 /* ETAccountAddTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountAddTableViewCell.m; path = Account/ETAccountAddTableViewCell.m; sourceTree = "<group>"; };
 		DF9D2E511AD58883003DDC1D /* ETAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountViewController.h; path = Account/ETAccountViewController.h; sourceTree = "<group>"; };
 		DF9D2E521AD58883003DDC1D /* ETAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountViewController.m; path = Account/ETAccountViewController.m; sourceTree = "<group>"; };
 		DF9D2E551AD58A41003DDC1D /* ETAccountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountTableViewCell.h; path = Account/ETAccountTableViewCell.h; sourceTree = "<group>"; };
@@ -268,6 +271,8 @@
 				DF9D2E561AD58A41003DDC1D /* ETAccountTableViewCell.m */,
 				DF0CFB381BAE736D00A98D88 /* ETAccountAddTableViewController.h */,
 				DF0CFB391BAE736D00A98D88 /* ETAccountAddTableViewController.m */,
+				DF783EEF1BAE8B5D00ADCB66 /* ETAccountAddTableViewCell.h */,
+				DF783EF01BAE8B5D00ADCB66 /* ETAccountAddTableViewCell.m */,
 				DF0CFB3B1BAE749900A98D88 /* deprecated (addView) */,
 			);
 			name = Account;
@@ -322,6 +327,7 @@
 				TargetAttributes = {
 					DF337E621AD2F5F9001CA285 = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 3S69777QC9;
 					};
 					DF337E7E1AD2F5F9001CA285 = {
 						CreatedOnToolsVersion = 6.2;
@@ -389,6 +395,7 @@
 				DF337EA91AD2F63E001CA285 /* FMDatabase.m in Sources */,
 				DF337EAD1AD2F63E001CA285 /* PODataManager.m in Sources */,
 				DF0CFB2C1BAC41FE00A98D88 /* ETAccountHomeViewController.m in Sources */,
+				DF783EF11BAE8B5D00ADCB66 /* ETAccountAddTableViewCell.m in Sources */,
 				DF9D2E571AD58A41003DDC1D /* ETAccountTableViewCell.m in Sources */,
 				DF337EAB1AD2F63E001CA285 /* MapTileOverlay.m in Sources */,
 				DF358D451AD7479000972F9B /* ETAccountAddViewController.m in Sources */,
@@ -515,9 +522,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ETAccount_iOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -525,9 +535,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ETAccount_iOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

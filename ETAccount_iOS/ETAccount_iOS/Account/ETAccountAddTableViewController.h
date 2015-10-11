@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ETAccountAddTableViewCell.h"
+
 @interface ETAccountAddTableViewController : UITableViewController <UINavigationControllerDelegate>
 
 @end

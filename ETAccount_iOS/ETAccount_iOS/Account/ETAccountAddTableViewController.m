@@ -29,29 +29,90 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)close:(id)sender
+{
+    UIAlertController *alertController = [ETUtility showAlert:@"ETAccount" Message:@"저장하지 않고 닫으시겠습니까?" atViewController:self withBlank:YES];
+    
+    UIAlertAction *okAction = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"닫기", @"Close action")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action)
+                               {
+                                   [self dismissViewControllerAnimated:YES completion:nil];
+                               }];
+    [alertController addAction:okAction];
+    
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"취소", @"Cancel action")
+                                   style:UIAlertActionStyleCancel
+                                   handler:nil];
+    [alertController addAction:cancelAction];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return 7;
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    NSString *CellIdentifier = @"AddCell";
     
-    // Configure the cell...
+    ETAccountAddTableViewCell *cell = (ETAccountAddTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[ETAccountAddTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+
+    switch (indexPath.row) {
+        case 0:
+            [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
+            [cell setTitle:@"날짜"];
+            break;
+        case 1:
+            [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
+            [cell setPlaceholder:@"거래명"];
+            break;
+        case 2:
+            [cell setType:ADD_DEAL_CELL_TYPE_NUMBERS];
+            [cell setPlaceholder:@"금액"];
+            break;
+        case 3:
+            [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
+            [cell setTitle:@"좌변"];
+            break;
+        case 4:
+            [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
+            [cell setTitle:@"우변"];
+            break;
+        case 5:
+            [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
+            [cell setPlaceholder:@"설명"];
+            break;
+        case 6:
+            [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
+            [cell setTitle:@"Tags"];
+            break;
+    }
     
     return cell;
 }
-*/
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(ETAccountAddTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+//    NSDictionary *tempVenueDictionary = [currentVenueArray objectAtIndex:indexPath.row];
+//    NSInteger tempRank = [[currentRankArray objectAtIndex:indexPath.row] integerValue];
+//    
+//    [POVenueSummaryCellController setVenueSummaryCell:cell dictionary:tempVenueDictionary withRank:tempRank BigSize:NO];
+}
+
+- (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
+    [[tableView cellForRowAtIndexPath:indexPath] resignFirstResponder];
+}
 
 /*
 // Override to support conditional editing of the table view.
