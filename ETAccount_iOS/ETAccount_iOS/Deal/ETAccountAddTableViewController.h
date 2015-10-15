@@ -1,5 +1,5 @@
 //
-//  ETAccountAddTableViewController.h
+//  ETAccountAddDealTableViewController.h
 //  ETAccount_iOS
 //
 //  Created by 기용 이 on 2015. 9. 20..
@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 
 #import "ETAccountAddTableViewCell.h"
+#import "ETItemAddTableViewController.h"
 
-@interface ETAccountAddTableViewController : UITableViewController <UINavigationControllerDelegate> {
+@interface ETAccountAddDealTableViewController : UITableViewController <UINavigationControllerDelegate> {
     
 }
 

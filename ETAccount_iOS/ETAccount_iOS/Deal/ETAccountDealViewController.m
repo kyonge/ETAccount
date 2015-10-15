@@ -1,18 +1,18 @@
 //
-//  ETAccountViewController.m
+//  ETAccountDealViewController.m
 //  ETAccount_iOS
 //
 //  Created by 기용 이 on 2015. 4. 9..
 //  Copyright (c) 2015년 Eten. All rights reserved.
 //
 
-#import "ETAccountViewController.h"
+#import "ETAccountDealViewController.h"
 
-@interface ETAccountViewController ()
+@interface ETAccountDealViewController ()
 
 @end
 
-@implementation ETAccountViewController
+@implementation ETAccountDealViewController
 
 @synthesize addViewController;
 
@@ -75,7 +75,7 @@
 
 - (ETAccountTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"AccountTableViewCellIdentifier";
+    static NSString *CellIdentifier = @"DealTableViewCellIdentifier";
     
     ETAccountTableViewCell *cell = (ETAccountTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {

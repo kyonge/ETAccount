@@ -8,7 +8,7 @@
         <!--가계부-->
         <scene sceneID="yUG-lL-AsK">
             <objects>
-                <viewController title="가계부" id="JEX-9P-axG" customClass="ETAccountViewController" sceneMemberID="viewController">
+                <viewController title="가계부" id="JEX-9P-axG" customClass="ETAccountDealViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SYR-Wa-9uf"/>
                         <viewControllerLayoutGuide type="bottom" id="GAO-Cl-Wes"/>
@@ -22,7 +22,7 @@
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AccountTableViewCellIdentifier" id="gHi-Z9-dYT" customClass="ETAccountTableViewCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DealTableViewCellIdentifier" id="gHi-Z9-dYT" customClass="ETAccountTableViewCell">
                                         <rect key="frame" x="0.0" y="86" width="600" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gHi-Z9-dYT" id="7tw-6Q-mFq">
@@ -153,10 +153,10 @@
             </objects>
             <point key="canvasLocation" x="1237" y="-810"/>
         </scene>
-        <!--Title-->
+        <!--거래 추가-->
         <scene sceneID="cpi-nC-bdd">
             <objects>
-                <tableViewController id="oH2-oZ-Gtv" customClass="ETAccountAddTableViewController" sceneMemberID="viewController">
+                <tableViewController id="oH2-oZ-Gtv" customClass="ETAccountAddDealTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="C77-9t-6Ev">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -233,7 +233,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Title" id="7Lk-sx-dX9">
+                    <navigationItem key="navigationItem" title="거래 추가" id="7Lk-sx-dX9">
                         <barButtonItem key="leftBarButtonItem" title="Close" id="qD0-Rz-f01">
                             <connections>
                                 <action selector="close:" destination="oH2-oZ-Gtv" id="W7B-vd-ebz"/>
@@ -247,6 +247,37 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oJU-Pe-VjZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2692" y="-810"/>
+        </scene>
+        <!--계정-->
+        <scene sceneID="Sks-qM-JMe">
+            <objects>
+                <tableViewController title="계정" id="jwp-AD-PLI" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="ZzO-PN-IXP">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AccountTableViewCellIdentifier" id="jmu-5G-GPo">
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jmu-5G-GPo" id="kxW-h5-tIq">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <animations/>
+                                </tableViewCellContentView>
+                                <animations/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="jwp-AD-PLI" id="3qv-ON-3BQ"/>
+                            <outlet property="delegate" destination="jwp-AD-PLI" id="zwe-mi-Rh8"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7fb-4r-AF8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3399" y="-810"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="cEV-qW-8kE">
@@ -265,11 +296,11 @@
             </objects>
             <point key="canvasLocation" x="1966" y="-810"/>
         </scene>
-        <!--Item-->
+        <!--가계부-->
         <scene sceneID="6Gg-nR-YaF">
             <objects>
                 <navigationController id="FnK-li-nkZ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="4lA-h2-MeP"/>
+                    <tabBarItem key="tabBarItem" title="가계부" id="4lA-h2-MeP"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="JGa-dS-DrS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -499,11 +530,11 @@
             </objects>
             <point key="canvasLocation" x="-45" y="873"/>
         </scene>
-        <!--Item-->
+        <!--Home-->
         <scene sceneID="GnP-Qp-mx2">
             <objects>
                 <navigationController id="AyX-DT-Omp" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="5oB-8E-56h"/>
+                    <tabBarItem key="tabBarItem" title="Home" id="5oB-8E-56h"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="pMV-Ig-ivf">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

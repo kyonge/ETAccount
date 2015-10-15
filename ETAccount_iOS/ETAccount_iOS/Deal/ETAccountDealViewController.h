@@ -1,5 +1,5 @@
 //
-//  ETAccountViewController.h
+//  ETAccountDealViewController.h
 //  ETAccount_iOS
 //
 //  Created by 기용 이 on 2015. 4. 9..
@@ -15,7 +15,7 @@
 #import "ETUtility.h"
 #import "ETFormatter.h"
 
-@interface ETAccountViewController : DetailViewController <UITableViewDataSource, UITableViewDelegate, ETAccountAddDelegate> {
+@interface ETAccountDealViewController : DetailViewController <UITableViewDataSource, UITableViewDelegate, ETAccountAddDelegate> {
     NSMutableArray *accountArray;
     
     IBOutlet UIBarButtonItem *addItem;

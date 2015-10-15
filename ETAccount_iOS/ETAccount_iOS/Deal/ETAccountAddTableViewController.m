@@ -1,5 +1,5 @@
 //
-//  ETAccountAddTableViewController.m
+//  ETAccountAddDealTableViewController.m
 //  ETAccount_iOS
 //
 //  Created by 기용 이 on 2015. 9. 20..
@@ -8,11 +8,11 @@
 
 #import "ETAccountAddTableViewController.h"
 
-@interface ETAccountAddTableViewController ()
+@interface ETAccountAddDealTableViewController ()
 
 @end
 
-@implementation ETAccountAddTableViewController
+@implementation ETAccountAddDealTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -131,10 +131,11 @@
 //            [cell setType:ADD_DEAL_CELL_TYPE_NUMBERS];
 //            [cell setPlaceholder:@"금액"];
             break;
-        case 3:
-//            [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
-//            [cell setTitle:@"좌변"];
+        case 3: {
+            ETItemAddTableViewController *itemAddTableViewController = [[ETItemAddTableViewController alloc] init];
+            [[self navigationController] pushViewController:itemAddTableViewController animated:YES];
             break;
+        }
         case 4:
 //            [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
 //            [cell setTitle:@"우변"];
