@@ -55,8 +55,13 @@ typedef enum : NSUInteger {
 } ADD_DEAL_CELL_TYPE;
 
 typedef enum : NSUInteger {
-    NUMBER_PLUS = 100,
-    NUMBER_MINUS = 200
-};
+    NUMBER_SIGN_PLUS = 100,
+    NUMBER_SIGN_MINUS = 200
+} NUMBER_SIGN;
+
+typedef enum : NSUInteger {
+    ACCOUNT_DIRECTION_LEFT = 100,
+    ACCOUNT_DIRECTION_RIGHT = 200
+} ACCOUNT_DIRECTION;
 
 #endif

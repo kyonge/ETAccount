@@ -84,11 +84,21 @@
             break;
         case 3:
             [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
-            [cell setTitle:@"좌변"];
+            
+            if (isAccountLeftFilled) {
+                [cell setTitle:[ETAccountDBManager getItem:@"name" OfId:AccountLeftId FromTable:@"Account"]];
+            }
+            else
+                [cell setTitle:@"좌변"];
             break;
         case 4:
             [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
-            [cell setTitle:@"우변"];
+            
+            if (isAccountRightFilled) {
+                [cell setTitle:[ETAccountDBManager getItem:@"name" OfId:AccountRightId FromTable:@"Account"]];
+            }
+            else
+                [cell setTitle:@"우변"];
             break;
         case 5:
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
@@ -132,14 +142,21 @@
 //            [cell setPlaceholder:@"금액"];
             break;
         case 3: {
-            ETItemAddTableViewController *itemAddTableViewController = [[ETItemAddTableViewController alloc] init];
+            direction = ACCOUNT_DIRECTION_LEFT;
+            
+            ETAccountAddAccountTableViewController *itemAddTableViewController = [[ETAccountAddAccountTableViewController alloc] init];
+            [itemAddTableViewController setAddDelegate:self];
             [[self navigationController] pushViewController:itemAddTableViewController animated:YES];
             break;
         }
-        case 4:
-//            [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
-//            [cell setTitle:@"우변"];
+        case 4: {
+            direction = ACCOUNT_DIRECTION_RIGHT;
+            
+            ETAccountAddAccountTableViewController *itemAddTableViewController = [[ETAccountAddAccountTableViewController alloc] init];
+            [itemAddTableViewController setAddDelegate:self];
+            [[self navigationController] pushViewController:itemAddTableViewController animated:YES];
             break;
+        }
         case 5:
 //            [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
 //            [cell setPlaceholder:@"설명"];
@@ -196,5 +213,22 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+
+#pragma mark ETAccountAddAccountDelegate
+
+- (void)didSelectAccount:(NSInteger)accountId
+{
+    if (direction == ACCOUNT_DIRECTION_LEFT) {
+        isAccountLeftFilled = YES;
+        AccountLeftId = accountId;
+    }
+    else if (direction == ACCOUNT_DIRECTION_RIGHT) {
+        isAccountRightFilled = YES;
+        AccountRightId = accountId;
+    }
+    
+    [addDealTableView reloadData];
+}
 
 @end

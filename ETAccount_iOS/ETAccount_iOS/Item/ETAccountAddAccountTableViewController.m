@@ -1,18 +1,20 @@
 //
-//  ETItemAddTableViewController.m
+//  ETAccountAddAccountTableViewController.m
 //  ETAccount_iOS
 //
 //  Created by 기용 이 on 2015. 10. 16..
 //  Copyright © 2015년 Eten. All rights reserved.
 //
 
-#import "ETItemAddTableViewController.h"
+#import "ETAccountAddAccountTableViewController.h"
 
-@interface ETItemAddTableViewController ()
+@interface ETAccountAddAccountTableViewController ()
 
 @end
 
-@implementation ETItemAddTableViewController
+@implementation ETAccountAddAccountTableViewController
+
+@synthesize addDelegate;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -74,6 +76,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row == [itemArray count])
+        NSLog(@"?");
+//        [[cell textLabel] setText:@"신규 항목 추가"];
+    else {
+        [addDelegate didSelectAccount:[[[itemArray objectAtIndex:indexPath.row] objectForKey:@"id"] integerValue]];
+        [[self navigationController] popViewControllerAnimated:YES];
+    }
+    
     [tableView reloadData];
 //    [challengerDelegate searchChallengerNick:[challengerListArray objectAtIndex:indexPath.row]];
 }

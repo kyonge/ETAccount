@@ -114,12 +114,12 @@
 
 - (IBAction)changePlusMinus:(id)sender
 {
-    if ([sender tag] == NUMBER_PLUS) {
-        [sender setTag:NUMBER_MINUS];
+    if ([sender tag] == NUMBER_SIGN_PLUS) {
+        [sender setTag:NUMBER_SIGN_MINUS];
         [titleTextField setTextColor:[UIColor redColor]];
     }
     else {
-        [sender setTag:NUMBER_PLUS];
+        [sender setTag:NUMBER_SIGN_PLUS];
         [titleTextField setTextColor:[UIColor blackColor]];
     }
 }

@@ -9,10 +9,14 @@
 #import <UIKit/UIKit.h>
 
 #import "ETAccountAddTableViewCell.h"
-#import "ETItemAddTableViewController.h"
+#import "ETAccountAddAccountTableViewController.h"
 
-@interface ETAccountAddDealTableViewController : UITableViewController <UINavigationControllerDelegate> {
+@interface ETAccountAddDealTableViewController : UITableViewController <UINavigationControllerDelegate, ETAccountAddAccountDelegate> {
+    IBOutlet UITableView *addDealTableView;
     
+    ACCOUNT_DIRECTION direction;
+    NSInteger AccountLeftId, AccountRightId;
+    BOOL isAccountLeftFilled, isAccountRightFilled;
 }
 
 @end
