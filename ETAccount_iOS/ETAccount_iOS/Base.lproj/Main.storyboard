@@ -184,6 +184,7 @@
                                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                             <connections>
                                                 <action selector="closeKeyboard:" destination="MQT-l1-dzO" eventType="editingDidEndOnExit" id="cwR-sq-aJW"/>
+                                                <outlet property="delegate" destination="MQT-l1-dzO" id="njT-v5-9rG"/>
                                             </connections>
                                         </textField>
                                         <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Zv-kx-PIA">
@@ -239,7 +240,11 @@
                                 <action selector="close:" destination="oH2-oZ-Gtv" id="W7B-vd-ebz"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="OK" id="Kdm-Mk-MTU"/>
+                        <barButtonItem key="rightBarButtonItem" title="OK" id="Kdm-Mk-MTU">
+                            <connections>
+                                <action selector="selectOk:" destination="oH2-oZ-Gtv" id="ABc-Ur-Xl4"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>

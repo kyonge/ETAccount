@@ -10,6 +10,11 @@
 
 @implementation ETAccountAddTableViewCell
 
+@synthesize cellRow;
+@synthesize titleTextField;
+@synthesize plusMinusButton;
+@synthesize addDelegate;
+
 - (void)awakeFromNib {
     // Initialization code
 }
@@ -123,5 +128,16 @@
         [titleTextField setTextColor:[UIColor blackColor]];
     }
 }
+
+
+//#pragma mark - 델리게이트 메서드
+//
+//#pragma mark UITextFieldDelegate
+//
+//- (void)textFieldDidEndEditing:(UITextField *)textField
+//{
+//    if (cellRow == 0)
+//        [addDelegate insertString:[textField text] Row:0];
+//}
 
 @end

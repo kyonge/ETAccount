@@ -14,6 +14,8 @@
 @interface ETAccountAddDealTableViewController : UITableViewController <UINavigationControllerDelegate, ETAccountAddAccountDelegate> {
     IBOutlet UITableView *addDealTableView;
     
+    NSString *dealName;
+    
     ACCOUNT_DIRECTION direction;
     NSInteger AccountLeftId, AccountRightId;
     BOOL isAccountLeftFilled, isAccountRightFilled;

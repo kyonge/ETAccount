@@ -49,7 +49,23 @@
     [alertController addAction:cancelAction];
 }
 
-#pragma mark - Table view data source
+- (IBAction)selectOk:(id)sender
+{
+    NSIndexPath *nameIndex = [NSIndexPath indexPathForRow:1 inSection:0];
+    dealName = [[[addDealTableView cellForRowAtIndexPath:nameIndex] titleTextField] text];
+    
+    if(!dealName || [dealName length] == 0) {
+        UIAlertController *errorAlertController = [ETUtility showAlert:@"ETAccount" Message:@"거래명을 입력해주세요" atViewController:self withBlank:YES];
+        UIAlertAction *cancelAction = [UIAlertAction
+                                       actionWithTitle:NSLocalizedString(@"확인", @"Cancel action")
+                                       style:UIAlertActionStyleCancel
+                                       handler:nil];
+        [errorAlertController addAction:cancelAction];
+    }
+}
+
+
+#pragma mark Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -65,6 +81,7 @@
     ETAccountAddTableViewCell *cell = (ETAccountAddTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[ETAccountAddTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        [cell setCellRow:indexPath.row];
     }
 
     switch (indexPath.row) {
@@ -230,5 +247,13 @@
     
     [addDealTableView reloadData];
 }
+
+//#pragma mark ETAccountAddDealCellDelegate
+//
+//- (void)insertString:(NSString *)insertedString Row:(NSInteger)row
+//{
+//    if (row == 1)
+//        dealName = insertedString;
+//}
 
 @end

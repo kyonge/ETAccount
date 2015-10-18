@@ -12,18 +12,33 @@
 #import "ETFormatter.h"
 #import "Constants.h"
 
-@interface ETAccountAddTableViewCell : UITableViewCell {
+@protocol ETAccountAddDealCellDelegate;
+
+@interface ETAccountAddTableViewCell : UITableViewCell <UITextFieldDelegate> {
     IBOutlet UILabel *titleLabel;
     IBOutlet UITextField *titleTextField;
     IBOutlet UIButton *plusMinusButton;
     
     UIDatePicker *datePicker;
+    
+    NSInteger cellRow;
 }
 
 - (void)setType:(ADD_DEAL_CELL_TYPE)type;
 - (void)setTitle:(NSString *)titleString;
 - (void)setPlaceholder:(NSString *)placeholderString;
-
 - (void)setDatePicker;
+
+@property (readwrite) NSInteger cellRow;
+@property (readonly) UITextField *titleTextField;
+@property (readonly) UIButton *plusMinusButton;
+@property (assign, readwrite) id<ETAccountAddDealCellDelegate> addDelegate;
+
+@end
+
+
+@protocol ETAccountAddDealCellDelegate <NSObject>
+
+- (void)insertString:(NSString *)insertedString Row:(NSInteger)row;
 
 @end
