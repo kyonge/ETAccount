@@ -230,6 +230,19 @@
 
 #pragma mark - FMDatabase : SQLite
 
++ (BOOL)runQuerry:(NSString *)querryString FromFile:(NSString *)sqliteFileName
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:sqliteFileName];
+    FMDatabase *db = [FMDatabase databaseWithPath:documentPath];
+    [db open];
+    
+    BOOL excuted = [db executeUpdate:querryString];
+    [db close];
+    
+    return excuted;
+}
+
 + (NSMutableArray *)selectDataWithQuerry:(NSString *)querryString FromFile:(NSString *)sqliteFileName WithColumn:(NSArray *)columns
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);

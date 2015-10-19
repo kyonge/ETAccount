@@ -27,6 +27,14 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"ETAccountAddDealSegue"]) {
+        [(ETAccountAddDealTableViewController *)[[(UINavigationController *)[segue destinationViewController] viewControllers] objectAtIndex:0] setAddDealDelegate:self];
+    }
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+
 
 #pragma mark - 초기화
 
@@ -92,13 +100,10 @@
     NSString *finalDateString = [ETFormatter dateColumnFormat:tempDateString];
     
     [[cell accountDateLabel] setText:finalDateString];
-    [[cell accountNameLabel] setText:[tempAccountDictionary objectForKey:@"description"]];
+    [[cell accountNameLabel] setText:[tempAccountDictionary objectForKey:@"name"]];
     [[cell accountIncomeLabel] setText:[tempAccountDictionary objectForKey:@"account_1"]];
     [[cell accountExpenseLabel] setText:[tempAccountDictionary objectForKey:@"account_2"]];
     [[cell accountPriceLabel] setText:[tempAccountDictionary objectForKey:@"money"]];
-//    NSInteger tempRank = [[currentRankArray objectAtIndex:indexPath.row] integerValue];
-//    
-//    [POVenueSummaryCellController setVenueSummaryCell:cell dictionary:tempVenueDictionary withRank:tempRank BigSize:NO];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -114,6 +119,14 @@
     [addItem setEnabled:YES];
     
     [self initAccount];
+}
+
+#pragma mark ETAccountAddDealDelegate
+
+- (void)didAddDeal
+{
+    [self initAccount];
+    [dealListTableView reloadData];
 }
 
 @end

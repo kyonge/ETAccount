@@ -12,8 +12,6 @@
 #import "ETFormatter.h"
 #import "Constants.h"
 
-@protocol ETAccountAddDealCellDelegate;
-
 @interface ETAccountAddTableViewCell : UITableViewCell <UITextFieldDelegate> {
     IBOutlet UILabel *titleLabel;
     IBOutlet UITextField *titleTextField;
@@ -32,13 +30,5 @@
 @property (readwrite) NSInteger cellRow;
 @property (readonly) UITextField *titleTextField;
 @property (readonly) UIButton *plusMinusButton;
-@property (assign, readwrite) id<ETAccountAddDealCellDelegate> addDelegate;
-
-@end
-
-
-@protocol ETAccountAddDealCellDelegate <NSObject>
-
-- (void)insertString:(NSString *)insertedString Row:(NSInteger)row;
 
 @end

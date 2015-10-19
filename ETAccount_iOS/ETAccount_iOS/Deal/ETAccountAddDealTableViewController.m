@@ -6,13 +6,15 @@
 //  Copyright (c) 2015년 Eten. All rights reserved.
 //
 
-#import "ETAccountAddTableViewController.h"
+#import "ETAccountAddDealTableViewController.h"
 
 @interface ETAccountAddDealTableViewController ()
 
 @end
 
 @implementation ETAccountAddDealTableViewController
+
+@synthesize addDealDelegate;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -38,6 +40,7 @@
                                style:UIAlertActionStyleDefault
                                handler:^(UIAlertAction *action)
                                {
+                                   [addDealDelegate didAddDeal];
                                    [self dismissViewControllerAnimated:YES completion:nil];
                                }];
     [alertController addAction:okAction];
@@ -51,8 +54,10 @@
 
 - (IBAction)selectOk:(id)sender
 {
+    // 거래 명
     NSIndexPath *nameIndex = [NSIndexPath indexPathForRow:1 inSection:0];
-    dealName = [[[addDealTableView cellForRowAtIndexPath:nameIndex] titleTextField] text];
+    NSString *dealName = [[[addDealTableView cellForRowAtIndexPath:nameIndex] titleTextField] text];
+    dealName = [NSString stringWithFormat:@"'%@'", dealName];
     
     if(!dealName || [dealName length] == 0) {
         UIAlertController *errorAlertController = [ETUtility showAlert:@"ETAccount" Message:@"거래명을 입력해주세요" atViewController:self withBlank:YES];
@@ -62,6 +67,40 @@
                                        handler:nil];
         [errorAlertController addAction:cancelAction];
     }
+    
+    // 거래 날짜
+    NSIndexPath *dateIndex = [NSIndexPath indexPathForRow:0 inSection:0];
+    NSString *dealDate = [[[addDealTableView cellForRowAtIndexPath:dateIndex] titleTextField] text];
+    dealDate = [NSString stringWithFormat:@"'%@'", dealDate];
+    
+    // 가격
+    NSIndexPath *costIndex = [NSIndexPath indexPathForRow:2 inSection:0];
+    NSString *dealCost = [[[addDealTableView cellForRowAtIndexPath:costIndex] titleTextField] text];
+    if ([[(ETAccountAddTableViewCell *)[addDealTableView cellForRowAtIndexPath:costIndex] plusMinusButton] tag] == NUMBER_SIGN_MINUS)
+        dealCost = [NSString stringWithFormat:@"-%@", dealCost];
+    
+    // 거래 설명
+    NSIndexPath *descriptionIndex = [NSIndexPath indexPathForRow:5 inSection:0];
+    NSString *dealDescription = [[[addDealTableView cellForRowAtIndexPath:descriptionIndex] titleTextField] text];
+    dealDescription = [NSString stringWithFormat:@"'%@'", dealDescription];
+    
+    NSArray *keyArray = [NSArray arrayWithObjects:@"name", @"account_id_1", @"account_id_2", @"tag_target_id", @"description", @"'date'", @"money", nil];
+    NSArray *objectsArray = [NSArray arrayWithObjects:dealName,
+                             [NSNumber numberWithInteger:accountLeftId], [NSNumber numberWithInteger:accountRightId],
+                             [NSNumber numberWithInteger:0],
+                             dealDescription, dealDate, dealCost, nil];
+    
+    if (![ETAccountDBManager insertToTable:@"Deal" dataDictionary:[NSDictionary dictionaryWithObjects:objectsArray forKeys:keyArray]]) {
+        UIAlertController *errorAlertController = [ETUtility showAlert:@"ETAccount" Message:@"저장하지 못했습니다." atViewController:self withBlank:YES];
+        UIAlertAction *cancelAction = [UIAlertAction
+                                       actionWithTitle:NSLocalizedString(@"확인", @"Cancel action")
+                                       style:UIAlertActionStyleCancel
+                                       handler:nil];
+        [errorAlertController addAction:cancelAction];
+    }
+    
+    [addDealDelegate didAddDeal];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -103,7 +142,7 @@
             [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
             
             if (isAccountLeftFilled) {
-                [cell setTitle:[ETAccountDBManager getItem:@"name" OfId:AccountLeftId FromTable:@"Account"]];
+                [cell setTitle:[ETAccountDBManager getItem:@"name" OfId:accountLeftId FromTable:@"Account"]];
             }
             else
                 [cell setTitle:@"좌변"];
@@ -112,7 +151,7 @@
             [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
             
             if (isAccountRightFilled) {
-                [cell setTitle:[ETAccountDBManager getItem:@"name" OfId:AccountRightId FromTable:@"Account"]];
+                [cell setTitle:[ETAccountDBManager getItem:@"name" OfId:accountRightId FromTable:@"Account"]];
             }
             else
                 [cell setTitle:@"우변"];
@@ -238,22 +277,14 @@
 {
     if (direction == ACCOUNT_DIRECTION_LEFT) {
         isAccountLeftFilled = YES;
-        AccountLeftId = accountId;
+        accountLeftId = accountId;
     }
     else if (direction == ACCOUNT_DIRECTION_RIGHT) {
         isAccountRightFilled = YES;
-        AccountRightId = accountId;
+        accountRightId = accountId;
     }
     
     [addDealTableView reloadData];
 }
-
-//#pragma mark ETAccountAddDealCellDelegate
-//
-//- (void)insertString:(NSString *)insertedString Row:(NSInteger)row
-//{
-//    if (row == 1)
-//        dealName = insertedString;
-//}
 
 @end

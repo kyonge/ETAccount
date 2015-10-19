@@ -20,4 +20,23 @@
     return [[[ETUtility selectDataWithQuerry:qerryString FromFile:_DB WithColumn:columnArray] objectAtIndex:0] objectForKey:itemName];
 }
 
++ (BOOL)insertToTable:(NSString *)table dataDictionary:(NSDictionary *)dataDic
+{
+    NSString *querryString = [NSString stringWithFormat:@"INSERT INTO %@ (", table];
+    
+    NSInteger dataDicCount = [[dataDic allKeys] count];
+    
+    for (NSInteger index = 0; index < dataDicCount - 1; index++) {
+        querryString = [NSString stringWithFormat:@"%@%@, ", querryString, [[dataDic allKeys] objectAtIndex:index]];
+    }
+    querryString = [NSString stringWithFormat:@"%@%@) VALUES (", querryString, [[dataDic allKeys] objectAtIndex:dataDicCount - 1]];
+    
+    for (NSInteger index = 0; index < dataDicCount - 1; index++) {
+        querryString = [NSString stringWithFormat:@"%@%@, ", querryString, [dataDic objectForKey:[[dataDic allKeys] objectAtIndex:index]]];
+    }
+    querryString = [NSString stringWithFormat:@"%@%@)", querryString, [dataDic objectForKey:[[dataDic allKeys] objectAtIndex:dataDicCount - 1]]];
+    
+    return [ETUtility runQuerry:querryString FromFile:_DB];
+}
+
 @end

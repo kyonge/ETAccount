@@ -17,7 +17,7 @@
     NSArray *timeArray = [(NSString *)[tempDateArray objectAtIndex:1] componentsSeparatedByString:@":"];
     NSString *finalDateString = [NSString stringWithFormat:@"%@\n%@/%@\n%@:%@",
                                  [dateArray objectAtIndex:0], [dateArray objectAtIndex:1], [dateArray objectAtIndex:2],
-                                 [timeArray objectAtIndex:0], [timeArray objectAtIndex:2]];
+                                 [timeArray objectAtIndex:0], [timeArray objectAtIndex:1]];
     
     return finalDateString;
 }
@@ -25,7 +25,7 @@
 + (NSString *)dateStringForDeal:(NSDate *)date
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"YYYY.MM.dd"];
+    [formatter setDateFormat:@"YYYY-MM-dd HH:mm"];
     
     return [formatter stringFromDate:date];
 }

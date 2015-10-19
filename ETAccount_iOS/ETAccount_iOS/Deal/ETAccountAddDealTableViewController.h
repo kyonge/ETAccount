@@ -11,14 +11,25 @@
 #import "ETAccountAddTableViewCell.h"
 #import "ETAccountAddAccountTableViewController.h"
 
+@protocol ETAccountAddDealDelegate;
+
 @interface ETAccountAddDealTableViewController : UITableViewController <UINavigationControllerDelegate, ETAccountAddAccountDelegate> {
     IBOutlet UITableView *addDealTableView;
     
-    NSString *dealName;
+//    NSString *dealName;
     
     ACCOUNT_DIRECTION direction;
-    NSInteger AccountLeftId, AccountRightId;
+    NSInteger accountLeftId, accountRightId;
     BOOL isAccountLeftFilled, isAccountRightFilled;
 }
+
+@property (assign, readwrite) id<ETAccountAddDealDelegate> addDealDelegate;
+
+@end
+
+
+@protocol ETAccountAddDealDelegate <NSObject>
+
+- (void)didAddDeal;
 
 @end

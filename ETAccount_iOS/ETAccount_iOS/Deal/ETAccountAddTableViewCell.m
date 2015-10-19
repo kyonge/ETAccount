@@ -13,7 +13,7 @@
 @synthesize cellRow;
 @synthesize titleTextField;
 @synthesize plusMinusButton;
-@synthesize addDelegate;
+//@synthesize addDelegate;
 
 - (void)awakeFromNib {
     // Initialization code
