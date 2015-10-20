@@ -36,10 +36,10 @@
 {
     //현재는 전체 로드 : 날짜순 조건 추가, 동적 로딩 추가
     
-    NSString *qerryString = @"SELECT Account.id, Account.name, Account.'order' FROM Account ORDER BY Account.'order'";
+    NSString *querryString = @"SELECT Account.id, Account.name, Account.'order' FROM Account ORDER BY Account.'order'";
     NSArray *columnArray = [NSArray arrayWithObjects:@"id", @"name", @"order", nil];
     
-    itemArray = [ETUtility selectDataWithQuerry:qerryString FromFile:_DB WithColumn:columnArray];
+    itemArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray];
     
 //    NSLog(@"%@", itemArray);
 }

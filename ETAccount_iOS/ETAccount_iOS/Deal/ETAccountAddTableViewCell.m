@@ -83,10 +83,10 @@
 
 #pragma mark - Date Picker
 
-- (void)setDatePicker
+- (void)setDatePicker:(UIDatePickerMode)datePickerMode
 {
     datePicker = [[UIDatePicker alloc] init];
-    [datePicker setDatePickerMode:UIDatePickerModeDate];
+    [datePicker setDatePickerMode:datePickerMode];
     
     UIToolbar* datePickerToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, DEVICE_SIZE.width, 50)];
     [datePickerToolbar setBarStyle:UIBarStyleBlackOpaque];

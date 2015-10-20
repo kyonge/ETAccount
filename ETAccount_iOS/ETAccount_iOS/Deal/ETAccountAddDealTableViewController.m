@@ -60,12 +60,8 @@
     dealName = [NSString stringWithFormat:@"'%@'", dealName];
     
     if(!dealName || [dealName length] == 0) {
-        UIAlertController *errorAlertController = [ETUtility showAlert:@"ETAccount" Message:@"거래명을 입력해주세요" atViewController:self withBlank:YES];
-        UIAlertAction *cancelAction = [UIAlertAction
-                                       actionWithTitle:NSLocalizedString(@"확인", @"Cancel action")
-                                       style:UIAlertActionStyleCancel
-                                       handler:nil];
-        [errorAlertController addAction:cancelAction];
+        [ETUtility showAlert:@"ETAccount" Message:@"거래명을 입력해주세요" atViewController:self withBlank:YES];
+        return;
     }
     
     // 거래 날짜
@@ -78,6 +74,22 @@
     NSString *dealCost = [[[addDealTableView cellForRowAtIndexPath:costIndex] titleTextField] text];
     if ([[(ETAccountAddTableViewCell *)[addDealTableView cellForRowAtIndexPath:costIndex] plusMinusButton] tag] == NUMBER_SIGN_MINUS)
         dealCost = [NSString stringWithFormat:@"-%@", dealCost];
+    if ([dealCost integerValue] == 0) {
+        [ETUtility showAlert:@"ETAccount" Message:@"가격정보가 없습니다" atViewController:self withBlank:NO];
+        return;
+    }
+    
+    // 좌변
+    if (!isAccountLeftFilled) {
+        [ETUtility showAlert:@"ETAccount" Message:@"좌변이 비어있습니다" atViewController:self withBlank:NO];
+        return;
+    }
+    
+    // 우변
+    if (!isAccountRightFilled) {
+        [ETUtility showAlert:@"ETAccount" Message:@"우변이 비어있습니다" atViewController:self withBlank:NO];
+        return;
+    }
     
     // 거래 설명
     NSIndexPath *descriptionIndex = [NSIndexPath indexPathForRow:5 inSection:0];
@@ -104,6 +116,8 @@
 }
 
 
+#pragma mark - 델리게이트 메서드
+
 #pragma mark Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -128,7 +142,7 @@
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
             [cell setPlaceholder:@"날짜"];
             
-            [cell setDatePicker];
+            [cell setDatePicker:UIDatePickerModeDate];
             break;
         case 1:
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT];

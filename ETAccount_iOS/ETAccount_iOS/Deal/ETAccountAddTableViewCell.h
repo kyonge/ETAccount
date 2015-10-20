@@ -25,7 +25,10 @@
 - (void)setType:(ADD_DEAL_CELL_TYPE)type;
 - (void)setTitle:(NSString *)titleString;
 - (void)setPlaceholder:(NSString *)placeholderString;
-- (void)setDatePicker;
+#pragma mark - Date Picker
+- (void)setDatePicker:(UIDatePickerMode)datePickerMode;
+#pragma maek - Plus&Minus
+- (IBAction)changePlusMinus:(id)sender;
 
 @property (readwrite) NSInteger cellRow;
 @property (readonly) UITextField *titleTextField;

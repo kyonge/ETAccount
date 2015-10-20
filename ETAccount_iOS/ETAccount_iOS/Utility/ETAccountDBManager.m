@@ -14,10 +14,10 @@
 {
     //현재는 전체 로드 : 날짜순 조건 추가, 동적 로딩 추가
     
-    NSString *qerryString = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE id = %d",itemName, table, itemIdx];
+    NSString *querryString = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE id = %ld",itemName, table, (long)itemIdx];
     NSArray *columnArray = [NSArray arrayWithObjects:itemName, nil];
     
-    return [[[ETUtility selectDataWithQuerry:qerryString FromFile:_DB WithColumn:columnArray] objectAtIndex:0] objectForKey:itemName];
+    return [[[ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray] objectAtIndex:0] objectForKey:itemName];
 }
 
 + (BOOL)insertToTable:(NSString *)table dataDictionary:(NSDictionary *)dataDic
