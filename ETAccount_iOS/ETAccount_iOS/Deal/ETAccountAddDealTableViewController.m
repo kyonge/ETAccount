@@ -55,7 +55,7 @@
 - (IBAction)selectOk:(id)sender
 {
     // 거래 명
-    NSIndexPath *nameIndex = [NSIndexPath indexPathForRow:1 inSection:0];
+    NSIndexPath *nameIndex = [NSIndexPath indexPathForRow:0 inSection:1];
     NSString *dealName = [[[addDealTableView cellForRowAtIndexPath:nameIndex] titleTextField] text];
     dealName = [NSString stringWithFormat:@"'%@'", dealName];
     
@@ -70,7 +70,7 @@
     dealDate = [NSString stringWithFormat:@"'%@'", dealDate];
     
     // 가격
-    NSIndexPath *costIndex = [NSIndexPath indexPathForRow:2 inSection:0];
+    NSIndexPath *costIndex = [NSIndexPath indexPathForRow:0 inSection:2];
     NSString *dealCost = [[[addDealTableView cellForRowAtIndexPath:costIndex] titleTextField] text];
     if ([[(ETAccountAddTableViewCell *)[addDealTableView cellForRowAtIndexPath:costIndex] plusMinusButton] tag] == NUMBER_SIGN_MINUS)
         dealCost = [NSString stringWithFormat:@"-%@", dealCost];
@@ -92,14 +92,14 @@
     }
     
     // 거래 설명
-    NSIndexPath *descriptionIndex = [NSIndexPath indexPathForRow:5 inSection:0];
+    NSIndexPath *descriptionIndex = [NSIndexPath indexPathForRow:0 inSection:4];
     NSString *dealDescription = [[[addDealTableView cellForRowAtIndexPath:descriptionIndex] titleTextField] text];
     dealDescription = [NSString stringWithFormat:@"'%@'", dealDescription];
     
     NSArray *keyArray = [NSArray arrayWithObjects:@"name", @"account_id_1", @"account_id_2", @"tag_target_id", @"description", @"'date'", @"money", nil];
     NSArray *objectsArray = [NSArray arrayWithObjects:dealName,
                              [NSNumber numberWithInteger:accountLeftId], [NSNumber numberWithInteger:accountRightId],
-                             [NSNumber numberWithInteger:0],
+                             [NSNumber numberWithInteger:0], // Tag_Target_Id (미구현)
                              dealDescription, dealDate, dealCost, nil];
     
     NSDictionary *dataDic = [NSDictionary dictionaryWithObjects:objectsArray forKeys:keyArray];
@@ -127,11 +127,34 @@
 #pragma mark Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 6;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    switch (section) {
+        case 0:
+            return @"일시";
+        case 1:
+            return @"거래명";
+        case 2:
+            return @"금액";
+        case 3:
+            return @"항목";
+        case 4:
+            return @"설명";
+        case 5:
+            return @"태그";
+    }
+    
+    return @"";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 7;
+    if (section == 3)
+        return 2;
+    
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -143,7 +166,7 @@
         [cell setCellRow:indexPath.row];
     }
 
-    switch (indexPath.row) {
+    switch (indexPath.section) {
         case 0:
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
             [cell setPlaceholder:@"날짜"];
@@ -161,26 +184,25 @@
         case 3:
             [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
             
-            if (isAccountLeftFilled) {
-                [cell setTitle:[ETAccountDBManager getItem:@"name" OfId:accountLeftId FromTable:@"Account"]];
+            if (indexPath.row == 0) {
+                if (isAccountLeftFilled)
+                    [cell setTitle:[ETAccountDBManager getItem:@"name" OfId:accountLeftId FromTable:@"Account"]];
+                else
+                    [cell setTitle:@"좌변"];
             }
-            else
-                [cell setTitle:@"좌변"];
+            else if (indexPath.row == 1) {
+                if (isAccountRightFilled)
+                    [cell setTitle:[ETAccountDBManager getItem:@"name" OfId:accountRightId FromTable:@"Account"]];
+                else
+                    [cell setTitle:@"우변"];
+            }
             break;
-        case 4:
-            [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
             
-            if (isAccountRightFilled) {
-                [cell setTitle:[ETAccountDBManager getItem:@"name" OfId:accountRightId FromTable:@"Account"]];
-            }
-            else
-                [cell setTitle:@"우변"];
-            break;
-        case 5:
+        case 4:
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
             [cell setPlaceholder:@"설명"];
             break;
-        case 6:
+        case 5:
             [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
             [cell setTitle:@"Tags"];
             break;
@@ -204,7 +226,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    switch (indexPath.row) {
+    switch (indexPath.section) {
         case 0:
 //            [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
 //            [cell setTitle:@"날짜"];
@@ -218,26 +240,21 @@
 //            [cell setPlaceholder:@"금액"];
             break;
         case 3: {
-            direction = ACCOUNT_DIRECTION_LEFT;
+            if (indexPath.row == 0)
+                direction = ACCOUNT_DIRECTION_LEFT;
+            else if(indexPath.row == 1)
+                direction = ACCOUNT_DIRECTION_RIGHT;
             
             ETAccountAddAccountTableViewController *itemAddTableViewController = [[ETAccountAddAccountTableViewController alloc] init];
             [itemAddTableViewController setAddDelegate:self];
             [[self navigationController] pushViewController:itemAddTableViewController animated:YES];
             break;
         }
-        case 4: {
-            direction = ACCOUNT_DIRECTION_RIGHT;
-            
-            ETAccountAddAccountTableViewController *itemAddTableViewController = [[ETAccountAddAccountTableViewController alloc] init];
-            [itemAddTableViewController setAddDelegate:self];
-            [[self navigationController] pushViewController:itemAddTableViewController animated:YES];
-            break;
-        }
-        case 5:
+        case 4:
 //            [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
 //            [cell setPlaceholder:@"설명"];
             break;
-        case 6:
+        case 5:
 //            [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
 //            [cell setTitle:@"Tags"];
             break;

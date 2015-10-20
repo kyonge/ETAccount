@@ -71,7 +71,7 @@
         [cell setCellRow:indexPath.row];
     }
     
-    switch (indexPath.row) {
+    switch (indexPath.section) {
         case 0:
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
             [cell setPlaceholder:@"날짜"];
@@ -102,19 +102,17 @@
         case 3:
             [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
             
-            [cell setTitle:[ETAccountDBManager getItem:@"name" OfId:accountLeftId FromTable:@"Account"]];
+            if (indexPath.row == 0)
+                [cell setTitle:[ETAccountDBManager getItem:@"name" OfId:accountLeftId FromTable:@"Account"]];
+            else if (indexPath.row == 1)
+                [cell setTitle:[ETAccountDBManager getItem:@"name" OfId:accountRightId FromTable:@"Account"]];
             break;
         case 4:
-            [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
-            
-            [cell setTitle:[ETAccountDBManager getItem:@"name" OfId:accountRightId FromTable:@"Account"]];
-            break;
-        case 5:
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
             [cell setPlaceholder:@"설명"];
             [[cell titleTextField] setText:dealDescription];
             break;
-        case 6:
+        case 5:
             [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
             [cell setTitle:@"Tags"];
             break;
