@@ -12,5 +12,6 @@
 
 + (NSString *)dateColumnFormat:(NSString *)tempDateString;
 + (NSString *)dateStringForDeal:(NSDate *)date;
++ (NSString *)dateStringFromDateColumnFormat:(NSString *)tempDateColumn;
 
 @end

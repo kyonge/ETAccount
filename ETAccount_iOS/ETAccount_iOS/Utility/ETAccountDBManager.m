@@ -39,4 +39,22 @@
     return [ETUtility runQuerry:querryString FromFile:_DB];
 }
 
++ (BOOL)updateToTable:(NSString *)table dataDictionary:(NSDictionary *)dataDic ToId:(NSInteger)dealId
+{
+    NSString *querryString = [NSString stringWithFormat:@"UPDATE %@ SET ", table];
+    
+    NSInteger dataDicCount = [[dataDic allKeys] count];
+    
+    for (NSInteger index = 0; index < dataDicCount - 1; index++) {
+        querryString = [NSString stringWithFormat:@"%@%@ = %@, ", querryString,
+                        [[dataDic allKeys] objectAtIndex:index], [dataDic objectForKey:[[dataDic allKeys] objectAtIndex:index]]];
+    }
+    querryString = [NSString stringWithFormat:@"%@%@ = %@ ", querryString,
+                    [[dataDic allKeys] objectAtIndex:dataDicCount - 1], [dataDic objectForKey:[[dataDic allKeys] objectAtIndex:dataDicCount - 1]]];
+    
+    querryString = [NSString stringWithFormat:@"%@WHERE id = %ld", querryString, (long)dealId];
+    
+    return [ETUtility runQuerry:querryString FromFile:_DB];
+}
+
 @end

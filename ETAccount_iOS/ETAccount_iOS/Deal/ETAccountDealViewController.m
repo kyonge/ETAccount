@@ -35,7 +35,7 @@
         NSDictionary *selectedDeal = [dealArray objectAtIndex:selectedRow];
         
         NSString *tempDateString = [selectedDeal objectForKey:@"date"];
-        NSString *finalDateString = [ETFormatter dateColumnFormat:tempDateString];
+//        NSString *finalDateString = [ETFormatter dateColumnFormat:tempDateString];
         
         NSString *querryString_1 = [NSString stringWithFormat:@"SELECT Account.id FROM Account WHERE Account.name = '%@'", [selectedDeal objectForKey:@"account_1"]];
         NSArray *columnArray = [NSArray arrayWithObject:@"id"];
@@ -44,7 +44,7 @@
         NSArray *account_2_id = [ETUtility selectDataWithQuerry:querryString_2 FromFile:_DB WithColumn:columnArray];
         
         [(ETAccountDealDetailViewController *)[segue destinationViewController] setAddDealDelegate:self];
-        [(ETAccountDealDetailViewController *)[segue destinationViewController] initDealDetailWithDate:finalDateString
+        [(ETAccountDealDetailViewController *)[segue destinationViewController] initDealDetailWithDate:tempDateString
                                                                                                   Name:[selectedDeal objectForKey:@"name"]
                                                                                                   Money:[selectedDeal objectForKey:@"money"]
                                                                                                   Left:[[[account_1_id objectAtIndex:0] objectForKey:@"id"] integerValue]

@@ -102,7 +102,13 @@
                              [NSNumber numberWithInteger:0],
                              dealDescription, dealDate, dealCost, nil];
     
-    if (![ETAccountDBManager insertToTable:@"Deal" dataDictionary:[NSDictionary dictionaryWithObjects:objectsArray forKeys:keyArray]]) {
+    NSDictionary *dataDic = [NSDictionary dictionaryWithObjects:objectsArray forKeys:keyArray];
+    [self writeToDB:dataDic];
+}
+
+- (void)writeToDB:(NSDictionary *)dataDic
+{
+    if (![ETAccountDBManager insertToTable:@"Deal" dataDictionary:dataDic]) {
         UIAlertController *errorAlertController = [ETUtility showAlert:@"ETAccount" Message:@"저장하지 못했습니다." atViewController:self withBlank:YES];
         UIAlertAction *cancelAction = [UIAlertAction
                                        actionWithTitle:NSLocalizedString(@"확인", @"Cancel action")

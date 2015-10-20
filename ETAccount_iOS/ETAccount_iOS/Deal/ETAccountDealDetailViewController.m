@@ -14,6 +14,8 @@
 
 @implementation ETAccountDealDetailViewController
 
+@synthesize addDealDelegate;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -35,7 +37,25 @@
     dealTagTarget = tagTarget;
     dealId = _id;
     
+    isAccountLeftFilled = YES;
+    isAccountRightFilled = YES;
+    
     [addDealTableView reloadData];
+}
+
+- (void)writeToDB:(NSDictionary *)dataDic
+{
+    if (![ETAccountDBManager updateToTable:@"Deal" dataDictionary:dataDic ToId:dealId]) {
+        UIAlertController *errorAlertController = [ETUtility showAlert:@"ETAccount" Message:@"저장하지 못했습니다." atViewController:self withBlank:YES];
+        UIAlertAction *cancelAction = [UIAlertAction
+                                       actionWithTitle:NSLocalizedString(@"확인", @"Cancel action")
+                                       style:UIAlertActionStyleCancel
+                                       handler:nil];
+        [errorAlertController addAction:cancelAction];
+    }
+    
+    [addDealDelegate didAddDeal];
+    [[self navigationController] popViewControllerAnimated:YES];
 }
 
 #pragma mark - 델리게이트 메서드

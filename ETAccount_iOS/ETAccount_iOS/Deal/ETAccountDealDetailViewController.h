@@ -17,4 +17,6 @@
 
 - (void)initDealDetailWithDate:(NSString *)date Name:(NSString *)name Money:(NSString *)money Left:(NSInteger)left Right:(NSInteger)right Description:(NSString *)description tagTarget:(NSInteger)tagTarget Id:(NSInteger)_id;
 
+@property (assign, readwrite) id<ETAccountAddDealDelegate> addDealDelegate;
+
 @end

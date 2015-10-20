@@ -30,4 +30,17 @@
     return [formatter stringFromDate:date];
 }
 
++ (NSString *)dateStringFromDateColumnFormat:(NSString *)tempDateColumn
+{
+    NSArray *tempDateArray = [tempDateColumn componentsSeparatedByString:@" "];
+    NSString *yearString = (NSString *)[tempDateArray objectAtIndex:0];
+    NSArray *dateArray = [(NSString *)[tempDateArray objectAtIndex:1] componentsSeparatedByString:@"/"];
+    NSArray *timeArray = [(NSString *)[tempDateArray objectAtIndex:2] componentsSeparatedByString:@":"];
+    NSString *finalDateString = [NSString stringWithFormat:@"%@-%@-%@ %@:%@",
+                                 yearString, [dateArray objectAtIndex:1], [dateArray objectAtIndex:2],
+                                 [timeArray objectAtIndex:0], [timeArray objectAtIndex:1]];
+    
+    return finalDateString;
+}
+
 @end
