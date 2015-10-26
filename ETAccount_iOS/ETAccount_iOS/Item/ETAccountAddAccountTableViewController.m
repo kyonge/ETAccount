@@ -44,7 +44,10 @@
 //    NSLog(@"%@", itemArray);
 }
 
-#pragma mark - Table view data source
+
+#pragma maek - 델리게이트 메서드
+
+#pragma mark Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;

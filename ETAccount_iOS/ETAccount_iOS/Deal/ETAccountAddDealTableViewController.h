@@ -10,6 +10,7 @@
 
 #import "ETAccountAddTableViewCell.h"
 #import "ETAccountAddAccountTableViewController.h"
+#import "ETAccountAddTagViewController.h"
 
 @protocol ETAccountAddDealDelegate;
 

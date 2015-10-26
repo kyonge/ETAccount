@@ -245,19 +245,21 @@
             else if(indexPath.row == 1)
                 direction = ACCOUNT_DIRECTION_RIGHT;
             
-            ETAccountAddAccountTableViewController *itemAddTableViewController = [[ETAccountAddAccountTableViewController alloc] init];
-            [itemAddTableViewController setAddDelegate:self];
-            [[self navigationController] pushViewController:itemAddTableViewController animated:YES];
+            ETAccountAddAccountTableViewController *addItemTableViewController = [[ETAccountAddAccountTableViewController alloc] init];
+            [addItemTableViewController setAddDelegate:self];
+            [[self navigationController] pushViewController:addItemTableViewController animated:YES];
             break;
         }
         case 4:
 //            [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
 //            [cell setPlaceholder:@"설명"];
             break;
-        case 5:
-//            [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
-//            [cell setTitle:@"Tags"];
+        case 5: {
+            ETAccountAddTagViewController *addTagViewController = [[ETAccountAddTagViewController alloc] init];
+//            [addTagViewController setAddDelegate:self];
+            [[self navigationController] pushViewController:addTagViewController animated:YES];
             break;
+        }
     }
     
     [tableView reloadData];

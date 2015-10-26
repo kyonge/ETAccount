@@ -35,7 +35,7 @@
         querryString = [NSString stringWithFormat:@"%@%@, ", querryString, [dataDic objectForKey:[[dataDic allKeys] objectAtIndex:index]]];
     }
     querryString = [NSString stringWithFormat:@"%@%@)", querryString, [dataDic objectForKey:[[dataDic allKeys] objectAtIndex:dataDicCount - 1]]];
-    
+    NSLog(@"%@",querryString);
     return [ETUtility runQuerry:querryString FromFile:_DB];
 }
 
