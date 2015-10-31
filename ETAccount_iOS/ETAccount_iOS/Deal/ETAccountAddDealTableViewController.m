@@ -78,18 +78,29 @@
         [ETUtility showAlert:@"ETAccount" Message:@"거래명을 입력해주세요" atViewController:self withBlank:NO];
         return;
     }
-    NSString *tempDealNameString = [NSString stringWithFormat:@"'%@'", dealNameString];
+    NSString *tempDealNameString;
+    NSIndexPath *nameIndex = [NSIndexPath indexPathForRow:0 inSection:1];
+    tempDealNameString = [[[addDealTableView cellForRowAtIndexPath:nameIndex] titleTextField] text];
+    if (!tempDealNameString || [tempDealNameString length] == 0) {
+        tempDealNameString = dealNameString;
+    }
+    tempDealNameString = [NSString stringWithFormat:@"'%@'", tempDealNameString];
     
     // 거래 날짜
     NSString *tempDealDateString = [NSString stringWithFormat:@"'%@'", dealDateString];
     
     // 가격
-    NSMutableString *dealCost = [NSMutableString stringWithFormat:@"%ld", (long)dealPrice];
+    NSIndexPath *costIndex = [NSIndexPath indexPathForRow:0 inSection:2];
+    NSMutableString *dealCost = [NSMutableString stringWithFormat:@"%@", [[[addDealTableView cellForRowAtIndexPath:costIndex] titleTextField] text]];
+    if (!dealCost || [dealCost length] == 0) {
+        dealCost = [NSMutableString stringWithFormat:@"%ld", (long)dealPrice];
+    }
+//    NSMutableString *dealCost = [NSMutableString stringWithFormat:@"%ld", (long)dealPrice];
     if ([dealCost integerValue] == 0) {
         [ETUtility showAlert:@"ETAccount" Message:@"가격정보가 없습니다" atViewController:self withBlank:NO];
         return;
     }
-    NSIndexPath *costIndex = [NSIndexPath indexPathForRow:0 inSection:2];
+    
     if ([[(ETAccountAddTableViewCell *)[addDealTableView cellForRowAtIndexPath:costIndex] plusMinusButton] tag] == NUMBER_SIGN_MINUS) {
         if ([dealCost characterAtIndex:0] != '-')
             dealCost = [NSMutableString stringWithFormat:@"-%@", dealCost];
@@ -255,14 +266,6 @@
     }
     
     return cell;
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(ETAccountAddTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-//    NSDictionary *tempVenueDictionary = [currentVenueArray objectAtIndex:indexPath.row];
-//    NSInteger tempRank = [[currentRankArray objectAtIndex:indexPath.row] integerValue];
-//    
-//    [POVenueSummaryCellController setVenueSummaryCell:cell dictionary:tempVenueDictionary withRank:tempRank BigSize:NO];
 }
 
 - (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(nonnull NSIndexPath *)indexPath
