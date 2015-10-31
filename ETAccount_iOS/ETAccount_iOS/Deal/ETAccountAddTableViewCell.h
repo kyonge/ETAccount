@@ -12,14 +12,14 @@
 #import "ETFormatter.h"
 #import "Constants.h"
 
+@protocol ETAccountAddDealCellDelegate;
+
 @interface ETAccountAddTableViewCell : UITableViewCell <UITextFieldDelegate> {
     IBOutlet UILabel *titleLabel;
     IBOutlet UITextField *titleTextField;
     IBOutlet UIButton *plusMinusButton;
     
     UIDatePicker *datePicker;
-    
-    NSInteger cellRow;
 }
 
 - (void)setType:(ADD_DEAL_CELL_TYPE)type;
@@ -30,8 +30,17 @@
 #pragma maek - Plus&Minus
 - (IBAction)changePlusMinus:(id)sender;
 
-@property (readwrite) NSInteger cellRow;
+@property (readwrite) NSInteger cellSection;
 @property (readonly) UITextField *titleTextField;
 @property (readonly) UIButton *plusMinusButton;
+
+@property (assign, readwrite) id<ETAccountAddDealCellDelegate> addDealCellDelegate;
+
+@end
+
+
+@protocol ETAccountAddDealCellDelegate <NSObject>
+
+- (void)didEndEditText:(NSString *)insertedText CellIndex:(NSInteger)index;
 
 @end

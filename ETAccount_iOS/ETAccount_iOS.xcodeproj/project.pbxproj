@@ -33,7 +33,7 @@
 		DF614C4B1BD0048F0015D662 /* ETAccountAddDealTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF614C451BD0048F0015D662 /* ETAccountAddDealTableViewController.m */; };
 		DF614C4C1BD0048F0015D662 /* ETAccountDealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF614C471BD0048F0015D662 /* ETAccountDealViewController.m */; };
 		DF614C4D1BD0048F0015D662 /* ETAccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DF614C491BD0048F0015D662 /* ETAccountTableViewCell.m */; };
-		DFAA41D81BD52EB300DEC501 /* ETAccount.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = DFAA41D71BD52EB300DEC501 /* ETAccount.sqlite */; };
+		DF8D727A1BE51FCC00203722 /* ETAccount.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = DF8D72791BE51FCC00203722 /* ETAccount.sqlite */; };
 		DFAA41DB1BD5356300DEC501 /* ETAccountDealDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAA41DA1BD5356300DEC501 /* ETAccountDealDetailViewController.m */; };
 		DFCF609D1BDDB3C70083F674 /* ETAccountAddTagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCF609C1BDDB3C70083F674 /* ETAccountAddTagViewController.m */; };
 /* End PBXBuildFile section */
@@ -99,7 +99,7 @@
 		DF614C471BD0048F0015D662 /* ETAccountDealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountDealViewController.m; path = Deal/ETAccountDealViewController.m; sourceTree = "<group>"; };
 		DF614C481BD0048F0015D662 /* ETAccountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountTableViewCell.h; path = Deal/ETAccountTableViewCell.h; sourceTree = "<group>"; };
 		DF614C491BD0048F0015D662 /* ETAccountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountTableViewCell.m; path = Deal/ETAccountTableViewCell.m; sourceTree = "<group>"; };
-		DFAA41D71BD52EB300DEC501 /* ETAccount.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; name = ETAccount.sqlite; path = ../../../../ETAccount.sqlite; sourceTree = "<group>"; };
+		DF8D72791BE51FCC00203722 /* ETAccount.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; name = ETAccount.sqlite; path = ../../../../../../ETAccount.sqlite; sourceTree = "<group>"; };
 		DFAA41D91BD5356300DEC501 /* ETAccountDealDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountDealDetailViewController.h; path = Deal/ETAccountDealDetailViewController.h; sourceTree = "<group>"; };
 		DFAA41DA1BD5356300DEC501 /* ETAccountDealDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountDealDetailViewController.m; path = Deal/ETAccountDealDetailViewController.m; sourceTree = "<group>"; };
 		DFCF609B1BDDB3C70083F674 /* ETAccountAddTagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountAddTagViewController.h; path = Tag/ETAccountAddTagViewController.h; sourceTree = "<group>"; };
@@ -214,7 +214,7 @@
 		DF337E8F1AD2F617001CA285 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				DFAA41D71BD52EB300DEC501 /* ETAccount.sqlite */,
+				DF8D72791BE51FCC00203722 /* ETAccount.sqlite */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -411,7 +411,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DFAA41D81BD52EB300DEC501 /* ETAccount.sqlite in Resources */,
+				DF8D727A1BE51FCC00203722 /* ETAccount.sqlite in Resources */,
 				DF337E751AD2F5F9001CA285 /* Main.storyboard in Resources */,
 				DF337E7A1AD2F5F9001CA285 /* LaunchScreen.xib in Resources */,
 				DF358D461AD7479000972F9B /* ETAccountAddViewController.xib in Resources */,

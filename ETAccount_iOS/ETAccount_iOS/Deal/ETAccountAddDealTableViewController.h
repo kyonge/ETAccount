@@ -14,11 +14,12 @@
 
 @protocol ETAccountAddDealDelegate;
 
-@interface ETAccountAddDealTableViewController : UITableViewController <UINavigationControllerDelegate, ETAccountAddAccountDelegate> {
+@interface ETAccountAddDealTableViewController : UITableViewController <UINavigationControllerDelegate, ETAccountAddAccountDelegate, ETAccountAddDealCellDelegate> {
     IBOutlet UITableView *addDealTableView;
     
     ACCOUNT_DIRECTION direction;
-    NSInteger accountLeftId, accountRightId;
+    NSString *dealDateString, *dealNameString, *dealDescriptionString;
+    NSInteger dealPrice, accountLeftId, accountRightId, dealTagTarget;
     BOOL isAccountLeftFilled, isAccountRightFilled;
 }
 

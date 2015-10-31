@@ -28,12 +28,12 @@
 
 - (void)initDealDetailWithDate:(NSString *)date Name:(NSString *)name Money:(NSString *)money Left:(NSInteger)left Right:(NSInteger)right Description:(NSString *)description tagTarget:(NSInteger)tagTarget Id:(NSInteger)_id
 {
-    dealDate = date;
-    dealName = name;
-    dealMoney = money;
+    dealDateString = date;
+    dealNameString = name;
+    dealPrice = [money integerValue];
     accountLeftId = left;
     accountRightId = right;
-    dealDescription = description;
+    dealDescriptionString = description;
     dealTagTarget = tagTarget;
     dealId = _id;
     
@@ -41,6 +41,11 @@
     isAccountRightFilled = YES;
     
     [addDealTableView reloadData];
+}
+
+- (NSInteger)getTag
+{
+    return dealTagTarget;
 }
 
 - (void)writeToDB:(NSDictionary *)dataDic
@@ -66,10 +71,13 @@
     NSString *CellIdentifier = @"AddCell";
     
     ETAccountAddTableViewCell *cell = (ETAccountAddTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    [cell setAddDealCellDelegate:self];
+    
     if (cell == nil) {
         cell = [[ETAccountAddTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        [cell setCellRow:indexPath.row];
     }
+    
+    [cell setCellSection:indexPath.section];
     
     switch (indexPath.section) {
         case 0:
@@ -77,28 +85,34 @@
             [cell setPlaceholder:@"날짜"];
             
             [cell setDatePicker:UIDatePickerModeDateAndTime];
-            [[cell titleTextField] setText:dealDate];
+            [[cell titleTextField] setText:dealDateString];
+            
             break;
         case 1:
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
             [cell setPlaceholder:@"거래명"];
-            [[cell titleTextField] setText:dealName];
+            [[cell titleTextField] setText:dealNameString];
             
             break;
-        case 2:
+        case 2: {
             [cell setType:ADD_DEAL_CELL_TYPE_NUMBERS];
             [cell setPlaceholder:@"금액"];
             
-            if ([dealMoney characterAtIndex:0] == '-') {
+            // 가격
+            NSString *dealCost = [NSString stringWithFormat:@"%ld", (long)dealPrice];
+            
+            if ([dealCost characterAtIndex:0] == '-') {
                 [[cell plusMinusButton] setTag:NUMBER_SIGN_MINUS];
                 [[cell titleTextField] setTextColor:[UIColor redColor]];
-                
-                NSMutableString *tempDealMoney = [NSMutableString stringWithString:dealMoney];
-                dealMoney = [tempDealMoney substringFromIndex:1];
+
+                NSMutableString *tempDealMoney = [NSMutableString stringWithString:dealCost];
+                dealCost = [tempDealMoney substringFromIndex:1];
             }
+
+            [[cell titleTextField] setText:dealCost];
             
-            [[cell titleTextField] setText:dealMoney];
             break;
+        }
         case 3:
             [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
             
@@ -106,15 +120,31 @@
                 [cell setTitle:[ETAccountDBManager getItem:@"name" OfId:accountLeftId FromTable:@"Account"]];
             else if (indexPath.row == 1)
                 [cell setTitle:[ETAccountDBManager getItem:@"name" OfId:accountRightId FromTable:@"Account"]];
+            
             break;
         case 4:
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
             [cell setPlaceholder:@"설명"];
-            [[cell titleTextField] setText:dealDescription];
+            [[cell titleTextField] setText:dealDescriptionString];
+            
             break;
         case 5:
             [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
-            [cell setTitle:@"Tags"];
+            
+            NSString *querryString = [NSString stringWithFormat:@"SELECT Tag.id, Tag.name from Tag JOIN Tag_match ON Tag.id = Tag_match.tag_id WHERE Tag_match.tag_target_id = %ld", (long)dealTagTarget];
+            NSArray *columnArray = [NSArray arrayWithObjects:@"id", @"name", nil];
+            NSArray *tagsArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray];
+            
+            if ([tagsArray count] > 0) {
+                NSString *tagString = [[tagsArray objectAtIndex:0] objectForKey:@"name"];
+                
+                for (NSInteger index = 1; index < [tagsArray count]; index++)
+                    tagString = [NSString stringWithFormat:@"%@, %@", tagString, [[tagsArray objectAtIndex:index] objectForKey:@"name"]];
+                
+                [cell setTitle:tagString];
+            }
+            else [cell setTitle:@"태그 추가"];
+            
             break;
     }
     

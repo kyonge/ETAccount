@@ -31,6 +31,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+//    if ([[segue identifier] isEqualToString:@"ETAccountAddDealSegue"]) {
+//        [(ETAccountAddDealTableViewController *)[[(UINavigationController *)[segue destinationViewController] viewControllers] objectAtIndex:0] setAddDealDelegate:self];
+//    }
+}
+
 - (IBAction)close:(id)sender
 {
     UIAlertController *alertController = [ETUtility showAlert:@"ETAccount" Message:@"저장하지 않고 닫으시겠습니까?" atViewController:self withBlank:YES];
@@ -52,26 +58,34 @@
     [alertController addAction:cancelAction];
 }
 
+- (NSInteger)getTag
+{
+    NSArray *tagKeyArray = [NSArray arrayWithObject:@"object"];
+    NSArray *tagObjectsArray = [NSArray arrayWithObject:@"'1'"];
+    NSDictionary *tagDataDic = [NSDictionary dictionaryWithObjects:tagObjectsArray forKeys:tagKeyArray];
+    
+    if (![ETAccountDBManager insertToTable:@"Tag_target" dataDictionary:tagDataDic]) {
+        [ETUtility showAlert:@"ETAccount" Message:@"저장하지 못했습니다." atViewController:self withBlank:NO];
+        return -1;
+    }
+    return [ETAccountDBManager getLastIdFromTable:@"Tag_target"];
+}
+
 - (IBAction)selectOk:(id)sender
 {
     // 거래 명
-    NSIndexPath *nameIndex = [NSIndexPath indexPathForRow:0 inSection:1];
-    NSString *dealName = [[[addDealTableView cellForRowAtIndexPath:nameIndex] titleTextField] text];
-    dealName = [NSString stringWithFormat:@"'%@'", dealName];
-    
-    if(!dealName || [dealName length] == 0) {
-        [ETUtility showAlert:@"ETAccount" Message:@"거래명을 입력해주세요" atViewController:self withBlank:YES];
+    if(!dealNameString || [dealNameString length] == 0) {
+        [ETUtility showAlert:@"ETAccount" Message:@"거래명을 입력해주세요" atViewController:self withBlank:NO];
         return;
     }
+    NSString *tempDealNameString = [NSString stringWithFormat:@"'%@'", dealNameString];
     
     // 거래 날짜
-    NSIndexPath *dateIndex = [NSIndexPath indexPathForRow:0 inSection:0];
-    NSString *dealDate = [[[addDealTableView cellForRowAtIndexPath:dateIndex] titleTextField] text];
-    dealDate = [NSString stringWithFormat:@"'%@'", dealDate];
+    NSString *tempDealDateString = [NSString stringWithFormat:@"'%@'", dealDateString];
     
     // 가격
+    NSString *dealCost = [NSString stringWithFormat:@"%ld", (long)dealPrice];
     NSIndexPath *costIndex = [NSIndexPath indexPathForRow:0 inSection:2];
-    NSString *dealCost = [[[addDealTableView cellForRowAtIndexPath:costIndex] titleTextField] text];
     if ([[(ETAccountAddTableViewCell *)[addDealTableView cellForRowAtIndexPath:costIndex] plusMinusButton] tag] == NUMBER_SIGN_MINUS)
         dealCost = [NSString stringWithFormat:@"-%@", dealCost];
     if ([dealCost integerValue] == 0) {
@@ -92,18 +106,41 @@
     }
     
     // 거래 설명
+    NSString *tempDealDescription;
     NSIndexPath *descriptionIndex = [NSIndexPath indexPathForRow:0 inSection:4];
     NSString *dealDescription = [[[addDealTableView cellForRowAtIndexPath:descriptionIndex] titleTextField] text];
-    dealDescription = [NSString stringWithFormat:@"'%@'", dealDescription];
+    if (!dealDescription || [dealDescription length] == 0) {
+        if ([dealDescriptionString length] == 0)
+            tempDealDescription = @"' '";
+        else tempDealDescription = [NSString stringWithFormat:@"'%@'", dealDescriptionString];
+    }
+    else {
+        tempDealDescription = [NSString stringWithFormat:@"'%@'", dealDescription];
+    }
     
-    NSArray *keyArray = [NSArray arrayWithObjects:@"name", @"account_id_1", @"account_id_2", @"tag_target_id", @"description", @"'date'", @"money", nil];
-    NSArray *objectsArray = [NSArray arrayWithObjects:dealName,
-                             [NSNumber numberWithInteger:accountLeftId], [NSNumber numberWithInteger:accountRightId],
-                             [NSNumber numberWithInteger:0], // Tag_Target_Id (미구현)
-                             dealDescription, dealDate, dealCost, nil];
-    
-    NSDictionary *dataDic = [NSDictionary dictionaryWithObjects:objectsArray forKeys:keyArray];
-    [self writeToDB:dataDic];
+    // 태그
+    NSInteger tag_target_1 = [self getTag];
+    if (tag_target_1 == -1)
+        return;
+    else {
+//        if (![ETAccountDBManager insertToTable:@"Tag_target" dataDictionary:tagDataDic]) {
+//            [ETUtility showAlert:@"ETAccount" Message:@"저장하지 못했습니다." atViewController:self withBlank:NO];
+////        return;
+//        }
+//        NSInteger tag_target_2 = [ETAccountDBManager getLastIdFromTable:@"Tag_target"];
+//        
+//        NSLog(@"%ld %ld", (long)tag_target_1, (long)tag_target_2);
+        
+        NSArray *keyArray = [NSArray arrayWithObjects:@"name", @"account_id_1", @"account_id_2", @"tag_target_id", @"description", @"'date'", @"money", nil];
+        NSArray *objectsArray = [NSArray arrayWithObjects:tempDealNameString,
+                                 [NSNumber numberWithInteger:accountLeftId], [NSNumber numberWithInteger:accountRightId],
+                                 [NSNumber numberWithInteger:tag_target_1],
+                                 tempDealDescription, tempDealDateString, dealCost, nil];
+        
+        NSDictionary *dataDic = [NSDictionary dictionaryWithObjects:objectsArray forKeys:keyArray];
+//        NSLog(@"%@", dataDic);
+        [self writeToDB:dataDic];
+    }
 }
 
 - (void)writeToDB:(NSDictionary *)dataDic
@@ -161,11 +198,13 @@
     NSString *CellIdentifier = @"AddCell";
     
     ETAccountAddTableViewCell *cell = (ETAccountAddTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    [cell setAddDealCellDelegate:self];
     if (cell == nil) {
         cell = [[ETAccountAddTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        [cell setCellRow:indexPath.row];
     }
-
+    
+    [cell setCellSection:indexPath.section];
+    
     switch (indexPath.section) {
         case 0:
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
@@ -255,7 +294,9 @@
 //            [cell setPlaceholder:@"설명"];
             break;
         case 5: {
-            ETAccountAddTagViewController *addTagViewController = [[ETAccountAddTagViewController alloc] init];
+//            ETAccountAddTagViewController *addTagViewController = [[ETAccountAddTagViewController alloc] init];
+            ETAccountAddTagViewController *addTagViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"ETAccountAddTagViewController"];
+//            addTagViewController setSelectedTags:<#(NSArray *)#>
 //            [addTagViewController setAddDelegate:self];
             [[self navigationController] pushViewController:addTagViewController animated:YES];
             break;
@@ -324,6 +365,31 @@
     }
     
     [addDealTableView reloadData];
+}
+
+#pragma mark ETAccountAddDealCellDelegate
+
+- (void)didEndEditText:(NSString *)insertedText CellIndex:(NSInteger)index
+{
+    switch (index) {
+        case 0:
+            dealDateString = insertedText;
+            break;
+            
+        case 1:
+            dealNameString = insertedText;
+            break;
+            
+        case 2:
+            dealPrice = [insertedText integerValue];
+            break;
+            
+        case 4:
+            dealDescriptionString = insertedText;
+            
+        default:
+            break;
+    }
 }
 
 @end

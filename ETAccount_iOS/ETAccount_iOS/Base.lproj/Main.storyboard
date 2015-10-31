@@ -163,7 +163,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddCell" id="MQT-l1-dzO" customClass="ETAccountAddTableViewCell">
                                 <rect key="frame" x="0.0" y="114" width="600" height="44"/>
@@ -186,7 +186,7 @@
                                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                             <connections>
                                                 <action selector="closeKeyboard:" destination="MQT-l1-dzO" eventType="editingDidEndOnExit" id="cwR-sq-aJW"/>
-                                                <outlet property="delegate" destination="MQT-l1-dzO" id="njT-v5-9rG"/>
+                                                <outlet property="delegate" destination="MQT-l1-dzO" id="bJT-sc-Uly"/>
                                             </connections>
                                         </textField>
                                         <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Zv-kx-PIA">
@@ -292,8 +292,8 @@
         <!--Tags-->
         <scene sceneID="Rp0-mS-xxz">
             <objects>
-                <tableViewController title="Tags" id="izt-fx-UFx" customClass="ETAccountAddTagViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="ZZ2-9M-mzt">
+                <tableViewController storyboardIdentifier="ETAccountAddTagViewController" title="Tags" id="izt-fx-UFx" customClass="ETAccountAddTagViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="ZZ2-9M-mzt">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
@@ -315,9 +315,6 @@
                             <outlet property="delegate" destination="izt-fx-UFx" id="oJx-8l-qL8"/>
                         </connections>
                     </tableView>
-                    <connections>
-                        <outlet property="tagTableView" destination="ZZ2-9M-mzt" id="ORi-EB-w5A"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XAj-G5-Z8w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -438,7 +435,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddCell" id="DVZ-1R-OYA" customClass="ETAccountAddTableViewCell">
                                 <rect key="frame" x="0.0" y="114" width="600" height="44"/>
@@ -461,7 +458,7 @@
                                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                             <connections>
                                                 <action selector="closeKeyboard:" destination="DVZ-1R-OYA" eventType="editingDidEndOnExit" id="6X5-9v-AYy"/>
-                                                <outlet property="delegate" destination="DVZ-1R-OYA" id="h7Q-sO-bNB"/>
+                                                <outlet property="delegate" destination="DVZ-1R-OYA" id="wrR-Ui-285"/>
                                             </connections>
                                         </textField>
                                         <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FB9-o0-IAs">

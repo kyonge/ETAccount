@@ -12,10 +12,11 @@
 #import "ETAccountDBManager.h"
 
 @interface ETAccountAddTagViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate> {
-    NSMutableArray *tagArray;
+    NSMutableArray *tagArray, *selectedTagArray;
     
-    IBOutlet UITableView *tagTableView;
     UITextField *newTagTextField;
 }
+
+- (void)setSelectedTags:(NSArray *)selectedArray;
 
 @end

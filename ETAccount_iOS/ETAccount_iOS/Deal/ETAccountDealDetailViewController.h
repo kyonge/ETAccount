@@ -9,9 +9,8 @@
 #import "ETAccountAddDealTableViewController.h"
 
 @interface ETAccountDealDetailViewController : ETAccountAddDealTableViewController {
-    NSString *dealDate, *dealName, *dealMoney;
-    NSString *dealDescription;
-    NSInteger dealTagTarget;
+//    NSString *dealDescription;
+//    NSInteger dealTagTarget;
     NSInteger dealId;
 }
 

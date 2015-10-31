@@ -10,10 +10,10 @@
 
 @implementation ETAccountAddTableViewCell
 
-@synthesize cellRow;
+@synthesize cellSection;
 @synthesize titleTextField;
 @synthesize plusMinusButton;
-//@synthesize addDelegate;
+@synthesize addDealCellDelegate;
 
 - (void)awakeFromNib {
     // Initialization code
@@ -77,6 +77,8 @@
 
 - (IBAction)closeKeyboard:(id)sender
 {
+    [addDealCellDelegate didEndEditText:[(UITextField *)sender text] CellIndex:cellSection];
+    
     [sender resignFirstResponder];
 }
 
@@ -101,6 +103,7 @@
     [titleTextField setInputView:datePicker];
     
     [titleTextField setText:[NSString stringWithFormat:@"%@", [ETFormatter dateStringForDeal:[datePicker date]]]];
+    [addDealCellDelegate didEndEditText:[titleTextField text] CellIndex:0];
 }
 
 - (void)cancleDatePicker
@@ -111,6 +114,8 @@
 - (void)acceptDatepicker
 {
     [titleTextField setText:[NSString stringWithFormat:@"%@", [ETFormatter dateStringForDeal:[datePicker date]]]];
+    [addDealCellDelegate didEndEditText:[titleTextField text] CellIndex:0];
+    
     [self cancleDatePicker];
 }
 
@@ -130,14 +135,13 @@
 }
 
 
-//#pragma mark - 델리게이트 메서드
-//
-//#pragma mark UITextFieldDelegate
-//
-//- (void)textFieldDidEndEditing:(UITextField *)textField
-//{
-//    if (cellRow == 0)
-//        [addDelegate insertString:[textField text] Row:0];
-//}
+#pragma mark - 델리게이트 메서드
+
+#pragma mark UITextFieldDelegate
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [addDealCellDelegate didEndEditText:[textField text] CellIndex:cellSection];
+}
 
 @end

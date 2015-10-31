@@ -10,6 +10,26 @@
 
 @implementation ETAccountDBManager
 
++ (NSInteger)getLastIdFromTable:(NSString *)table
+{
+    NSString *querryString = @"SELECT Tag_target.id FROM Tag_target ORDER BY tag_target.id DESC LIMIT 1";
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:_DB];
+    FMDatabase *db = [FMDatabase databaseWithPath:documentPath];
+    [db open];
+    
+    FMResultSet *rs = [db executeQuery:querryString];
+    NSInteger lastId = 0;
+    
+    while ([rs next]) {
+        lastId = [[rs stringForColumn:@"id"] integerValue];
+    }
+    [db close];
+    
+    return lastId;
+}
+
 + (NSString *)getItem:(NSString *)itemName OfId:(NSInteger)itemIdx FromTable:(NSString *)table
 {
     //현재는 전체 로드 : 날짜순 조건 추가, 동적 로딩 추가
@@ -35,11 +55,11 @@
         querryString = [NSString stringWithFormat:@"%@%@, ", querryString, [dataDic objectForKey:[[dataDic allKeys] objectAtIndex:index]]];
     }
     querryString = [NSString stringWithFormat:@"%@%@)", querryString, [dataDic objectForKey:[[dataDic allKeys] objectAtIndex:dataDicCount - 1]]];
-    NSLog(@"%@",querryString);
+    
     return [ETUtility runQuerry:querryString FromFile:_DB];
 }
 
-+ (BOOL)updateToTable:(NSString *)table dataDictionary:(NSDictionary *)dataDic ToId:(NSInteger)dealId
++ (BOOL)updateToTable:(NSString *)table dataDictionary:(NSDictionary *)dataDic ToId:(NSInteger)itemId
 {
     NSString *querryString = [NSString stringWithFormat:@"UPDATE %@ SET ", table];
     
@@ -52,7 +72,14 @@
     querryString = [NSString stringWithFormat:@"%@%@ = %@ ", querryString,
                     [[dataDic allKeys] objectAtIndex:dataDicCount - 1], [dataDic objectForKey:[[dataDic allKeys] objectAtIndex:dataDicCount - 1]]];
     
-    querryString = [NSString stringWithFormat:@"%@WHERE id = %ld", querryString, (long)dealId];
+    querryString = [NSString stringWithFormat:@"%@WHERE id = %ld", querryString, (long)itemId];
+    
+    return [ETUtility runQuerry:querryString FromFile:_DB];
+}
+
++ (BOOL)deleteFromTable:(NSString *)table OfId:(NSInteger)itemId
+{
+    NSString *querryString = [NSString stringWithFormat:@"DELETE FROM %@ WHERE id = %ld", table, (long)itemId];
     
     return [ETUtility runQuerry:querryString FromFile:_DB];
 }

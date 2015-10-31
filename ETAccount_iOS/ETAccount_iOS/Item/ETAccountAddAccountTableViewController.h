@@ -15,6 +15,8 @@
 
 @interface ETAccountAddAccountTableViewController : UITableViewController {
     NSMutableArray *itemArray;
+    
+    UITextField *newAccountTextField;
 }
 
 @property (assign, readwrite) id<ETAccountAddAccountDelegate> addDelegate;

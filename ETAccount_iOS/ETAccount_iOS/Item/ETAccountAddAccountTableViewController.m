@@ -20,11 +20,6 @@
     [super viewDidLoad];
     
     [self initItemList];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,8 +35,61 @@
     NSArray *columnArray = [NSArray arrayWithObjects:@"id", @"name", @"order", nil];
     
     itemArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray];
+}
+
+
+#pragma maek - 추가
+
+- (void)showAddAccountAlertControllerFromTableView:(UITableView *)tableView
+{
+    UIAlertController *addTagAlertControl = [UIAlertController
+                                             alertControllerWithTitle:@"항목 추가"
+                                             message:@"항목명을 입력해주세요"
+                                             preferredStyle:UIAlertControllerStyleAlert];
+    [addTagAlertControl addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        [textField setPlaceholder:@"항목명"];
+        [textField setKeyboardType:UIKeyboardTypeDefault];
+        newAccountTextField = textField;
+    }];
     
-//    NSLog(@"%@", itemArray);
+    UIAlertAction *okAction = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"추가", @"Close action")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action)
+                               {
+                                   [self addNewAccount:[newAccountTextField text] TableView:tableView];
+                               }];
+    [addTagAlertControl addAction:okAction];
+    
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"취소", @"Cancel action")
+                                   style:UIAlertActionStyleCancel
+                                   handler:nil];
+    [addTagAlertControl addAction:cancelAction];
+    
+    [self presentViewController:addTagAlertControl animated:YES completion:nil];
+}
+
+- (void)addNewAccount:(NSString *)tagName TableView:(UITableView*)tableView
+{
+//    NSArray *keyArray = [NSArray arrayWithObject:@"name"];
+//    NSArray *objectsArray = [NSArray arrayWithObject:[NSString stringWithFormat:@"'%@'", tagName]];
+//    
+//    NSDictionary *dataDic = [NSDictionary dictionaryWithObjects:objectsArray forKeys:keyArray];
+//    [self writeToDB:dataDic];
+    
+    [self initItemList];
+    [tableView reloadData];
+}
+
+- (void)writeToDB:(NSDictionary *)dataDic TableView:(UITableView*)tableView
+{
+//    if (![ETAccountDBManager insertToTable:@"Tag" dataDictionary:dataDic]) {
+//    [ETUtility showAlert:@"ETAccount" Message:@"저장하지 못했습니다." atViewController:self withBlank:NO];
+//    }
+//    else {
+//        [self refresh];
+//    }
 }
 
 
@@ -80,8 +128,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == [itemArray count])
-        NSLog(@"?");
-//        [[cell textLabel] setText:@"신규 항목 추가"];
+        [self showAddAccountAlertControllerFromTableView:tableView];
     else {
         [addDelegate didSelectAccount:[[[itemArray objectAtIndex:indexPath.row] objectForKey:@"id"] integerValue]];
         [[self navigationController] popViewControllerAnimated:YES];
@@ -89,6 +136,29 @@
     
     [tableView reloadData];
 //    [challengerDelegate searchChallengerNick:[challengerListArray objectAtIndex:indexPath.row]];
+}
+
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
+    UITableViewRowAction *deleteTagAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
+                                                                               title:@"Delete"
+                                                                             handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+                                                                                 if (![ETAccountDBManager deleteFromTable:@"Tag" OfId:[[[itemArray objectAtIndex:indexPath.row] objectForKey:@"id"] integerValue]]) {
+//                                                                                     UIAlertController *errorAlertController = [ETUtility showAlert:@"ETAccount" Message:@"삭제하지 못했습니다." atViewController:self withBlank:YES];
+//                                                                                     UIAlertAction *cancelAction = [UIAlertAction
+//                                                                                                                    actionWithTitle:NSLocalizedString(@"확인", @"Cancel action")
+//                                                                                                                    style:UIAlertActionStyleCancel
+//                                                                                                                    handler:nil];
+//                                                                                     [errorAlertController addAction:cancelAction];
+                                                                                     [ETUtility showAlert:@"ETAccount" Message:@"삭제하지 못했습니다." atViewController:self withBlank:NO];
+                                                                                 }
+                                                                                 
+                                                                                 [tableView setEditing:NO animated:NO];
+                                                                             }];
+    [deleteTagAction setBackgroundColor:[UIColor redColor]];
+    
+    [tableView setEditing:YES animated:NO];
+    return [NSArray arrayWithObject:deleteTagAction];
 }
 
 /*
