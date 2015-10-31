@@ -84,14 +84,21 @@
     NSString *tempDealDateString = [NSString stringWithFormat:@"'%@'", dealDateString];
     
     // 가격
-    NSString *dealCost = [NSString stringWithFormat:@"%ld", (long)dealPrice];
-    NSIndexPath *costIndex = [NSIndexPath indexPathForRow:0 inSection:2];
-    if ([[(ETAccountAddTableViewCell *)[addDealTableView cellForRowAtIndexPath:costIndex] plusMinusButton] tag] == NUMBER_SIGN_MINUS)
-        dealCost = [NSString stringWithFormat:@"-%@", dealCost];
+    NSMutableString *dealCost = [NSMutableString stringWithFormat:@"%ld", (long)dealPrice];
     if ([dealCost integerValue] == 0) {
         [ETUtility showAlert:@"ETAccount" Message:@"가격정보가 없습니다" atViewController:self withBlank:NO];
         return;
     }
+    NSIndexPath *costIndex = [NSIndexPath indexPathForRow:0 inSection:2];
+    if ([[(ETAccountAddTableViewCell *)[addDealTableView cellForRowAtIndexPath:costIndex] plusMinusButton] tag] == NUMBER_SIGN_MINUS) {
+        if ([dealCost characterAtIndex:0] != '-')
+            dealCost = [NSMutableString stringWithFormat:@"-%@", dealCost];
+    }
+    else {
+        if ([dealCost characterAtIndex:0] == '-')
+            dealCost = [NSMutableString stringWithFormat:@"%@", [dealCost substringFromIndex:1]];
+    }
+    
     
     // 좌변
     if (!isAccountLeftFilled) {
@@ -305,50 +312,6 @@
     
     [tableView reloadData];
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 
 #pragma mark ETAccountAddAccountDelegate
