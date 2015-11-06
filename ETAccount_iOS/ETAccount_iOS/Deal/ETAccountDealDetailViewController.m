@@ -61,7 +61,8 @@
 - (void)openAddTagViewController
 {
     ETAccountAddTagViewController *addTagViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"ETAccountAddTagViewController"];
-    [addTagViewController setSelectedTags:[self getSelectedTagsWithTargetId:dealTagTarget]];
+//    [addTagViewController setSelectedTags:[self getSelectedTagsWithTargetId:dealTagTarget]];
+    [addTagViewController setSelectedTags:selectedTagsArray];
     [addTagViewController setChangeTagDelegate:self];
     
     [[self navigationController] pushViewController:addTagViewController animated:YES];
@@ -150,35 +151,12 @@
         case 5:
             [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
             
-//            if ([selectedTagsArray count] > 0) {
-//                NSString *tagString = [[selectedTagsArray objectAtIndex:0] objectForKey:@"name"];
-//                
-//                for (NSInteger index = 1; index < [selectedTagsArray count]; index++)
-//                    tagString = [NSString stringWithFormat:@"%@, %@", tagString, [[selectedTagsArray objectAtIndex:index] objectForKey:@"name"]];
-//                
-//                [cell setTitle:tagString];
-//            }
-//            else [cell setTitle:@"태그 추가"];
             [self setTagCell:cell];
             
             break;
     }
     
     return cell;
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-}
-
-#pragma ETAccountChangeTagDelegate
-
-- (void)didChangeSelectedTagsArray:(NSArray *)newSelectedArray
-{
-    selectedTagsArray = newSelectedArray;
-    
-    [addDealTableView reloadData];
 }
 
 @end

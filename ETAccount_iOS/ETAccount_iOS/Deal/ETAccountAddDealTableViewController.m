@@ -19,11 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    selectedTagsArray = [NSMutableArray array];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -81,7 +77,7 @@
     NSDictionary *tagDataDic = [NSDictionary dictionaryWithObjects:tagObjectsArray forKeys:tagKeyArray];
     
     if (![ETAccountDBManager insertToTable:@"Tag_target" dataDictionary:tagDataDic]) {
-        [ETUtility showAlert:@"ETAccount" Message:@"저장하지 못했습니다." atViewController:self withBlank:NO];
+        [ETUtility showAlert:@"ETAccount" Message:@"태그를 생성하지 못했습니다." atViewController:self withBlank:NO];
         return -1;
     }
     return [ETAccountDBManager getLastIdFromTable:@"Tag_target"];
@@ -99,10 +95,28 @@
 - (void)openAddTagViewController
 {
     ETAccountAddTagViewController *addTagViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"ETAccountAddTagViewController"];
-    [addTagViewController setSelectedTags:[NSArray array]];
+    [addTagViewController setSelectedTags:selectedTagsArray];
     [addTagViewController setChangeTagDelegate:self];
     
     [[self navigationController] pushViewController:addTagViewController animated:YES];
+}
+
+- (BOOL)saveTagsWithTargetId:(NSInteger)targetId
+{
+    for (NSDictionary *tempTagDictionary in selectedTagsArray) {
+        NSArray *keyArray = [NSArray arrayWithObjects:@"tag_id", @"tag_target_id", nil];
+        NSArray *objectsArray = [NSArray arrayWithObjects:
+                                 [NSString stringWithFormat:@"'%ld'", (long)[[tempTagDictionary objectForKey:@"id"] integerValue]],
+                                 [NSString stringWithFormat:@"'%ld'", (long)targetId], nil];
+        
+        NSDictionary *dataDic = [NSDictionary dictionaryWithObjects:objectsArray forKeys:keyArray];
+        
+        if (![ETAccountDBManager insertToTable:@"Tag_match" dataDictionary:dataDic]) {
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 
@@ -178,6 +192,11 @@
     if (tag_target_1 == -1)
         return;
     else {
+        if (![self saveTagsWithTargetId:tag_target_1]) {
+            [ETUtility showAlert:@"ETAccount" Message:@"태그를 저장하지 못했습니다." atViewController:self withBlank:NO];
+            return;
+        }
+        
 //        if (![ETAccountDBManager insertToTable:@"Tag_target" dataDictionary:tagDataDic]) {
 //            [ETUtility showAlert:@"ETAccount" Message:@"저장하지 못했습니다." atViewController:self withBlank:NO];
 ////        return;

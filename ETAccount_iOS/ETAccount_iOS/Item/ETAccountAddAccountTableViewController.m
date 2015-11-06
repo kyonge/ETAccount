@@ -82,16 +82,6 @@
     [tableView reloadData];
 }
 
-- (void)writeToDB:(NSDictionary *)dataDic TableView:(UITableView*)tableView
-{
-//    if (![ETAccountDBManager insertToTable:@"Tag" dataDictionary:dataDic]) {
-//    [ETUtility showAlert:@"ETAccount" Message:@"저장하지 못했습니다." atViewController:self withBlank:NO];
-//    }
-//    else {
-//        [self refresh];
-//    }
-}
-
 
 #pragma maek - 델리게이트 메서드
 
