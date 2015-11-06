@@ -11,12 +11,23 @@
 #import "ETUtility.h"
 #import "ETAccountDBManager.h"
 
+@protocol ETAccountChangeTagDelegate;
+
 @interface ETAccountAddTagViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate> {
-    NSMutableArray *tagArray, *selectedTagArray;
+    NSMutableArray *tagArray, *selectedTagsArray;
     
     UITextField *newTagTextField;
 }
 
 - (void)setSelectedTags:(NSArray *)selectedArray;
+
+@property (assign, readwrite) id<ETAccountChangeTagDelegate> changeTagDelegate;
+
+@end
+
+
+@protocol ETAccountChangeTagDelegate <NSObject>
+
+- (void)didChangeSelectedTagsArray:(NSArray *)newSelectedArray;
 
 @end

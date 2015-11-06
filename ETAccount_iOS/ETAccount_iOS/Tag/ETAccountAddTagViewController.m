@@ -14,10 +14,19 @@
 
 @implementation ETAccountAddTagViewController
 
+@synthesize changeTagDelegate;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initTagList];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [changeTagDelegate didChangeSelectedTagsArray:selectedTagsArray];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,7 +44,7 @@
 
 - (void)setSelectedTags:(NSArray *)selectedArray
 {
-    selectedTagArray = [NSMutableArray arrayWithArray:selectedArray];
+    selectedTagsArray = [NSMutableArray arrayWithArray:selectedArray];
 }
 
 
@@ -91,10 +100,22 @@
     [tableView reloadData];
 }
 
+
+#pragma mark - 삭제
+
 - (void)delete:(NSIndexPath *)indexPath TableView:(UITableView*)tableView
 {
-    if (![ETAccountDBManager deleteFromTable:@"Tag" OfId:[[[tagArray objectAtIndex:indexPath.row] objectForKey:@"id"] integerValue]]) {
+    NSInteger deleteTagId = [[[tagArray objectAtIndex:indexPath.row] objectForKey:@"id"] integerValue];
+    
+    // DB에서 삭제
+    if (![ETAccountDBManager deleteFromTable:@"Tag" OfId:deleteTagId]) {
         [ETUtility showAlert:@"ETAccount" Message:@"삭제하지 못했습니다." atViewController:self withBlank:NO];
+    }
+    
+    // SelectedTagsArray에서 삭제
+    for (NSDictionary *tempDic in selectedTagsArray) {
+        if ([[tempDic objectForKey:@"id"] integerValue] == deleteTagId)
+            [selectedTagsArray removeObject:tempDic];
     }
     
     [self initTagList];
@@ -126,24 +147,55 @@
     if (indexPath.row != [tagArray count])
         [cell setTag:[[[tagArray objectAtIndex:indexPath.row] objectForKey:@"id"] integerValue]];
     
+    [cell setAccessoryType:UITableViewCellAccessoryNone];
+    
+    for (NSDictionary *tempDic in selectedTagsArray) {
+        if ([[tempDic objectForKey:@"id"] integerValue] == [cell tag])
+            [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+    }
+    
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == [tagArray count])
+    if (indexPath.row == [tagArray count]) {
+        [cell setAccessoryType:UITableViewCellAccessoryNone];
         [[cell textLabel] setText:@"신규 항목 추가"];
-    else
+    }
+    else {
         [[cell textLabel] setText:[[tagArray objectAtIndex:indexPath.row] objectForKey:@"name"]];
+        [[cell textLabel] setTag:[[[tagArray objectAtIndex:indexPath.row] objectForKey:@"id"] integerValue]];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row != [tagArray count]) {
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        if ([cell accessoryType] == UITableViewCellAccessoryNone)
+        if ([cell accessoryType] == UITableViewCellAccessoryNone) {
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
-        else [cell setAccessoryType:UITableViewCellAccessoryNone];
+            
+            // SelectedTagsArray에 추가
+            NSArray *tagObjectArray = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%ld", (long)[[cell textLabel] tag]], [[cell textLabel] text], nil];
+            NSArray *tagKeyArray = [NSArray arrayWithObjects:@"id", @"name", nil];
+            NSDictionary *tagDictionary = [NSDictionary dictionaryWithObjects:tagObjectArray forKeys:tagKeyArray];
+            [selectedTagsArray addObject:tagDictionary];
+            
+            [tableView reloadData];
+        }
+        else {
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
+            
+            // SelectedTagsArray에 삭제
+            for (NSDictionary *tempDic in selectedTagsArray) {
+                if ([[tempDic objectForKey:@"id"] integerValue] == [[cell textLabel] tag])
+                    [selectedTagsArray removeObject:tempDic];
+            }
+        }
+        
+        [self initTagList];
+        [changeTagDelegate didChangeSelectedTagsArray:selectedTagsArray];
     }
     else {
         [self showAddTabAlertControllerFromTableView:tableView];

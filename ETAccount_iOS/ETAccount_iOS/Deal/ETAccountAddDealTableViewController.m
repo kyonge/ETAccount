@@ -58,6 +58,22 @@
     [alertController addAction:cancelAction];
 }
 
+
+#pragma mark - Tag 컨트롤
+
+- (void)setTagCell:(ETAccountAddTableViewCell *)cell
+{
+    if ([selectedTagsArray count] > 0) {
+        NSString *tagString = [[selectedTagsArray objectAtIndex:0] objectForKey:@"name"];
+        
+        for (NSInteger index = 1; index < [selectedTagsArray count]; index++)
+            tagString = [NSString stringWithFormat:@"%@, %@", tagString, [[selectedTagsArray objectAtIndex:index] objectForKey:@"name"]];
+        
+        [cell setTitle:tagString];
+    }
+    else [cell setTitle:@"태그 추가"];
+}
+
 - (NSInteger)getTag
 {
     NSArray *tagKeyArray = [NSArray arrayWithObject:@"object"];
@@ -70,6 +86,27 @@
     }
     return [ETAccountDBManager getLastIdFromTable:@"Tag_target"];
 }
+
+- (NSArray *)getSelectedTagsWithTargetId:(NSInteger)targetID
+{
+    NSString *querryString = [NSString stringWithFormat:@"SELECT Tag.id, Tag.name from Tag JOIN Tag_match ON Tag.id = Tag_match.tag_id WHERE Tag_match.tag_target_id = %ld", (long)targetID];
+    NSArray *columnArray = [NSArray arrayWithObjects:@"id", @"name", nil];
+    NSArray *tempSelectedTagsArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray];
+    
+    return tempSelectedTagsArray;
+}
+
+- (void)openAddTagViewController
+{
+    ETAccountAddTagViewController *addTagViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"ETAccountAddTagViewController"];
+    [addTagViewController setSelectedTags:[NSArray array]];
+    [addTagViewController setChangeTagDelegate:self];
+    
+    [[self navigationController] pushViewController:addTagViewController animated:YES];
+}
+
+
+#pragma mark - 저장
 
 - (IBAction)selectOk:(id)sender
 {
@@ -261,7 +298,13 @@
             break;
         case 5:
             [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
-            [cell setTitle:@"Tags"];
+            
+//            if ([selectedTagsArray count] == 0)
+//                [cell setTitle:@"태그 추가"];
+//            else {
+//                
+//            }
+            [self setTagCell:cell];
             break;
     }
     
@@ -304,11 +347,7 @@
 //            [cell setPlaceholder:@"설명"];
             break;
         case 5: {
-//            ETAccountAddTagViewController *addTagViewController = [[ETAccountAddTagViewController alloc] init];
-            ETAccountAddTagViewController *addTagViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"ETAccountAddTagViewController"];
-//            addTagViewController setSelectedTags:<#(NSArray *)#>
-//            [addTagViewController setAddDelegate:self];
-            [[self navigationController] pushViewController:addTagViewController animated:YES];
+            [self openAddTagViewController];
             break;
         }
     }
@@ -356,6 +395,15 @@
         default:
             break;
     }
+}
+
+#pragma ETAccountChangeTagDelegate
+
+- (void)didChangeSelectedTagsArray:(NSArray *)newSelectedArray
+{
+    selectedTagsArray = newSelectedArray;
+    
+    [addDealTableView reloadData];
 }
 
 @end

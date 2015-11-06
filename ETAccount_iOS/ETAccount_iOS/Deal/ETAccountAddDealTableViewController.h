@@ -14,14 +14,19 @@
 
 @protocol ETAccountAddDealDelegate;
 
-@interface ETAccountAddDealTableViewController : UITableViewController <UINavigationControllerDelegate, ETAccountAddAccountDelegate, ETAccountAddDealCellDelegate> {
+@interface ETAccountAddDealTableViewController : UITableViewController <UINavigationControllerDelegate, ETAccountAddAccountDelegate, ETAccountAddDealCellDelegate, ETAccountChangeTagDelegate> {
     IBOutlet UITableView *addDealTableView;
+    
+    NSArray *selectedTagsArray;
     
     ACCOUNT_DIRECTION direction;
     NSString *dealDateString, *dealNameString, *dealDescriptionString;
     NSInteger dealPrice, accountLeftId, accountRightId, dealTagTarget;
     BOOL isAccountLeftFilled, isAccountRightFilled;
 }
+
+- (void)setTagCell:(ETAccountAddTableViewCell *)cell;
+- (NSArray *)getSelectedTagsWithTargetId:(NSInteger)targetID;
 
 @property (assign, readwrite) id<ETAccountAddDealDelegate> addDealDelegate;
 

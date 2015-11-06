@@ -19,11 +19,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    [self initSelectedTagsArray];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)initSelectedTagsArray
+{
+    selectedTagsArray = [self getSelectedTagsWithTargetId:dealTagTarget];
 }
 
 - (void)initDealDetailWithDate:(NSString *)date Name:(NSString *)name Money:(NSString *)money Left:(NSInteger)left Right:(NSInteger)right Description:(NSString *)description tagTarget:(NSInteger)tagTarget Id:(NSInteger)_id
@@ -43,9 +50,21 @@
     [addDealTableView reloadData];
 }
 
+
+#pragma mark - Tag 컨트롤
+
 - (NSInteger)getTag
 {
     return dealTagTarget;
+}
+
+- (void)openAddTagViewController
+{
+    ETAccountAddTagViewController *addTagViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"ETAccountAddTagViewController"];
+    [addTagViewController setSelectedTags:[self getSelectedTagsWithTargetId:dealTagTarget]];
+    [addTagViewController setChangeTagDelegate:self];
+    
+    [[self navigationController] pushViewController:addTagViewController animated:YES];
 }
 
 - (void)writeToDB:(NSDictionary *)dataDic
@@ -131,24 +150,35 @@
         case 5:
             [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
             
-            NSString *querryString = [NSString stringWithFormat:@"SELECT Tag.id, Tag.name from Tag JOIN Tag_match ON Tag.id = Tag_match.tag_id WHERE Tag_match.tag_target_id = %ld", (long)dealTagTarget];
-            NSArray *columnArray = [NSArray arrayWithObjects:@"id", @"name", nil];
-            NSArray *tagsArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray];
-            
-            if ([tagsArray count] > 0) {
-                NSString *tagString = [[tagsArray objectAtIndex:0] objectForKey:@"name"];
-                
-                for (NSInteger index = 1; index < [tagsArray count]; index++)
-                    tagString = [NSString stringWithFormat:@"%@, %@", tagString, [[tagsArray objectAtIndex:index] objectForKey:@"name"]];
-                
-                [cell setTitle:tagString];
-            }
-            else [cell setTitle:@"태그 추가"];
+//            if ([selectedTagsArray count] > 0) {
+//                NSString *tagString = [[selectedTagsArray objectAtIndex:0] objectForKey:@"name"];
+//                
+//                for (NSInteger index = 1; index < [selectedTagsArray count]; index++)
+//                    tagString = [NSString stringWithFormat:@"%@, %@", tagString, [[selectedTagsArray objectAtIndex:index] objectForKey:@"name"]];
+//                
+//                [cell setTitle:tagString];
+//            }
+//            else [cell setTitle:@"태그 추가"];
+            [self setTagCell:cell];
             
             break;
     }
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
+#pragma ETAccountChangeTagDelegate
+
+- (void)didChangeSelectedTagsArray:(NSArray *)newSelectedArray
+{
+    selectedTagsArray = newSelectedArray;
+    
+    [addDealTableView reloadData];
 }
 
 @end
