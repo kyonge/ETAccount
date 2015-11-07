@@ -184,14 +184,6 @@
             return;
         }
         
-//        if (![ETAccountDBManager insertToTable:@"Tag_target" dataDictionary:tagDataDic]) {
-//            [ETUtility showAlert:@"ETAccount" Message:@"저장하지 못했습니다." atViewController:self withBlank:NO];
-////        return;
-//        }
-//        NSInteger tag_target_2 = [ETAccountDBManager getLastIdFromTable:@"Tag_target"];
-//        
-//        NSLog(@"%ld %ld", (long)tag_target_1, (long)tag_target_2);
-        
         NSArray *keyArray = [NSArray arrayWithObjects:@"name", @"account_id_1", @"account_id_2", @"tag_target_id", @"description", @"'date'", @"money", nil];
         NSArray *objectsArray = [NSArray arrayWithObjects:tempDealNameString,
                                  [NSNumber numberWithInteger:accountLeftId], [NSNumber numberWithInteger:accountRightId],
@@ -199,7 +191,7 @@
                                  tempDealDescription, tempDealDateString, dealCost, nil];
         
         NSDictionary *dataDic = [NSDictionary dictionaryWithObjects:objectsArray forKeys:keyArray];
-//        NSLog(@"%@", dataDic);
+        
         [self writeToDB:dataDic];
     }
 }
@@ -271,7 +263,7 @@
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
             [cell setPlaceholder:@"날짜"];
             
-            [cell setDatePicker:UIDatePickerModeDate];
+            [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:YES];
             break;
         case 1:
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
@@ -305,11 +297,6 @@
         case 5:
             [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
             
-//            if ([selectedTagsArray count] == 0)
-//                [cell setTitle:@"태그 추가"];
-//            else {
-//                
-//            }
             [self setTagCell:cell];
             break;
     }

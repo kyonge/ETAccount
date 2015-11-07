@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self initAccount];
+    [self initDeals];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -60,7 +60,7 @@
 
 #pragma mark - 초기화
 
-- (void)initAccount
+- (void)initDeals
 {
     //현재는 전체 로드 : 날짜순 조건 추가, 동적 로딩 추가
     
@@ -82,6 +82,54 @@
     [addViewController setSuperViewController:self];
     [addViewController setAddDelegate:self];
     [[self view] addSubview:[addViewController view]];
+}
+
+
+#pragma mark - 삭제
+
+- (void)askDelete:(NSIndexPath *)indexPath TableView:(UITableView*)tableView
+{
+    UIAlertController *deleteAccountAlertControl = [UIAlertController
+                                                    alertControllerWithTitle:@"거래 삭제"
+                                                    message:@"거래를 삭제하시겠습니까?"
+                                                    preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"삭제", @"Close action")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action)
+                               {
+                                   [self delete:indexPath TableView:tableView];
+                               }];
+    [deleteAccountAlertControl addAction:okAction];
+    
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"취소", @"Cancel action")
+                                   style:UIAlertActionStyleCancel
+                                   handler:nil];
+    [deleteAccountAlertControl addAction:cancelAction];
+    
+    [self presentViewController:deleteAccountAlertControl animated:YES completion:nil];
+}
+
+- (void)delete:(NSIndexPath *)indexPath TableView:(UITableView*)tableView
+{
+    NSDictionary *dealDictionary = [dealArray objectAtIndex:indexPath.row];
+    
+    // tag_target_id 삭제
+    NSInteger targetTag = [[dealDictionary objectForKey:@"tag_target_id"] integerValue];
+    [ETAccountDBManager deleteFromTable:@"Tag_target" OfId:targetTag];
+    
+    NSString *deleteMatchOfTargetQuerryString = [NSString stringWithFormat:@"DELETE FROM Tag_match WHERE tag_target_id = %ld", (long)targetTag];
+    [ETUtility runQuerry:deleteMatchOfTargetQuerryString FromFile:_DB];
+    
+    // DB에서 삭제
+    NSInteger targetAccountId = [[dealDictionary objectForKey:@"id"] integerValue];
+    if (![ETAccountDBManager deleteFromTable:@"Deal" OfId:targetAccountId]) {
+        [ETUtility showAlert:@"ETAccount" Message:@"삭제하지 못했습니다." atViewController:self withBlank:NO];
+    }
+    
+    [self initDeals];
+    [tableView reloadData];
 }
 
 
@@ -142,20 +190,35 @@
 //    [challengerDelegate searchChallengerNick:[challengerListArray objectAtIndex:indexPath.row]];
 }
 
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
+    UITableViewRowAction *deleteTagAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
+                                                                               title:@"Delete"
+                                                                             handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+                                                                                 [tableView setEditing:NO animated:NO];
+                                                                                 
+                                                                                 [self askDelete:indexPath TableView:tableView];
+                                                                             }];
+    [deleteTagAction setBackgroundColor:[UIColor redColor]];
+    
+    [tableView setEditing:YES animated:NO];
+    return [NSArray arrayWithObject:deleteTagAction];
+}
+
 #pragma mark ETAccountAddDelegate
 
 - (void)closeAddView
 {
     [addItem setEnabled:YES];
     
-    [self initAccount];
+    [self initDeals];
 }
 
 #pragma mark ETAccountAddDealDelegate
 
 - (void)didAddDeal
 {
-    [self initAccount];
+    [self initDeals];
     [dealListTableView reloadData];
 }
 

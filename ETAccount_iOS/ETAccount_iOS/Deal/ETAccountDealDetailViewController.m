@@ -148,8 +148,8 @@
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
             [cell setPlaceholder:@"날짜"];
             
-            [cell setDatePicker:UIDatePickerModeDateAndTime];
             [[cell titleTextField] setText:dealDateString];
+            [cell setDatePicker:UIDatePickerModeDateAndTime WithCurrentTime:NO];
             
             break;
         case 1:

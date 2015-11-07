@@ -26,7 +26,7 @@
 - (void)setTitle:(NSString *)titleString;
 - (void)setPlaceholder:(NSString *)placeholderString;
 #pragma mark - Date Picker
-- (void)setDatePicker:(UIDatePickerMode)datePickerMode;
+- (void)setDatePicker:(UIDatePickerMode)datePickerMode WithCurrentTime:(BOOL)isCurrentTime;
 #pragma maek - Plus&Minus
 - (IBAction)changePlusMinus:(id)sender;
 

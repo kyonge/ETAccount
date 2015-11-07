@@ -138,8 +138,8 @@
 - (void)delete:(NSIndexPath *)indexPath TableView:(UITableView*)tableView
 {
     // 사용하고 있는 거래가 있는지 체크
-    NSDictionary *dealDictionary = [itemArray objectAtIndex:indexPath.row];
-    NSInteger targetAccountId = [[dealDictionary objectForKey:@"id"] integerValue];
+    NSDictionary *accountDictionary = [itemArray objectAtIndex:indexPath.row];
+    NSInteger targetAccountId = [[accountDictionary objectForKey:@"id"] integerValue];
     NSString *querryString = [NSString stringWithFormat:@"SELECT Deal.id FROM Deal WHERE account_id_1 = %ld OR account_id_2 = %ld", (long)targetAccountId, (long)targetAccountId];
     NSArray *keyArray = [NSArray arrayWithObject:@"id"];
     
@@ -150,7 +150,21 @@
         return;
     }
     
-    // DB에서 삭제
+    // tag_target_id 삭제
+    NSInteger targetTag = [[accountDictionary objectForKey:@"tag_target_id"] integerValue];
+    [ETAccountDBManager deleteFromTable:@"Tag_target" OfId:targetTag];
+    
+    NSString *deleteMatchOfTargetQuerryString = [NSString stringWithFormat:@"DELETE FROM Tag_match WHERE tag_target_id = %ld", (long)targetTag];
+    [ETUtility runQuerry:deleteMatchOfTargetQuerryString FromFile:_DB];
+    
+    // auto_target_id 삭제
+    NSInteger autoTargetTag = [[accountDictionary objectForKey:@"auto_target_id"] integerValue];
+    [ETAccountDBManager deleteFromTable:@"Tag_target" OfId:autoTargetTag];
+    
+    NSString *deleteMatchOfAutoTargetQuerryString = [NSString stringWithFormat:@"DELETE FROM Tag_match WHERE tag_target_id = %ld", (long)autoTargetTag];
+    [ETUtility runQuerry:deleteMatchOfAutoTargetQuerryString FromFile:_DB];
+    
+    // 거래 삭제
     if (![ETAccountDBManager deleteFromTable:@"Account" OfId:targetAccountId]) {
         [ETUtility showAlert:@"ETAccount" Message:@"삭제하지 못했습니다." atViewController:self withBlank:NO];
     }
