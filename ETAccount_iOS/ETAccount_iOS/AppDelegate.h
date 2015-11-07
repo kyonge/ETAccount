@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "ETUtility.h"
+#import "ETAccountDBManager.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

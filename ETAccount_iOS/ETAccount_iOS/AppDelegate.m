@@ -19,6 +19,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [ETUtility copyBundleToDocumentsWithFileName:@"ETAccount.sqlite"];
     
+//    [self copyData];
+    
     return YES;
 }
 
@@ -42,6 +44,45 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+
+#pragma mark - 컨버터
+
+- (void)copyData
+{
+    NSString *dataFilePath = [[NSBundle mainBundle] pathForResource:@"151107_edit" ofType:@"csv"];
+    NSString *dataString = [NSString stringWithContentsOfFile:dataFilePath encoding:NSUTF8StringEncoding error:nil];
+//    NSLog(@"%@", dataString);
+    NSArray *dataArray = [dataString componentsSeparatedByString:@"\n"];
+//    NSLog(@"%@", dataArray);
+    
+    for (NSString *tempDataString in dataArray) {
+        NSArray *tempDataArray = [tempDataString componentsSeparatedByString:@","];
+        NSString *tempDataDate = [tempDataArray objectAtIndex:0];
+        NSArray *tempDataDateArray = [tempDataDate componentsSeparatedByString:@". "];
+        NSString *tempDataDateString = [NSString stringWithFormat:@"%@-%@-%@ 00:00",
+                                        [tempDataDateArray objectAtIndex:0],
+                                        [tempDataDateArray objectAtIndex:1],
+                                        [[tempDataDateArray objectAtIndex:2] substringToIndex:[[tempDataDateArray objectAtIndex:2] length] - 1]];
+        NSString *tempDataName = [tempDataArray objectAtIndex:1];
+        NSString *tempDataAccount_1 = [tempDataArray objectAtIndex:2];
+        NSString *tempDataAccount_2 = [tempDataArray objectAtIndex:4];
+        NSString *tempDataPrice = [tempDataArray objectAtIndex:3];
+        
+        NSArray *tagKeyArray = [NSArray arrayWithObject:@"object"];
+        NSArray *tagObjectsArray = [NSArray arrayWithObject:@"'1'"];
+        NSDictionary *tagDataDic = [NSDictionary dictionaryWithObjects:tagObjectsArray forKeys:tagKeyArray];
+        [ETAccountDBManager insertToTable:@"Tag_target" dataDictionary:tagDataDic];
+        NSInteger newTag = [ETAccountDBManager getLast:@"id" FromTable:@"Tag_target"];
+        
+        NSString *querryString = @"INSERT INTO Deal (name, account_id_1, account_id_2, tag_target_id, date, money) VALUES (";
+        querryString = [NSString stringWithFormat:@"%@'%@', '%@', '%@', '%ld', '%@', '%@')",
+                        querryString, tempDataName, tempDataAccount_1, tempDataAccount_2, (long)newTag, tempDataDateString, tempDataPrice];
+//        NSLog(@"%@", querryString);
+        
+        [ETUtility runQuerry:querryString FromFile:_DB];
+    }
 }
 
 @end

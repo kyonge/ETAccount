@@ -49,6 +49,8 @@
     NSString *sourceFilePath = [[NSBundle mainBundle] pathForResource:nameString ofType:extensionString];
 //    NSString *sourceFilePath = [[NSBundle mainBundle] pathForResource:@"Locations" ofType:@"sqlite"];
     
+//    [fileManager removeItemAtPath:sourceFilePath error:nil];
+    
     if (!exist)
         [fileManager copyItemAtPath:sourceFilePath toPath:localDBPath error:nil];
 }
