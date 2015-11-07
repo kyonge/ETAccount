@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "ETUtility.h"
-#import "ETAccountDBManager.h"
+#import "ETAccountUtility.h"
 
 @protocol ETAccountAddAccountDelegate;
 

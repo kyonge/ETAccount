@@ -206,6 +206,9 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row == [tagArray count])
+        return NO;
+    
     return YES;
 }
 

@@ -11,6 +11,7 @@
 #import "ETAccountAddTableViewCell.h"
 #import "ETAccountAddAccountTableViewController.h"
 #import "ETAccountAddTagViewController.h"
+#import "ETAccountUtility.h"
 
 @protocol ETAccountAddDealDelegate;
 

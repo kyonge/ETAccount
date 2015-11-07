@@ -10,9 +10,9 @@
 
 @implementation ETAccountDBManager
 
-+ (NSInteger)getLastIdFromTable:(NSString *)table
++ (NSInteger)getLast:(NSString *)key FromTable:(NSString *)table
 {
-    NSString *querryString = @"SELECT Tag_target.id FROM Tag_target ORDER BY tag_target.id DESC LIMIT 1";
+    NSString *querryString = [NSString stringWithFormat:@"SELECT %@ FROM %@ ORDER BY %@ DESC LIMIT 1", key, table, key];
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:_DB];
@@ -23,7 +23,7 @@
     NSInteger lastId = 0;
     
     while ([rs next]) {
-        lastId = [[rs stringForColumn:@"id"] integerValue];
+        lastId = [[rs stringForColumn:key] integerValue];
     }
     [db close];
     

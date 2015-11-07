@@ -31,8 +31,8 @@
 {
     //현재는 전체 로드 : 날짜순 조건 추가, 동적 로딩 추가
     
-    NSString *querryString = @"SELECT Account.id, Account.name, Account.'order' FROM Account ORDER BY Account.'order'";
-    NSArray *columnArray = [NSArray arrayWithObjects:@"id", @"name", @"order", nil];
+    NSString *querryString = @"SELECT Account.id, Account.name, Account.account_order FROM Account ORDER BY Account.account_order";
+    NSArray *columnArray = [NSArray arrayWithObjects:@"id", @"name", @"account_order", nil];
     
     itemArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray];
 }
@@ -70,16 +70,64 @@
     [self presentViewController:addTagAlertControl animated:YES completion:nil];
 }
 
-- (void)addNewAccount:(NSString *)tagName TableView:(UITableView*)tableView
+- (void)addNewAccount:(NSString *)accountName TableView:(UITableView*)tableView
 {
-//    NSArray *keyArray = [NSArray arrayWithObject:@"name"];
-//    NSArray *objectsArray = [NSArray arrayWithObject:[NSString stringWithFormat:@"'%@'", tagName]];
-//    
-//    NSDictionary *dataDic = [NSDictionary dictionaryWithObjects:objectsArray forKeys:keyArray];
-//    [self writeToDB:dataDic];
+    // 태그
+    NSInteger tag_target_1 = [ETAccountUtility getTagFromViewController:self];
+    NSInteger tag_target_2 = [ETAccountUtility getTagFromViewController:self];
+    NSInteger accountOrder = [ETAccountDBManager getLast:@"account_order" FromTable:@"Account"] + 1;
+    
+    if (tag_target_1 == -1 || tag_target_2 == -1)
+        return;
+    else {
+        if (![self saveAccountWithTargetId11:tag_target_1 TargetId2:tag_target_2 Name:accountName Order:accountOrder]) {
+            [ETUtility showAlert:@"ETAccount" Message:@"태그를 저장하지 못했습니다." atViewController:self withBlank:NO];
+            return;
+        }
+    }
     
     [self initItemList];
     [tableView reloadData];
+}
+
+- (BOOL)saveAccountWithTargetId11:(NSInteger)targetId1 TargetId2:(NSInteger)targetId2 Name:(NSString *)accountName Order:(NSInteger)accountOrder
+{
+    NSArray *keyArray = [NSArray arrayWithObjects:@"name", @"tag_target_id", @"auto_target_id", @"account_order", nil];
+    NSArray *objectsArray = [NSArray arrayWithObjects:
+                             [NSString stringWithFormat:@"'%@'", accountName],
+                             [NSString stringWithFormat:@"'%ld'", (long)targetId1],
+                             [NSString stringWithFormat:@"'%ld'", (long)targetId2],
+                             [NSString stringWithFormat:@"'%ld'", (long)accountOrder], nil];
+    
+    NSDictionary *dataDic = [NSDictionary dictionaryWithObjects:objectsArray forKeys:keyArray];
+    
+    if (![ETAccountDBManager insertToTable:@"Account" dataDictionary:dataDic]) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+
+#pragma mark - 삭제
+
+- (void)delete:(NSIndexPath *)indexPath TableView:(UITableView*)tableView
+{
+//    NSInteger deleteAccountId = [[[tagArray objectAtIndex:indexPath.row] objectForKey:@"id"] integerValue];
+//
+//    // DB에서 삭제
+//    if (![ETAccountDBManager deleteFromTable:@"Tag" OfId:deleteTagId]) {
+//        [ETUtility showAlert:@"ETAccount" Message:@"삭제하지 못했습니다." atViewController:self withBlank:NO];
+//    }
+//    
+//    // SelectedTagsArray에서 삭제
+//    for (NSDictionary *tempDic in selectedTagsArray) {
+//        if ([[tempDic objectForKey:@"id"] integerValue] == deleteTagId)
+//            [selectedTagsArray removeObject:tempDic];
+//    }
+//    
+//    [self initTagList];
+//    [tableView reloadData];
 }
 
 
@@ -125,7 +173,14 @@
     }
     
     [tableView reloadData];
-//    [challengerDelegate searchChallengerNick:[challengerListArray objectAtIndex:indexPath.row]];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == [itemArray count])
+        return NO;
+    
+    return YES;
 }
 
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
@@ -133,17 +188,9 @@
     UITableViewRowAction *deleteTagAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
                                                                                title:@"Delete"
                                                                              handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-                                                                                 if (![ETAccountDBManager deleteFromTable:@"Tag" OfId:[[[itemArray objectAtIndex:indexPath.row] objectForKey:@"id"] integerValue]]) {
-//                                                                                     UIAlertController *errorAlertController = [ETUtility showAlert:@"ETAccount" Message:@"삭제하지 못했습니다." atViewController:self withBlank:YES];
-//                                                                                     UIAlertAction *cancelAction = [UIAlertAction
-//                                                                                                                    actionWithTitle:NSLocalizedString(@"확인", @"Cancel action")
-//                                                                                                                    style:UIAlertActionStyleCancel
-//                                                                                                                    handler:nil];
-//                                                                                     [errorAlertController addAction:cancelAction];
-                                                                                     [ETUtility showAlert:@"ETAccount" Message:@"삭제하지 못했습니다." atViewController:self withBlank:NO];
-                                                                                 }
-                                                                                 
                                                                                  [tableView setEditing:NO animated:NO];
+                                                                                 
+                                                                                 [self delete:indexPath TableView:tableView];
                                                                              }];
     [deleteTagAction setBackgroundColor:[UIColor redColor]];
     

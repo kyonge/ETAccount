@@ -70,19 +70,6 @@
     else [cell setTitle:@"태그 추가"];
 }
 
-- (NSInteger)getTag
-{
-    NSArray *tagKeyArray = [NSArray arrayWithObject:@"object"];
-    NSArray *tagObjectsArray = [NSArray arrayWithObject:@"'1'"];
-    NSDictionary *tagDataDic = [NSDictionary dictionaryWithObjects:tagObjectsArray forKeys:tagKeyArray];
-    
-    if (![ETAccountDBManager insertToTable:@"Tag_target" dataDictionary:tagDataDic]) {
-        [ETUtility showAlert:@"ETAccount" Message:@"태그를 생성하지 못했습니다." atViewController:self withBlank:NO];
-        return -1;
-    }
-    return [ETAccountDBManager getLastIdFromTable:@"Tag_target"];
-}
-
 - (NSArray *)getSelectedTagsWithTargetId:(NSInteger)targetID
 {
     NSString *querryString = [NSString stringWithFormat:@"SELECT Tag.id, Tag.name from Tag JOIN Tag_match ON Tag.id = Tag_match.tag_id WHERE Tag_match.tag_target_id = %ld", (long)targetID];
@@ -188,7 +175,7 @@
     }
     
     // 태그
-    NSInteger tag_target_1 = [self getTag];
+    NSInteger tag_target_1 = [ETAccountUtility getTagFromViewController:self];
     if (tag_target_1 == -1)
         return;
     else {
