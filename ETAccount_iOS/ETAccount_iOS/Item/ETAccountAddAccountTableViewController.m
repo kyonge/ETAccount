@@ -111,23 +111,52 @@
 
 #pragma mark - 삭제
 
+- (void)askDelete:(NSIndexPath *)indexPath TableView:(UITableView*)tableView
+{
+    UIAlertController *deleteAccountAlertControl = [UIAlertController
+                                                    alertControllerWithTitle:@"항목 삭제"
+                                                    message:@"계정 항목을 삭제하시겠습니까?"
+                                                    preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"삭제", @"Close action")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action)
+                               {
+                                   [self delete:indexPath TableView:tableView];
+                               }];
+    [deleteAccountAlertControl addAction:okAction];
+    
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"취소", @"Cancel action")
+                                   style:UIAlertActionStyleCancel
+                                   handler:nil];
+    [deleteAccountAlertControl addAction:cancelAction];
+    
+    [self presentViewController:deleteAccountAlertControl animated:YES completion:nil];
+}
+
 - (void)delete:(NSIndexPath *)indexPath TableView:(UITableView*)tableView
 {
-//    NSInteger deleteAccountId = [[[tagArray objectAtIndex:indexPath.row] objectForKey:@"id"] integerValue];
-//
-//    // DB에서 삭제
-//    if (![ETAccountDBManager deleteFromTable:@"Tag" OfId:deleteTagId]) {
-//        [ETUtility showAlert:@"ETAccount" Message:@"삭제하지 못했습니다." atViewController:self withBlank:NO];
-//    }
-//    
-//    // SelectedTagsArray에서 삭제
-//    for (NSDictionary *tempDic in selectedTagsArray) {
-//        if ([[tempDic objectForKey:@"id"] integerValue] == deleteTagId)
-//            [selectedTagsArray removeObject:tempDic];
-//    }
-//    
-//    [self initTagList];
-//    [tableView reloadData];
+    // 사용하고 있는 거래가 있는지 체크
+    NSDictionary *dealDictionary = [itemArray objectAtIndex:indexPath.row];
+    NSInteger targetAccountId = [[dealDictionary objectForKey:@"id"] integerValue];
+    NSString *querryString = [NSString stringWithFormat:@"SELECT Deal.id FROM Deal WHERE account_id_1 = %ld OR account_id_2 = %ld", (long)targetAccountId, (long)targetAccountId];
+    NSArray *keyArray = [NSArray arrayWithObject:@"id"];
+    
+    NSArray *dealsArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:keyArray];
+    
+    if ([dealsArray count] > 0) {
+        [ETUtility showAlert:@"항목 삭제" Message:@"항목을 사용하고 있는 거래가 있습니다." atViewController:self withBlank:NO];
+        return;
+    }
+    
+    // DB에서 삭제
+    if (![ETAccountDBManager deleteFromTable:@"Account" OfId:targetAccountId]) {
+        [ETUtility showAlert:@"ETAccount" Message:@"삭제하지 못했습니다." atViewController:self withBlank:NO];
+    }
+
+    [self initItemList];
+    [tableView reloadData];
 }
 
 
@@ -190,56 +219,12 @@
                                                                              handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
                                                                                  [tableView setEditing:NO animated:NO];
                                                                                  
-                                                                                 [self delete:indexPath TableView:tableView];
+                                                                                 [self askDelete:indexPath TableView:tableView];
                                                                              }];
     [deleteTagAction setBackgroundColor:[UIColor redColor]];
     
     [tableView setEditing:YES animated:NO];
     return [NSArray arrayWithObject:deleteTagAction];
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
