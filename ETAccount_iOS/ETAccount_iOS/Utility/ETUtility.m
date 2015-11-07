@@ -186,6 +186,16 @@
     return nil;
 }
 
++ (BOOL)hasArray:(NSArray *)targetArray hasDictionaryWithId:(NSInteger)targetId
+{
+    for (NSDictionary *tempDictionary in targetArray) {
+        if ([[tempDictionary objectForKey:@"id"] integerValue] == targetId)
+            return YES;
+    }
+    
+    return NO;
+}
+
 
 #pragma mark - Alert
 

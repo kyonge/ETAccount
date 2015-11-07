@@ -83,6 +83,50 @@
     [[self navigationController] popViewControllerAnimated:YES];
 }
 
+- (BOOL)saveTagsWithTargetId:(NSInteger)targetId
+{
+    for (NSDictionary *tempTagDictionary in selectedTagsArray) {
+        NSInteger tempTag = [[tempTagDictionary objectForKey:@"id"] integerValue];
+        
+        // 중복 체크
+        NSString *querryString = [NSString stringWithFormat:@"SELECT TagMatch.tag_id, TagMatch.tag_target_id FROM Tag_match TagMatch WHERE TagMatch.tag_id=%ld AND Tagmatch.tag_target_id=%ld", (long)tempTag, (long)targetId];
+        NSArray *keyArray = [NSArray arrayWithObjects:@"tag_id", @"tag_target_id", nil];
+        
+        NSArray *tagArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:keyArray];
+        
+        if ([tagArray count] == 0) {
+            // 추가
+            NSArray *objectsArray = [NSArray arrayWithObjects:
+                                     [NSString stringWithFormat:@"'%ld'", (long)[[tempTagDictionary objectForKey:@"id"] integerValue]],
+                                     [NSString stringWithFormat:@"'%ld'", (long)targetId], nil];
+            
+            NSDictionary *dataDic = [NSDictionary dictionaryWithObjects:objectsArray forKeys:keyArray];
+            
+            if (![ETAccountDBManager insertToTable:@"Tag_match" dataDictionary:dataDic]) {
+                return NO;
+            }
+        }
+    }
+    
+    NSArray *lastSelectedArray = [self getSelectedTagsWithTargetId:dealTagTarget];
+    for (NSDictionary *tempTagDictionary in lastSelectedArray) {
+        // 제외된 태그 삭제
+        NSInteger tempTagId = [[tempTagDictionary objectForKey:@"id"] integerValue];
+        
+        if (![ETUtility hasArray:selectedTagsArray hasDictionaryWithId:tempTagId]) {
+            // DB에서 삭제
+            NSString *querryString = [NSString stringWithFormat:@"DELETE FROM Tag_match WHERE tag_id = %ld AND tag_target_id = %ld", (long)tempTagId, (long)targetId];
+            
+            if (![ETUtility runQuerry:querryString FromFile:_DB]) {
+                [ETUtility showAlert:@"ETAccount" Message:@"삭제하지 못했습니다." atViewController:self withBlank:NO];
+            }
+        }
+    }
+    
+    return YES;
+}
+
+
 #pragma mark - 델리게이트 메서드
 
 #pragma mark Table view data source

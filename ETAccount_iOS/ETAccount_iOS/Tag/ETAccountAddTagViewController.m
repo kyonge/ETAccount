@@ -189,8 +189,10 @@
             
             // SelectedTagsArray에 삭제
             for (NSDictionary *tempDic in selectedTagsArray) {
-                if ([[tempDic objectForKey:@"id"] integerValue] == [[cell textLabel] tag])
+                if ([[tempDic objectForKey:@"id"] integerValue] == [[cell textLabel] tag]) {
                     [selectedTagsArray removeObject:tempDic];
+                    break;
+                }
             }
         }
         
