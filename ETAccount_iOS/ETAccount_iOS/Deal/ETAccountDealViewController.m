@@ -64,7 +64,7 @@
 {
     //현재는 전체 로드 : 날짜순 조건 추가, 동적 로딩 추가
     
-    NSString *querryString = @"SELECT Deal.id, Deal.name, Deal.tag_target_id, Account_1.name account_1, Account_2.name account_2, money, description, Deal.date FROM Deal JOIN Account Account_1 ON Deal.account_id_1 = Account_1.id JOIN Account Account_2 ON Deal.account_id_2 = Account_2.id ORDER BY date(Deal.Date) DESC";
+    NSString *querryString = @"SELECT Deal.id, Deal.name, Deal.tag_target_id, Account_1.name account_1, Account_2.name account_2, money, description, Deal.date FROM Deal JOIN Account Account_1 ON Deal.account_id_1 = Account_1.id JOIN Account Account_2 ON Deal.account_id_2 = Account_2.id ORDER BY datetime(Deal.Date) DESC";
     NSArray *columnArray = [NSArray arrayWithObjects:@"id", @"name", @"tag_target_id", @"account_1", @"account_2", @"money", @"description", @"date", nil];
     
     dealArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray];

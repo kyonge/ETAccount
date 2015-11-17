@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eOm-rG-bjx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eOm-rG-bjx">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
     </dependencies>
     <scenes>
         <!--가계부-->
@@ -370,6 +370,7 @@
                     <connections>
                         <segue destination="AyX-DT-Omp" kind="relationship" relationship="viewControllers" id="Nmt-XJ-XAv"/>
                         <segue destination="FnK-li-nkZ" kind="relationship" relationship="viewControllers" id="Xhx-ZK-hBf"/>
+                        <segue destination="bhL-LX-9Qo" kind="relationship" relationship="viewControllers" id="dL7-QC-B0z"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rwF-xZ-khe" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -524,6 +525,205 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wtg-IY-vwv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2697" y="-106"/>
+        </scene>
+        <!--가계부-->
+        <scene sceneID="SJe-4L-iy8">
+            <objects>
+                <viewController title="가계부" id="kqe-uj-mcc" customClass="ETAccountDealViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8vw-mv-KyQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="2IO-F3-nxN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Z2S-xI-wm5">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="xxs-h2-wDz">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Lf2-6s-9lZ">
+                                        <rect key="frame" x="0.0" y="86" width="600" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lf2-6s-9lZ" id="eqe-m4-pMW">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <animations/>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="kqe-uj-mcc" id="4Rc-7H-DGZ"/>
+                                    <outlet property="delegate" destination="kqe-uj-mcc" id="jgG-MJ-p2o"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="xxs-h2-wDz" firstAttribute="leading" secondItem="Z2S-xI-wm5" secondAttribute="leading" id="EIl-in-F4F"/>
+                            <constraint firstItem="xxs-h2-wDz" firstAttribute="top" secondItem="Z2S-xI-wm5" secondAttribute="top" id="VTq-wz-6bt"/>
+                            <constraint firstItem="2IO-F3-nxN" firstAttribute="top" secondItem="xxs-h2-wDz" secondAttribute="bottom" id="YKO-qT-zGW"/>
+                            <constraint firstAttribute="trailing" secondItem="xxs-h2-wDz" secondAttribute="trailing" id="nrh-8i-rRo"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="통계" id="paD-qS-Alo"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="통계" id="XQs-fP-XNQ">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="hoC-Nv-Vac">
+                            <connections>
+                                <segue destination="VsU-6g-mbP" kind="presentation" identifier="ETAccountAddDealSegue" id="c67-FG-J2o"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="addItem" destination="hoC-Nv-Vac" id="VLL-z2-6QF"/>
+                        <outlet property="dealListTableView" destination="xxs-h2-wDz" id="3Bl-qc-gxn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bfq-1R-b8n" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1242" y="615"/>
+        </scene>
+        <!--통계 추가-->
+        <scene sceneID="wbL-ag-2eE">
+            <objects>
+                <tableViewController id="nvq-qp-oXd" customClass="ETAccountAddDealTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="0dz-bV-ht7">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddCell" id="Ymd-yZ-rpi" customClass="ETAccountAddTableViewCell">
+                                <rect key="frame" x="0.0" y="114" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ymd-yZ-rpi" id="E9F-yJ-LtV">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HO8-mK-F0R">
+                                            <rect key="frame" x="8" y="11" width="584" height="21"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZPC-In-sUq">
+                                            <rect key="frame" x="8" y="7" width="584" height="30"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                            <connections>
+                                                <action selector="closeKeyboard:" destination="Ymd-yZ-rpi" eventType="editingDidEndOnExit" id="mQ3-H6-Yjb"/>
+                                                <outlet property="delegate" destination="Ymd-yZ-rpi" id="xt8-HV-XdU"/>
+                                            </connections>
+                                        </textField>
+                                        <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DKJ-zk-NJM">
+                                            <rect key="frame" x="546" y="7" width="46" height="30"/>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="eOF-O2-YMX"/>
+                                                <constraint firstAttribute="width" constant="46" id="oug-Y2-s7A"/>
+                                            </constraints>
+                                            <state key="normal" title="+/-"/>
+                                            <connections>
+                                                <action selector="changePlusMinus:" destination="Ymd-yZ-rpi" eventType="touchUpInside" id="tkh-Lv-fl1"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <animations/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="ZPC-In-sUq" secondAttribute="bottom" constant="6" id="0Qz-5J-ix0"/>
+                                        <constraint firstItem="ZPC-In-sUq" firstAttribute="top" secondItem="E9F-yJ-LtV" secondAttribute="top" constant="7" id="E7a-fe-NWZ"/>
+                                        <constraint firstAttribute="bottom" secondItem="DKJ-zk-NJM" secondAttribute="bottom" constant="6" id="IFc-yR-OKI"/>
+                                        <constraint firstAttribute="trailing" secondItem="DKJ-zk-NJM" secondAttribute="trailing" constant="8" id="MPN-LJ-WeZ"/>
+                                        <constraint firstItem="DKJ-zk-NJM" firstAttribute="top" secondItem="E9F-yJ-LtV" secondAttribute="top" constant="7" id="W93-5A-LlE"/>
+                                        <constraint firstItem="ZPC-In-sUq" firstAttribute="leading" secondItem="E9F-yJ-LtV" secondAttribute="leading" constant="8" id="Yfu-qe-0Id"/>
+                                        <constraint firstAttribute="trailing" secondItem="HO8-mK-F0R" secondAttribute="trailing" constant="8" id="cle-rJ-zg4"/>
+                                        <constraint firstItem="HO8-mK-F0R" firstAttribute="leading" secondItem="E9F-yJ-LtV" secondAttribute="leading" constant="8" id="fNi-Vx-BtS"/>
+                                        <constraint firstAttribute="bottom" secondItem="HO8-mK-F0R" secondAttribute="bottom" constant="11" id="nxW-M0-zDl"/>
+                                        <constraint firstAttribute="trailing" secondItem="ZPC-In-sUq" secondAttribute="trailing" constant="8" id="teC-UL-htk"/>
+                                        <constraint firstItem="HO8-mK-F0R" firstAttribute="top" secondItem="E9F-yJ-LtV" secondAttribute="top" constant="11" id="xH2-Kj-m3i"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="IFc-yR-OKI"/>
+                                        </mask>
+                                    </variation>
+                                </tableViewCellContentView>
+                                <animations/>
+                                <connections>
+                                    <outlet property="plusMinusButton" destination="DKJ-zk-NJM" id="rrS-xK-5Sv"/>
+                                    <outlet property="titleLabel" destination="HO8-mK-F0R" id="uIh-fw-RTP"/>
+                                    <outlet property="titleTextField" destination="ZPC-In-sUq" id="4Ac-Ee-QMU"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="nvq-qp-oXd" id="IBg-ys-7sd"/>
+                            <outlet property="delegate" destination="nvq-qp-oXd" id="ohs-vn-I1y"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="통계 추가" id="er9-Ec-u2T">
+                        <barButtonItem key="leftBarButtonItem" title="Close" id="YYy-Xf-qyI">
+                            <connections>
+                                <action selector="close:" destination="nvq-qp-oXd" id="IOV-OT-SoF"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="OK" id="G01-SY-jEL">
+                            <connections>
+                                <action selector="selectOk:" destination="nvq-qp-oXd" id="PeC-xo-xZB"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="addDealTableView" destination="0dz-bV-ht7" id="BH4-Bd-dwk"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CBO-Jt-h3F" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2697" y="615"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="EC0-Jd-40w">
+            <objects>
+                <navigationController id="VsU-6g-mbP" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="qEJ-kS-OJA">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="nvq-qp-oXd" kind="relationship" relationship="rootViewController" id="9ng-WW-X7B"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eRl-0a-HNa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1966" y="615"/>
+        </scene>
+        <!--통계-->
+        <scene sceneID="IAc-9N-o0d">
+            <objects>
+                <navigationController id="bhL-LX-9Qo" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="통계" id="9RN-40-tpa"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8it-Tl-iaL">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="kqe-uj-mcc" kind="relationship" relationship="rootViewController" id="8Gf-t5-LEO"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0c6-7D-rvN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="536" y="615"/>
         </scene>
     </scenes>
 </document>
