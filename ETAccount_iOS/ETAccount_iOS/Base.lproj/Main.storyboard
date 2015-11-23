@@ -256,7 +256,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oJU-Pe-VjZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2692" y="-810"/>
+            <point key="canvasLocation" x="2697" y="-810"/>
         </scene>
         <!--계정-->
         <scene sceneID="Sks-qM-JMe">
@@ -287,7 +287,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7fb-4r-AF8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3399" y="-810"/>
+            <point key="canvasLocation" x="3404" y="-810"/>
         </scene>
         <!--Tags-->
         <scene sceneID="Rp0-mS-xxz">
@@ -526,10 +526,10 @@
             </objects>
             <point key="canvasLocation" x="2697" y="-106"/>
         </scene>
-        <!--가계부-->
+        <!--통계-->
         <scene sceneID="SJe-4L-iy8">
             <objects>
-                <viewController title="가계부" id="kqe-uj-mcc" customClass="ETAccountDealViewController" sceneMemberID="viewController">
+                <viewController title="통계" id="kqe-uj-mcc" customClass="ETAccountStatisticListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8vw-mv-KyQ"/>
                         <viewControllerLayoutGuide type="bottom" id="2IO-F3-nxN"/>
@@ -543,7 +543,7 @@
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Lf2-6s-9lZ">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StatisticListTableViewCellIdentifier" id="Lf2-6s-9lZ" customClass="ETAccountStatisticListTableViewCell">
                                         <rect key="frame" x="0.0" y="86" width="600" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lf2-6s-9lZ" id="eqe-m4-pMW">
@@ -552,6 +552,9 @@
                                             <animations/>
                                         </tableViewCellContentView>
                                         <animations/>
+                                        <connections>
+                                            <segue destination="tex-PA-gbR" kind="show" identifier="ETAccountViewStatisticSegue" id="xNH-4K-f0e"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -574,13 +577,13 @@
                     <navigationItem key="navigationItem" title="통계" id="XQs-fP-XNQ">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="hoC-Nv-Vac">
                             <connections>
-                                <segue destination="VsU-6g-mbP" kind="presentation" identifier="ETAccountAddDealSegue" id="c67-FG-J2o"/>
+                                <segue destination="VsU-6g-mbP" kind="presentation" identifier="ETAccountAddStatisticSegue" id="c67-FG-J2o"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="addItem" destination="hoC-Nv-Vac" id="VLL-z2-6QF"/>
-                        <outlet property="dealListTableView" destination="xxs-h2-wDz" id="3Bl-qc-gxn"/>
+                        <outlet property="statisticListTableView" destination="xxs-h2-wDz" id="HP1-al-RKw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bfq-1R-b8n" sceneMemberID="firstResponder"/>
@@ -689,6 +692,89 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CBO-Jt-h3F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2697" y="615"/>
+        </scene>
+        <!--통계 열람-->
+        <scene sceneID="Z0e-BG-QGM">
+            <objects>
+                <tableViewController title="통계 열람" id="lD8-sg-zYB" customClass="ETAccountStatisticDetailViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="VO7-4g-zxm">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ETAccountGraphCellIdentifier" id="Jae-8k-i5J">
+                                <rect key="frame" x="0.0" y="114" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Jae-8k-i5J" id="zl6-lt-4Im">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="czg-Gq-ROv">
+                                            <rect key="frame" x="8" y="8" width="584" height="27"/>
+                                            <animations/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </subviews>
+                                    <animations/>
+                                    <constraints>
+                                        <constraint firstItem="czg-Gq-ROv" firstAttribute="leading" secondItem="zl6-lt-4Im" secondAttribute="leading" constant="8" id="493-gi-TNe"/>
+                                        <constraint firstItem="czg-Gq-ROv" firstAttribute="top" secondItem="zl6-lt-4Im" secondAttribute="top" constant="8" id="APZ-qb-dHe"/>
+                                        <constraint firstAttribute="trailing" secondItem="czg-Gq-ROv" secondAttribute="trailing" constant="8" id="YKh-66-5nd"/>
+                                        <constraint firstAttribute="bottom" secondItem="czg-Gq-ROv" secondAttribute="bottom" constant="8" id="s6b-H3-tRM"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <animations/>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ETAccountTableCellIdentifier" id="hi4-Wm-2sF">
+                                <rect key="frame" x="0.0" y="158" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hi4-Wm-2sF" id="jBG-C3-Yhk">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <animations/>
+                                </tableViewCellContentView>
+                                <animations/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="lD8-sg-zYB" id="hxT-oy-S6h"/>
+                            <outlet property="delegate" destination="lD8-sg-zYB" id="mtt-QA-F1Q"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="통계 열람" id="aLg-fy-lBU">
+                        <barButtonItem key="leftBarButtonItem" enabled="NO" title="Close" id="mdW-Qf-qcJ">
+                            <connections>
+                                <action selector="close:" destination="nvq-qp-oXd" id="eYh-ck-3lN"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Setting" id="7Pq-1D-Zhh">
+                            <connections>
+                                <action selector="selectOk:" destination="nvq-qp-oXd" id="ari-8g-3U2"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wzp-JK-DMP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2697" y="1324"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="HtS-32-OkH">
+            <objects>
+                <navigationController id="tex-PA-gbR" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="0IR-Qc-7x8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="lD8-sg-zYB" kind="relationship" relationship="rootViewController" id="0Yz-pE-eCh"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="E6O-Be-Mdc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1966" y="1324"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="EC0-Jd-40w">
