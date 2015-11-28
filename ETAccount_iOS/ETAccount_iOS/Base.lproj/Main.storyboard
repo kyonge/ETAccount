@@ -553,7 +553,7 @@
                                         </tableViewCellContentView>
                                         <animations/>
                                         <connections>
-                                            <segue destination="tex-PA-gbR" kind="show" identifier="ETAccountViewStatisticSegue" id="xNH-4K-f0e"/>
+                                            <segue destination="lD8-sg-zYB" kind="show" identifier="ETAccountStatisticDetailSegue" id="FOP-3t-8X0"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -743,11 +743,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="통계 열람" id="aLg-fy-lBU">
-                        <barButtonItem key="leftBarButtonItem" enabled="NO" title="Close" id="mdW-Qf-qcJ">
-                            <connections>
-                                <action selector="close:" destination="nvq-qp-oXd" id="eYh-ck-3lN"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Setting" id="7Pq-1D-Zhh">
                             <connections>
                                 <action selector="selectOk:" destination="nvq-qp-oXd" id="ari-8g-3U2"/>
@@ -757,24 +752,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wzp-JK-DMP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2697" y="1324"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="HtS-32-OkH">
-            <objects>
-                <navigationController id="tex-PA-gbR" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="0IR-Qc-7x8">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="lD8-sg-zYB" kind="relationship" relationship="rootViewController" id="0Yz-pE-eCh"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="E6O-Be-Mdc" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1966" y="1324"/>
+            <point key="canvasLocation" x="1966" y="1314"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="EC0-Jd-40w">

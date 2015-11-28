@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "ETAccountStatisticListTableViewCell.h"
+#import "ETAccountStatisticDetailViewController.h"
 
 #import "ETUtility.h"
 
@@ -17,6 +18,8 @@
     IBOutlet UITableView *statisticListTableView;
     
     NSMutableArray *statisticArray;
+    
+    ETAccountStatisticDetailViewController *statisticDetailViewController;
 }
 
 @end

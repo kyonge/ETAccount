@@ -25,6 +25,15 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"ETAccountStatisticDetailSegue"]) {
+        statisticDetailViewController = (ETAccountStatisticDetailViewController *)[segue destinationViewController];
+//        ETAccountStatisticDetailViewController *statisticDetailViewController = (ETAccountStatisticDetailViewController *)[segue destinationViewController];
+//        [statisticDetailViewController setStatisticDictionary:tempStaticDictionary];
+//        [statisticDetailViewController initStatistic];
+    }
+}
+
 
 #pragma mark - 초기화
 
@@ -49,7 +58,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"%d", [statisticArray count]);
     return [statisticArray count];
 }
 
@@ -68,7 +76,6 @@
     static NSString *CellIdentifier = @"StatisticListTableViewCellIdentifier";
     
     ETAccountStatisticListTableViewCell *cell = (ETAccountStatisticListTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    NSLog(@"%@", cell);
     if (cell == nil) {
         cell = [[ETAccountStatisticListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
@@ -78,7 +85,7 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(ETAccountStatisticListTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%@", [[statisticArray objectAtIndex:indexPath.row] objectForKey:@"name"]);
+//    NSLog(@"%@", [[statisticArray objectAtIndex:indexPath.row] objectForKey:@"name"]);
     [[cell textLabel] setText:[[statisticArray objectAtIndex:indexPath.row] objectForKey:@"name"]];
 //    NSDictionary *tempAccountDictionary = [dealArray objectAtIndex:indexPath.row];
 //    NSString *tempDateString = [tempAccountDictionary objectForKey:@"date"];
@@ -100,8 +107,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+//    tempStaticDictionary = [statisticArray objectAtIndex:indexPath.row];
+    [statisticDetailViewController setStatisticDictionary:[statisticArray objectAtIndex:indexPath.row]];
+    [statisticDetailViewController initStatistic];
+    
     [tableView reloadData];
-    //    [challengerDelegate searchChallengerNick:[challengerListArray objectAtIndex:indexPath.row]];
+//    [challengerDelegate searchChallengerNick:[challengerListArray objectAtIndex:indexPath.row]];
 }
 
 //- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
