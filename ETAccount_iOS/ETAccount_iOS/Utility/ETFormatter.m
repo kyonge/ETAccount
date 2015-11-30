@@ -43,4 +43,13 @@
     return finalDateString;
 }
 
++ (NSString *)moneyFormatFromString:(NSString *)moneyString
+{
+    NSInteger money = [moneyString integerValue];
+    NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setFormatterBehavior: NSNumberFormatterBehavior10_4];
+    [numberFormatter setNumberStyle: NSNumberFormatterDecimalStyle];
+    return [numberFormatter stringFromNumber: [NSNumber numberWithInteger:money]];
+}
+
 @end

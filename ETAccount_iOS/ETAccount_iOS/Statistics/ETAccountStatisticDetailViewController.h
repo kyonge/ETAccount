@@ -10,12 +10,16 @@
 
 #import "ETAccountStatisticDetailTableViewCell.h"
 //#import "ETAccountGraphView.h"
+#import "ETAccountTableViewCell.h"
 
 #import "ETUtility.h"
+#import "ETFormatter.h"
 
 @interface ETAccountStatisticDetailViewController : UITableViewController {
 //    IBOutlet ETAccountGraphView *graphView;
+    IBOutlet UITableView *statisticTableView;
     NSDictionary *statisticDictionary;
+    NSArray *resultArray;
 }
 
 - (void)setStatisticDictionary:(NSDictionary *)inputDictionary;

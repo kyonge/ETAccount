@@ -174,7 +174,7 @@
     [[cell accountNameLabel] setText:[tempAccountDictionary objectForKey:@"name"]];
     [[cell accountIncomeLabel] setText:[tempAccountDictionary objectForKey:@"account_1"]];
     [[cell accountExpenseLabel] setText:[tempAccountDictionary objectForKey:@"account_2"]];
-    [[cell accountPriceLabel] setText:[tempAccountDictionary objectForKey:@"money"]];
+    [[cell accountPriceLabel] setText:[NSString stringWithFormat:@"%@", [ETFormatter moneyFormatFromString:[tempAccountDictionary objectForKey:@"money"]]]];
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath

@@ -13,5 +13,6 @@
 + (NSString *)dateColumnFormat:(NSString *)tempDateString;
 + (NSString *)dateStringForDeal:(NSDate *)date;
 + (NSString *)dateStringFromDateColumnFormat:(NSString *)tempDateColumn;
++ (NSString *)moneyFormatFromString:(NSString *)moneyString;
 
 @end
