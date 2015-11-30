@@ -10,6 +10,9 @@
 
 @implementation ETAccountStatisticDetailTableViewCell
 
+@synthesize nameLabel;
+@synthesize moneyLabel;
+
 - (void)awakeFromNib {
     // Initialization code
 }

@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ETAccountStatisticDetailTableViewCell : UITableViewCell
+@interface ETAccountStatisticDetailTableViewCell : UITableViewCell {
+    IBOutlet UILabel *nameLabel;
+    IBOutlet UILabel *moneyLabel;
+}
+
+@property (readonly) IBOutlet UILabel *nameLabel;
+@property (readonly) IBOutlet UILabel *moneyLabel;
 
 @end

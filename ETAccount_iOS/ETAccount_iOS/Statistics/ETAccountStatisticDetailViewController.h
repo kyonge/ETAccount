@@ -16,12 +16,14 @@
 
 #import "ETUtility.h"
 #import "ETFormatter.h"
+#import "ETAccountWhereMaker.h"
 
 @interface ETAccountStatisticDetailViewController : UITableViewController <ETAccountAddDealDelegate> {
 //    IBOutlet ETAccountGraphView *graphView;
     IBOutlet UITableView *statisticTableView;
     NSDictionary *statisticDictionary;
-    NSArray *resultArray;
+    NSArray *resultArray, *resultAccountArray;
+    NSString *whereString;
     
     NSInteger selectedRow;
 }

@@ -65,87 +65,73 @@
     statisticDictionary = [[ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray] objectAtIndex:0];
 //    NSLog(@"staticDictionary : %@", statisticDictionary);
     
-    // 필터
-    querryString = [NSString stringWithFormat:@"SELECT Filter.id, Filter.type, Filter.item, Filter.compare FROM Filter Filter JOIN Statistics_filter_match Match ON Filter.id = Match.filter_id WHERE Match.statistic_id=%@", [statisticDictionary objectForKey:@"id"]];
-    columnArray = [NSArray arrayWithObjects:@"id", @"type", @"item", @"compare", nil];
-    NSArray *filterArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray];
-//    NSLog(@"%@", filterArray);
-    
-    // 기본 Deal SELECT 쿼리
-    querryString = @"SELECT Deal.id, Deal.name, Deal.tag_target_id, Account_1.name account_1, Account_1.tag_target_id tag_target_id_1, Account_2.name account_2, Account_2.tag_target_id tag_target_id_2, money, description, Deal.date FROM Deal JOIN Account Account_1 ON Deal.account_id_1 = Account_1.id JOIN Account Account_2 ON Deal.account_id_2 = Account_2.id WHERE";
-    
-    // date 조건
-    NSString *date_1String = [statisticDictionary objectForKey:@"date_1"];
-    if (![date_1String isEqualToString:@"0"])
-        querryString = [NSString stringWithFormat:@"%@ Deal.date>'%@' AND", querryString, date_1String];
-    NSString *date_2String = [statisticDictionary objectForKey:@"date_2"];
-    if (![date_2String isEqualToString:@"0"])
-        querryString = [NSString stringWithFormat:@"%@ Deal.date>'%@' AND", querryString, date_2String];
-//    NSLog(@"%@", querryString);
-    
-    // 필터 내용들을 Deal SELECT 쿼리에 추가
-    for (NSDictionary *tempFilterDictionary in filterArray) {
-//        NSLog(@"%@", tempFilterDictionary);
-        FILTER_TYPE tempType = [[tempFilterDictionary objectForKey:@"type"] integerValue];
-        NSInteger tempItem = [[tempFilterDictionary objectForKey:@"item"] integerValue];
-        FILTER_COMPARE tempCompare = [[tempFilterDictionary objectForKey:@"compare"] integerValue];
-        
-        switch (tempType) {
-            case FILTER_TYPE_ITEM:
-                querryString = [NSString stringWithFormat:@"%@ (Deal.account_id_1='%ld' OR Deal.account_id_2='%ld') AND", querryString, (long)tempItem, (long)tempItem];
-                break;
-                
-            case FILTER_TYPE_TAG: {
-                NSString *tagQuerryString = [NSString stringWithFormat:@"SELECT Deal.id, Deal.tag_target_id, Tag_match.tag_id FROM Deal Deal JOIN Tag_match Tag_match ON Deal.tag_target_id = Tag_match.tag_target_id WHERE Tag_match.tag_id='%ld'", (long)tempItem];
-                NSArray *tagColumnArray = [NSArray arrayWithObjects:@"id", @"tag_target_id", @"tag_id", nil];
-                NSArray *tagTargetArray = [ETUtility selectDataWithQuerry:tagQuerryString FromFile:_DB WithColumn:tagColumnArray];
-                
-                querryString = [NSString stringWithFormat:@"%@ (", querryString];
-                for (NSDictionary *tempTagTargetDictionary in tagTargetArray) {
-                    NSNumber *tempItem = [tempTagTargetDictionary objectForKey:@"tag_id"];
-                    querryString = [NSString stringWithFormat:@"%@ Deal.tag_target_id='%@' OR tag_target_id_1='%@' OR tag_target_id_2='%@' OR", querryString, tempItem, tempItem, tempItem];
-                }
-                querryString = [querryString substringToIndex:[querryString length] - 3];
-                querryString = [NSString stringWithFormat:@"%@) AND", querryString];
-                
-                break;
-            }
-                
-            case FILTER_TYPE_COST: {
-                NSString *compareString;
-                if (tempCompare == FILTER_COMPARE_SAME)
-                    compareString = @"=";
-                else if (tempCompare == FILTER_COMPARE_LEFT)
-                    compareString = @">";
-                else if (tempCompare == FILTER_COMPARE_SAME_LEFT)
-                    compareString = @">=";
-                else if (tempCompare == FILTER_COMPARE_RIGHT)
-                    compareString = @"<";
-                else if (tempCompare == FILTER_COMPARE_SAME_RIGHT)
-                    compareString = @"<=";
-                
-                querryString = [NSString stringWithFormat:@"%@ ABS(money)%@%ld AND", querryString, compareString, (long)tempItem];
-                
-                break;
-            }
-                
-            default:
-                break;
-        }
-    }
-    querryString = [querryString substringToIndex:[querryString length] - 4];
-//    NSLog(@"%@", querryString);
+    // 조건
+    whereString = [ETAccountWhereMaker whereStringWithDictionary:statisticDictionary];
+    querryString = @"SELECT Deal.id, Deal.name, Deal.tag_target_id, Account_1.name account_1, Account_1.tag_target_id tag_target_id_1, Account_2.name account_2, Account_2.tag_target_id tag_target_id_2, money, description, Deal.date FROM Deal JOIN Account Account_1 ON Deal.account_id_1 = Account_1.id JOIN Account Account_2 ON Deal.account_id_2 = Account_2.id ";
+    querryString = [NSString stringWithFormat:@"%@ %@",querryString, whereString];
     
     // ORDER BY
     querryString = [NSString stringWithFormat:@"%@ ORDER BY datetime(Deal.Date) DESC", querryString];
-//    NSLog(@"%@", querryString);
     
     // Deal SELECT
     columnArray = [NSArray arrayWithObjects:@"id", @"name", @"tag_target_id", @"account_1", @"tag_target_id_1", @"account_2", @"tag_target_id_2", @"money", @"description", @"date", nil];
     resultArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray];
 //    NSLog(@"%@", resultArray);
     
+    resultAccountArray = [NSArray arrayWithArray:[self getResultOfAccount]];
+    
     [statisticTableView reloadData];
+}
+
+- (NSMutableArray *)getResultOfAccount
+{
+    NSString *querryString = @"SELECT Deal.id, Deal.tag_target_id, Account_1.id account_1, Account_1.name account_1_name, Account_1.tag_target_id tag_target_id_1, Account_2.id account_2, Account_2.name account_2_name, Account_2.tag_target_id tag_target_id_2, money FROM Deal JOIN Account Account_1 ON Deal.account_id_1 = Account_1.id JOIN Account Account_2 ON Deal.account_id_2 = Account_2.id ";
+    querryString = [NSString stringWithFormat:@"%@ %@",querryString, whereString];
+    
+    // ORDER BY
+    querryString = [NSString stringWithFormat:@"%@ ORDER BY datetime(Deal.Date) DESC", querryString];
+    
+    NSArray *columnArray = [NSArray arrayWithObjects:@"id", @"tag_target_id", @"account_1", @"account_1_name", @"tag_target_id_1", @"account_2", @"account_2_name", @"tag_target_id_2", @"money", nil];
+    NSArray *resultDataArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray];
+//    NSLog(@"%@", resultDataArray);
+    
+    NSMutableArray *tempResultArray = [NSMutableArray array];
+    
+    for (NSDictionary *tempDataDictionary in resultDataArray)
+    {
+        NSInteger tempId_1 = [[tempDataDictionary objectForKey:@"account_1"] integerValue];
+        NSString *tempName_1 = [tempDataDictionary objectForKey:@"account_1_name"];
+        NSInteger tempId_2 = [[tempDataDictionary objectForKey:@"account_2"] integerValue];
+        NSString *tempName_2 = [tempDataDictionary objectForKey:@"account_2_name"];
+        NSInteger tempMoney = [[tempDataDictionary objectForKey:@"money"] integerValue];
+        
+        [self addMoneyWithId:tempId_1 Name:tempName_1 Money:tempMoney To:tempResultArray Is1:YES];
+        [self addMoneyWithId:tempId_2 Name:tempName_2 Money:tempMoney To:tempResultArray Is1:NO];
+    }
+    
+//    NSLog(@"%@", tempResultArray);
+    return tempResultArray;
+}
+
+- (void)addMoneyWithId:(NSInteger)tempId Name:(NSString *)tempName Money:(NSInteger)tempMoney To:(NSMutableArray *)tempResultArray Is1:(BOOL)is1
+{
+    if (!is1)
+        tempMoney *= -1;
+    
+    NSArray *keyArray = [NSArray arrayWithObjects:@"id", @"name", @"money", nil];
+    
+    if (![ETUtility hasArray:tempResultArray hasDictionaryWithId:tempId]) {
+        NSArray *tempObjectArray = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%ld", (long)tempId], tempName, [NSString stringWithFormat:@"%ld", (long)tempMoney], nil];
+        NSDictionary *tempAccountDataDictionary = [NSDictionary dictionaryWithObjects:tempObjectArray forKeys:keyArray];
+        [tempResultArray addObject:tempAccountDataDictionary];
+    }
+    else {
+        NSMutableDictionary *tempAccountDataDictionary = [NSMutableDictionary dictionaryWithDictionary:[ETUtility selectDictionaryWithValue:[NSString stringWithFormat:@"%ld", (long)tempId] OfKey:@"id" inArray:tempResultArray]];
+//        NSInteger tempIndex = [ETUtility indexOfDictionaryWithValue:[NSString stringWithFormat:@"%ld", (long)tempId] OfKey:@"id" inArray:tempResultArray];
+        NSInteger tempIndex = [tempResultArray indexOfObject:tempAccountDataDictionary];
+        [tempAccountDataDictionary setValue:[NSString stringWithFormat:@"%ld", (long)([[tempAccountDataDictionary objectForKey:@"money"] integerValue] + tempMoney)] forKey:@"money"];
+        [tempResultArray replaceObjectAtIndex:tempIndex withObject:tempAccountDataDictionary];
+    }
 }
 
 
@@ -222,7 +208,9 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 3)
+    if (section == 1)
+        return [resultAccountArray count];
+    else if (section == 3)
         return [resultArray count];
     else return 1;
 }
@@ -238,6 +226,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == 1 || indexPath.section == 2) {
+        NSString *CellIdentifier = @"ETAccountStatisticResultSummaryTableViewCellIdentifier";
+        
+        ETAccountStatisticDetailTableViewCell *cell = (ETAccountStatisticDetailTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//        [cell setAddDealCellDelegate:self];
+        if (cell == nil) {
+            cell = [[ETAccountStatisticDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }
+        
+        return cell;
+    }
     if (indexPath.section == 3) {
         static NSString *CellIdentifier = @"ETAccountStatisticResultDataListTableViewCellIdentifier";
         
@@ -251,10 +250,10 @@
     
     static NSString *CellIdentifier = @"ETAccountStatisticResultValueListTableViewCellIdentifier";
     
-    ETAccountStatisticDetailTableViewCell *cell = (ETAccountStatisticDetailTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 //    [cell setAddDealCellDelegate:self];
     if (cell == nil) {
-        cell = [[ETAccountStatisticDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     return cell;
@@ -262,6 +261,11 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(ETAccountTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == 1) {
+        [[(ETAccountStatisticDetailTableViewCell *)cell nameLabel] setText:[[resultAccountArray objectAtIndex:indexPath.row] objectForKey:@"name"]];
+        [[(ETAccountStatisticDetailTableViewCell *)cell moneyLabel] setText:[[resultAccountArray objectAtIndex:indexPath.row] objectForKey:@"money"]];
+//        [[cell textLabel] setText:[NSString stringWithFormat:@"%@ %@", [[resultAccountArray objectAtIndex:indexPath.row] objectForKey:@"name"], [[resultAccountArray objectAtIndex:indexPath.row] objectForKey:@"money"]]];
+    }
     if (indexPath.section == 3) {
         NSDictionary *tempAccountDictionary = [resultArray objectAtIndex:indexPath.row];
         NSString *tempDateString = [tempAccountDictionary objectForKey:@"date"];
@@ -277,7 +281,10 @@
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    selectedRow = indexPath.row;
+    if (indexPath.section == 0)
+        return NO;
+    else if (indexPath.section == 3)
+        selectedRow = indexPath.row;
     
     return YES;
 }
@@ -296,6 +303,14 @@
     }
     
     [tableView reloadData];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section != 3)
+        return NO;
+    
+    return YES;
 }
 
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(nonnull NSIndexPath *)indexPath

@@ -29,6 +29,7 @@
 		DF337EB01AD2F659001CA285 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DF337EAF1AD2F659001CA285 /* libsqlite3.0.dylib */; };
 		DF358D451AD7479000972F9B /* ETAccountAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF358D431AD7479000972F9B /* ETAccountAddViewController.m */; };
 		DF358D461AD7479000972F9B /* ETAccountAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF358D441AD7479000972F9B /* ETAccountAddViewController.xib */; };
+		DF4E5BE01C0C81F400501AC6 /* ETAccountWhereMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4E5BDF1C0C81F300501AC6 /* ETAccountWhereMaker.m */; };
 		DF614C3E1BCFFE320015D662 /* ETAccountAddAccountTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF614C3D1BCFFE320015D662 /* ETAccountAddAccountTableViewController.m */; };
 		DF614C4A1BD0048F0015D662 /* ETAccountAddTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DF614C431BD0048F0015D662 /* ETAccountAddTableViewCell.m */; };
 		DF614C4B1BD0048F0015D662 /* ETAccountAddDealTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF614C451BD0048F0015D662 /* ETAccountAddDealTableViewController.m */; };
@@ -97,6 +98,8 @@
 		DF358D421AD7479000972F9B /* ETAccountAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountAddViewController.h; path = Account/ETAccountAddViewController.h; sourceTree = "<group>"; };
 		DF358D431AD7479000972F9B /* ETAccountAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountAddViewController.m; path = Account/ETAccountAddViewController.m; sourceTree = "<group>"; };
 		DF358D441AD7479000972F9B /* ETAccountAddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ETAccountAddViewController.xib; path = Account/ETAccountAddViewController.xib; sourceTree = "<group>"; };
+		DF4E5BDE1C0C81F300501AC6 /* ETAccountWhereMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ETAccountWhereMaker.h; sourceTree = "<group>"; };
+		DF4E5BDF1C0C81F300501AC6 /* ETAccountWhereMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ETAccountWhereMaker.m; sourceTree = "<group>"; };
 		DF614C3C1BCFFE320015D662 /* ETAccountAddAccountTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountAddAccountTableViewController.h; path = Item/ETAccountAddAccountTableViewController.h; sourceTree = "<group>"; };
 		DF614C3D1BCFFE320015D662 /* ETAccountAddAccountTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountAddAccountTableViewController.m; path = Item/ETAccountAddAccountTableViewController.m; sourceTree = "<group>"; };
 		DF614C421BD0048F0015D662 /* ETAccountAddTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountAddTableViewCell.h; path = Deal/ETAccountAddTableViewCell.h; sourceTree = "<group>"; };
@@ -256,6 +259,8 @@
 				DF0CFB361BAE5D6800A98D88 /* ETFormatter.m */,
 				DF337E971AD2F63E001CA285 /* ETXMLParser.h */,
 				DF337E981AD2F63E001CA285 /* ETXMLParser.m */,
+				DF4E5BDE1C0C81F300501AC6 /* ETAccountWhereMaker.h */,
+				DF4E5BDF1C0C81F300501AC6 /* ETAccountWhereMaker.m */,
 				DF337E991AD2F63E001CA285 /* FMDatabase */,
 				DF337E9E1AD2F63E001CA285 /* MapTileOverlay */,
 				DF337EA11AD2F63E001CA285 /* MKMapView+ZoomLevel */,
@@ -501,6 +506,7 @@
 				DF337EA71AD2F63E001CA285 /* ETUtility.m in Sources */,
 				DF614C3E1BCFFE320015D662 /* ETAccountAddAccountTableViewController.m in Sources */,
 				DF614C4B1BD0048F0015D662 /* ETAccountAddDealTableViewController.m in Sources */,
+				DF4E5BE01C0C81F400501AC6 /* ETAccountWhereMaker.m in Sources */,
 				DF9597CD1C038A16005856FD /* ETAccountStatisticDetailTableViewCell.m in Sources */,
 				DF0CFB371BAE5D6800A98D88 /* ETFormatter.m in Sources */,
 				DF0CFB301BAC48FE00A98D88 /* DetailViewController.m in Sources */,

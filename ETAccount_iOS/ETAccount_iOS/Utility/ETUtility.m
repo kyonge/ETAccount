@@ -188,6 +188,17 @@
     return nil;
 }
 
++ (NSInteger)indexOfDictionaryWithValue:(id)value OfKey:(NSString *)key inArray:(NSArray *)array
+{
+    for (NSInteger index = 0; index < [array count]; index++) {
+        NSDictionary *tempDictionary = [array objectAtIndex:index];
+        if ([[tempDictionary objectForKey:key] isEqualToString:value])
+            return index;
+    }
+    
+    return [array count];
+}
+
 + (BOOL)hasArray:(NSArray *)targetArray hasDictionaryWithId:(NSInteger)targetId
 {
     for (NSDictionary *tempDictionary in targetArray) {
