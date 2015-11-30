@@ -832,6 +832,7 @@
                                     <outlet property="accountIncomeLabel" destination="TWZ-NP-Fts" id="mcf-N1-F0B"/>
                                     <outlet property="accountNameLabel" destination="hEV-cl-hDS" id="gYE-wb-GeM"/>
                                     <outlet property="accountPriceLabel" destination="FIl-iD-MHA" id="Ni9-9Z-Ehm"/>
+                                    <segue destination="O83-6F-Wxb" kind="show" identifier="ETAccountDetailStatisticItemSegue" id="Y7y-Qi-ihB"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -891,4 +892,7 @@
             <point key="canvasLocation" x="536" y="615"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Y7y-Qi-ihB"/>
+    </inferredMetricsTieBreakers>
 </document>

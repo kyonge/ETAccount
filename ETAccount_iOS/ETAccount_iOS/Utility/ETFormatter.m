@@ -36,9 +36,22 @@
     NSString *yearString = (NSString *)[tempDateArray objectAtIndex:0];
     NSArray *dateArray = [(NSString *)[tempDateArray objectAtIndex:1] componentsSeparatedByString:@"/"];
     NSArray *timeArray = [(NSString *)[tempDateArray objectAtIndex:2] componentsSeparatedByString:@":"];
+    
+    NSString *monthString = [dateArray objectAtIndex:1];
+//    if ([monthString integerValue] < 10)
+//        monthString = [NSString stringWithFormat:@"0%@", monthString];
+    NSString *dayString = [dateArray objectAtIndex:2];
+//    if ([dayString integerValue] < 10)
+//        dayString = [NSString stringWithFormat:@"0%@", dayString];
+    NSString *hourString = [timeArray objectAtIndex:0];
+//    if ([hourString integerValue] < 10)
+//        hourString = [NSString stringWithFormat:@"0%@", hourString];
+    NSString *minuteString = [timeArray objectAtIndex:1];
+//    if ([minuteString integerValue] < 10)
+//        minuteString = [NSString stringWithFormat:@"0%@", minuteString];
+    
     NSString *finalDateString = [NSString stringWithFormat:@"%@-%@-%@ %@:%@",
-                                 yearString, [dateArray objectAtIndex:1], [dateArray objectAtIndex:2],
-                                 [timeArray objectAtIndex:0], [timeArray objectAtIndex:1]];
+                                 yearString, monthString, dayString, hourString, minuteString];
     
     return finalDateString;
 }

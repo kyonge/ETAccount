@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ETAccountDealDetailViewController.h"
+
 #import "ETAccountStatisticDetailTableViewCell.h"
 //#import "ETAccountGraphView.h"
 #import "ETAccountTableViewCell.h"
@@ -15,11 +17,13 @@
 #import "ETUtility.h"
 #import "ETFormatter.h"
 
-@interface ETAccountStatisticDetailViewController : UITableViewController {
+@interface ETAccountStatisticDetailViewController : UITableViewController <ETAccountAddDealDelegate> {
 //    IBOutlet ETAccountGraphView *graphView;
     IBOutlet UITableView *statisticTableView;
     NSDictionary *statisticDictionary;
     NSArray *resultArray;
+    
+    NSInteger selectedRow;
 }
 
 - (void)setStatisticDictionary:(NSDictionary *)inputDictionary;

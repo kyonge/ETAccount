@@ -27,30 +27,28 @@
     if ([[segue identifier] isEqualToString:@"ETAccountAddStatisticSegue"]) {
 //        [(ETAccountAddDealTableViewController *)[[(UINavigationController *)[segue destinationViewController] viewControllers] objectAtIndex:0] setAddDealDelegate:self];
     }
-    else if ([[segue identifier] isEqualToString:@"ETAccountViewStatisticSegue"]) {
-//        NSDictionary *selectedDeal = [dealArray objectAtIndex:selectedRow];
-//        
-//        NSString *tempDateString = [selectedDeal objectForKey:@"date"];
-//        //        NSString *finalDateString = [ETFormatter dateColumnFormat:tempDateString];
-//        
-//        NSString *querryString_1 = [NSString stringWithFormat:@"SELECT Account.id FROM Account WHERE Account.name = '%@'", [selectedDeal objectForKey:@"account_1"]];
-//        NSArray *columnArray = [NSArray arrayWithObject:@"id"];
-//        NSArray *account_1_id = [ETUtility selectDataWithQuerry:querryString_1 FromFile:_DB WithColumn:columnArray];
-//        NSString *querryString_2 = [NSString stringWithFormat:@"SELECT Account.id FROM Account WHERE Account.name = '%@'", [selectedDeal objectForKey:@"account_2"]];
-//        NSArray *account_2_id = [ETUtility selectDataWithQuerry:querryString_2 FromFile:_DB WithColumn:columnArray];
-//        
-//        [(ETAccountDealDetailViewController *)[segue destinationViewController] setAddDealDelegate:self];
-//        [(ETAccountDealDetailViewController *)[segue destinationViewController] initDealDetailWithDate:tempDateString
-//                                                                                                  Name:[selectedDeal objectForKey:@"name"]
-//                                                                                                 Money:[selectedDeal objectForKey:@"money"]
-//                                                                                                  Left:[[[account_1_id objectAtIndex:0] objectForKey:@"id"] integerValue]
-//                                                                                                 Right:[[[account_2_id objectAtIndex:0] objectForKey:@"id"] integerValue]
-//                                                                                           Description:[selectedDeal objectForKey:@"description"]
-//                                                                                             tagTarget:[[selectedDeal objectForKey:@"tag_target_id"] integerValue]
-//                                                                                                    Id:[[selectedDeal objectForKey:@"id"] integerValue]];
+    else if ([[segue identifier] isEqualToString:@"ETAccountDetailStatisticItemSegue"]) {
+        NSDictionary *selectedDeal = [resultArray objectAtIndex:selectedRow];
+        
+        NSString *tempDateString = [selectedDeal objectForKey:@"date"];
+//        NSString *finalDateString = [ETFormatter dateColumnFormat:tempDateString];
+        
+        NSString *querryString_1 = [NSString stringWithFormat:@"SELECT Account.id FROM Account WHERE Account.name = '%@'", [selectedDeal objectForKey:@"account_1"]];
+        NSArray *columnArray = [NSArray arrayWithObject:@"id"];
+        NSArray *account_1_id = [ETUtility selectDataWithQuerry:querryString_1 FromFile:_DB WithColumn:columnArray];
+        NSString *querryString_2 = [NSString stringWithFormat:@"SELECT Account.id FROM Account WHERE Account.name = '%@'", [selectedDeal objectForKey:@"account_2"]];
+        NSArray *account_2_id = [ETUtility selectDataWithQuerry:querryString_2 FromFile:_DB WithColumn:columnArray];
+        
+        [(ETAccountDealDetailViewController *)[segue destinationViewController] setAddDealDelegate:self];
+        [(ETAccountDealDetailViewController *)[segue destinationViewController] initDealDetailWithDate:tempDateString
+                                                                                                  Name:[selectedDeal objectForKey:@"name"]
+                                                                                                 Money:[selectedDeal objectForKey:@"money"]
+                                                                                                  Left:[[[account_1_id objectAtIndex:0] objectForKey:@"id"] integerValue]
+                                                                                                 Right:[[[account_2_id objectAtIndex:0] objectForKey:@"id"] integerValue]
+                                                                                           Description:[selectedDeal objectForKey:@"description"]
+                                                                                             tagTarget:[[selectedDeal objectForKey:@"tag_target_id"] integerValue]
+                                                                                                    Id:[[selectedDeal objectForKey:@"id"] integerValue]];
     }
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
 }
 
 - (void)setStatisticDictionary:(NSDictionary *)inputDictionary
@@ -151,12 +149,60 @@
 }
 
 
+#pragma mark - 삭제
+
+- (void)askDelete:(NSIndexPath *)indexPath TableView:(UITableView*)tableView
+{
+    UIAlertController *deleteAccountAlertControl = [UIAlertController
+                                                    alertControllerWithTitle:@"거래 삭제"
+                                                    message:@"거래를 삭제하시겠습니까?"
+                                                    preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"삭제", @"Close action")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action)
+                               {
+                                   [self delete:indexPath TableView:tableView];
+                               }];
+    [deleteAccountAlertControl addAction:okAction];
+    
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"취소", @"Cancel action")
+                                   style:UIAlertActionStyleCancel
+                                   handler:nil];
+    [deleteAccountAlertControl addAction:cancelAction];
+    
+    [self presentViewController:deleteAccountAlertControl animated:YES completion:nil];
+}
+
+- (void)delete:(NSIndexPath *)indexPath TableView:(UITableView*)tableView
+{
+    NSDictionary *dealDictionary = [resultArray objectAtIndex:indexPath.row];
+    
+    // tag_target_id 삭제
+    NSInteger targetTag = [[dealDictionary objectForKey:@"tag_target_id"] integerValue];
+    [ETAccountDBManager deleteFromTable:@"Tag_target" OfId:targetTag];
+    
+    NSString *deleteMatchOfTargetQuerryString = [NSString stringWithFormat:@"DELETE FROM Tag_match WHERE tag_target_id = %ld", (long)targetTag];
+    [ETUtility runQuerry:deleteMatchOfTargetQuerryString FromFile:_DB];
+    
+    // DB에서 삭제
+    NSInteger targetAccountId = [[dealDictionary objectForKey:@"id"] integerValue];
+    if (![ETAccountDBManager deleteFromTable:@"Deal" OfId:targetAccountId]) {
+        [ETUtility showAlert:@"ETAccount" Message:@"삭제하지 못했습니다." atViewController:self withBlank:NO];
+    }
+    
+    [self initStatistic];
+    [tableView reloadData];
+}
+
+
 #pragma mark - 델리게이트 메서드
 
 #pragma mark Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 4;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -165,8 +211,10 @@
         case 0:
             return @"Graph";
         case 1:
-            return @"Result";
+            return @"Result - Account";
         case 2:
+            return @"Result - Tag";
+        case 3:
             return @"Data";
     }
     
@@ -174,21 +222,23 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 2)
+    if (section == 3)
         return [resultArray count];
     else return 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
-    if (indexPath.section == 2)
+    if (indexPath.section == 0)
+        return [[self view] frame].size.width;
+    else if (indexPath.section == 3)
         return 60;
     else return 44;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 2) {
+    if (indexPath.section == 3) {
         static NSString *CellIdentifier = @"ETAccountStatisticResultDataListTableViewCellIdentifier";
         
         ETAccountTableViewCell *cell = (ETAccountTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -212,7 +262,7 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(ETAccountTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 2) {
+    if (indexPath.section == 3) {
         NSDictionary *tempAccountDictionary = [resultArray objectAtIndex:indexPath.row];
         NSString *tempDateString = [tempAccountDictionary objectForKey:@"date"];
         NSString *finalDateString = [ETFormatter dateColumnFormat:tempDateString];
@@ -225,37 +275,12 @@
     }
 }
 
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    NSString *CellIdentifier = @"ETAccountTableCellIdentifier";
-//    
-//    ETAccountStatisticDetailTableViewCell *cell = (ETAccountStatisticDetailTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-////    [cell setAddDealCellDelegate:self];
-//    if (cell == nil) {
-//        cell = [[ETAccountStatisticDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//    }
-//    
-////    [cell setCellSection:indexPath.section];
-//    
-//    switch (indexPath.section) {
-//        case 0:
-////            [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
-////            [cell setPlaceholder:@"날짜"];
-////            
-////            [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:YES];
-//            break;
-//        case 1:
-////            [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
-////            [cell setPlaceholder:@"거래명"];
-//            break;
-//    }
-//    
-//    return cell;
-//}
-
-//- (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(nonnull NSIndexPath *)indexPath
-//{
-//    [[tableView cellForRowAtIndexPath:indexPath] resignFirstResponder];
-//}
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    selectedRow = indexPath.row;
+    
+    return YES;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -271,6 +296,28 @@
     }
     
     [tableView reloadData];
+}
+
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
+    UITableViewRowAction *deleteTagAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
+                                                                               title:@"Delete"
+                                                                             handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+                                                                                 [tableView setEditing:NO animated:NO];
+                                                                                 
+                                                                                 [self askDelete:indexPath TableView:tableView];
+                                                                             }];
+    [deleteTagAction setBackgroundColor:[UIColor redColor]];
+    
+    [tableView setEditing:YES animated:NO];
+    return [NSArray arrayWithObject:deleteTagAction];
+}
+
+#pragma mark ETAccountAddDealDelegate
+
+- (void)didAddDeal
+{
+    [self initStatistic];
 }
 
 @end
