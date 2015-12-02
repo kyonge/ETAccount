@@ -14,6 +14,7 @@
 
 + (NSInteger)getLast:(NSString *)key FromTable:(NSString *)table;
 + (NSString *)getItem:(NSString *)itemName OfId:(NSInteger)itemIdx FromTable:(NSString *)table;
++ (NSString *)getItem:(NSString *)itemName OfId:(NSInteger)itemIdx Key:(NSString *)key FromTable:(NSString *)table;
 + (BOOL)insertToTable:(NSString *)table dataDictionary:(NSDictionary *)dataDic;
 + (BOOL)updateToTable:(NSString *)table dataDictionary:(NSDictionary *)dataDic ToId:(NSInteger)dealId;
 + (BOOL)deleteFromTable:(NSString *)table OfId:(NSInteger)itemId;

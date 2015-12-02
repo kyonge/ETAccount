@@ -32,12 +32,24 @@
 
 + (NSString *)getItem:(NSString *)itemName OfId:(NSInteger)itemIdx FromTable:(NSString *)table
 {
-    //현재는 전체 로드 : 날짜순 조건 추가, 동적 로딩 추가
-    
     NSString *querryString = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE id = %ld",itemName, table, (long)itemIdx];
     NSArray *columnArray = [NSArray arrayWithObjects:itemName, nil];
     
-    return [[[ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray] objectAtIndex:0] objectForKey:itemName];
+    NSArray *resultArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray];
+    if ([resultArray count] > 0)
+        return [[resultArray objectAtIndex:0] objectForKey:itemName];
+    else return @"-1";
+}
+
++ (NSString *)getItem:(NSString *)itemName OfId:(NSInteger)itemIdx Key:(NSString *)key FromTable:(NSString *)table
+{
+    NSString *querryString = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = %ld",itemName, table, key, (long)itemIdx];
+    NSArray *columnArray = [NSArray arrayWithObjects:itemName, nil];
+    
+    NSArray *resultArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray];
+    if ([resultArray count] > 0)
+        return [[resultArray objectAtIndex:0] objectForKey:itemName];
+    else return @"-1";
 }
 
 + (BOOL)insertToTable:(NSString *)table dataDictionary:(NSDictionary *)dataDic

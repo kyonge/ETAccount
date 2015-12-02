@@ -22,7 +22,7 @@
 //    IBOutlet ETAccountGraphView *graphView;
     IBOutlet UITableView *statisticTableView;
     NSDictionary *statisticDictionary;
-    NSArray *resultArray, *resultAccountArray;
+    NSArray *resultArray, *resultAccountArray, *resultTagArray;
     NSString *whereString;
     
     NSInteger selectedRow;
