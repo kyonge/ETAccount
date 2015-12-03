@@ -18,5 +18,6 @@
 + (BOOL)insertToTable:(NSString *)table dataDictionary:(NSDictionary *)dataDic;
 + (BOOL)updateToTable:(NSString *)table dataDictionary:(NSDictionary *)dataDic ToId:(NSInteger)dealId;
 + (BOOL)deleteFromTable:(NSString *)table OfId:(NSInteger)itemId;
++ (BOOL)deleteFromTable:(NSString *)table OfId:(NSInteger)itemId Key:(NSString *)key;
 
 @end

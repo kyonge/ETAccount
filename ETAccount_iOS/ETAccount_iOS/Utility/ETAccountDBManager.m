@@ -96,4 +96,11 @@
     return [ETUtility runQuerry:querryString FromFile:_DB];
 }
 
++ (BOOL)deleteFromTable:(NSString *)table OfId:(NSInteger)itemId Key:(NSString *)key
+{
+    NSString *querryString = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@ = %ld", table, key, (long)itemId];
+    
+    return [ETUtility runQuerry:querryString FromFile:_DB];
+}
+
 @end

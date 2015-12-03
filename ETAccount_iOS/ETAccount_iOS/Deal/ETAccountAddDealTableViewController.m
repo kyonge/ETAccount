@@ -175,7 +175,10 @@
     }
     
     // 태그
-    NSInteger tag_target_1 = [ETAccountUtility getTagFromViewController:self];
+    NSInteger tag_target_1;
+    if (dealTagTarget == 0) tag_target_1 = [ETAccountUtility getTagFromViewController:self];
+    else tag_target_1 = dealTagTarget;
+    
     if (tag_target_1 == -1)
         return;
     else {

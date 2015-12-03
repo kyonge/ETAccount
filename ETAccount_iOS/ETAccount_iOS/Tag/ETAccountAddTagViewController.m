@@ -112,6 +112,10 @@
         [ETUtility showAlert:@"ETAccount" Message:@"삭제하지 못했습니다." atViewController:self withBlank:NO];
     }
     
+    if (![ETAccountDBManager deleteFromTable:@"Tag_match" OfId:deleteTagId Key:@"tag_id"]) {
+        [ETUtility showAlert:@"ETAccount" Message:@"삭제하지 못했습니다." atViewController:self withBlank:NO];
+    }
+    
     // SelectedTagsArray에서 삭제
     for (NSDictionary *tempDic in selectedTagsArray) {
         if ([[tempDic objectForKey:@"id"] integerValue] == deleteTagId)

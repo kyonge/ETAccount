@@ -42,8 +42,8 @@
 		DF9597CD1C038A16005856FD /* ETAccountStatisticDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9597CC1C038A16005856FD /* ETAccountStatisticDetailTableViewCell.m */; };
 		DFA5B7BA1BEDD87400243B88 /* ETAccountUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA5B7B91BEDD87400243B88 /* ETAccountUtility.m */; };
 		DFAA41DB1BD5356300DEC501 /* ETAccountDealDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAA41DA1BD5356300DEC501 /* ETAccountDealDetailViewController.m */; };
-		DFC563171C0F4AB3000CAAC2 /* ETAccount.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = DFC563161C0F4AB3000CAAC2 /* ETAccount.sqlite */; };
 		DFCF609D1BDDB3C70083F674 /* ETAccountAddTagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCF609C1BDDB3C70083F674 /* ETAccountAddTagViewController.m */; };
+		DFCFE39F1C0F5B1600D5E3BC /* ETAccount.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = DFCFE39E1C0F5B1600D5E3BC /* ETAccount.sqlite */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,9 +124,9 @@
 		DFA5B7B91BEDD87400243B88 /* ETAccountUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ETAccountUtility.m; sourceTree = "<group>"; };
 		DFAA41D91BD5356300DEC501 /* ETAccountDealDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountDealDetailViewController.h; path = Deal/ETAccountDealDetailViewController.h; sourceTree = "<group>"; };
 		DFAA41DA1BD5356300DEC501 /* ETAccountDealDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountDealDetailViewController.m; path = Deal/ETAccountDealDetailViewController.m; sourceTree = "<group>"; };
-		DFC563161C0F4AB3000CAAC2 /* ETAccount.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = ETAccount.sqlite; sourceTree = "<group>"; };
 		DFCF609B1BDDB3C70083F674 /* ETAccountAddTagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountAddTagViewController.h; path = Tag/ETAccountAddTagViewController.h; sourceTree = "<group>"; };
 		DFCF609C1BDDB3C70083F674 /* ETAccountAddTagViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountAddTagViewController.m; path = Tag/ETAccountAddTagViewController.m; sourceTree = "<group>"; };
+		DFCFE39E1C0F5B1600D5E3BC /* ETAccount.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = ETAccount.sqlite; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,7 +151,7 @@
 		DF0CD6121BEE3C6200648EE5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				DFC563161C0F4AB3000CAAC2 /* ETAccount.sqlite */,
+				DFCFE39E1C0F5B1600D5E3BC /* ETAccount.sqlite */,
 				DF0CD6171BEE4FB600648EE5 /* 151107_edit.csv */,
 			);
 			path = Resources;
@@ -477,7 +477,7 @@
 				DF0CD6181BEE4FB600648EE5 /* 151107_edit.csv in Resources */,
 				DF337E7A1AD2F5F9001CA285 /* LaunchScreen.xib in Resources */,
 				DF358D461AD7479000972F9B /* ETAccountAddViewController.xib in Resources */,
-				DFC563171C0F4AB3000CAAC2 /* ETAccount.sqlite in Resources */,
+				DFCFE39F1C0F5B1600D5E3BC /* ETAccount.sqlite in Resources */,
 				DF337E771AD2F5F9001CA285 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -583,6 +583,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: kyonge@korea.ac.kr (F844987DQW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -626,6 +627,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: kyonge@korea.ac.kr (F844987DQW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_NS_ASSERTIONS = NO;

@@ -128,24 +128,29 @@
     [self getPreTagsDataWithQuerry:querryString To:tempPreResultArray];
 //    NSLog(@"%@", tempPreResultArray);
     
+//    querryString = @"SELECT * FROM Tag_match";
+//    NSArray *columnArray = [NSArray arrayWithObjects:@"id", @"tag_target_id", @"tag_id", nil];
+//    NSArray *resultDataArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray];
+//    NSLog(@"%@", resultDataArray);
+    
     NSMutableArray *tempResultArray = [NSMutableArray array];
 
     for (NSDictionary *tempDataDictionary in tempPreResultArray)
     {
         NSInteger tempId = [[tempDataDictionary objectForKey:@"tag_target_id"] integerValue];
-        NSInteger tempTagId = [[ETAccountDBManager getItem:@"id" OfId:tempId Key:@"tag_target_id" FromTable:@"Tag_match"] integerValue];
+        NSInteger tempTagId = [[ETAccountDBManager getItem:@"tag_id" OfId:tempId Key:@"tag_target_id" FromTable:@"Tag_match"] integerValue];
         NSString *tempTag = [ETAccountDBManager getItem:@"name" OfId:tempTagId FromTable:@"Tag"];
         NSInteger tempId_1 = [[tempDataDictionary objectForKey:@"tag_target_id_1"] integerValue];
-        NSInteger tempTagId_1 = [[ETAccountDBManager getItem:@"id" OfId:tempId Key:@"tag_target_id_1" FromTable:@"Tag_match"] integerValue];
+        NSInteger tempTagId_1 = [[ETAccountDBManager getItem:@"tag_id" OfId:tempId_1 Key:@"tag_target_id_1" FromTable:@"Tag_match"] integerValue];
         NSString *tempTag_1 = [ETAccountDBManager getItem:@"name" OfId:tempTagId_1 FromTable:@"Tag"];
         NSInteger tempId_2 = [[tempDataDictionary objectForKey:@"tag_target_id_2"] integerValue];
-        NSInteger tempTagId_2 = [[ETAccountDBManager getItem:@"id" OfId:tempId Key:@"tag_target_id_2" FromTable:@"Tag_match"] integerValue];
+        NSInteger tempTagId_2 = [[ETAccountDBManager getItem:@"tag_id" OfId:tempId_2 Key:@"tag_target_id_2" FromTable:@"Tag_match"] integerValue];
         NSString *tempTag_2 = [ETAccountDBManager getItem:@"name" OfId:tempTagId_2 FromTable:@"Tag"];
         NSInteger tempMoney = [[tempDataDictionary objectForKey:@"money"] integerValue];
-        
-        if (tempTagId > 0) [self addMoneyWithId:tempId Name:tempTag Money:tempMoney To:tempResultArray Is1:YES];
-        if (tempTagId_1 > 0) [self addMoneyWithId:tempId_1 Name:tempTag_1 Money:tempMoney To:tempResultArray Is1:YES];
-        if (tempTagId_2 > 0) [self addMoneyWithId:tempId_2 Name:tempTag_2 Money:tempMoney To:tempResultArray Is1:NO];
+
+        if (tempTagId > 0) [self addMoneyWithId:tempTagId Name:tempTag Money:tempMoney To:tempResultArray Is1:YES];
+        if (tempTagId_1 > 0) [self addMoneyWithId:tempTagId_1 Name:tempTag_1 Money:tempMoney To:tempResultArray Is1:YES];
+        if (tempTagId_2 > 0) [self addMoneyWithId:tempTagId_2 Name:tempTag_2 Money:tempMoney To:tempResultArray Is1:NO];
     }
     
 //    NSLog(@"%@", tempResultArray);
