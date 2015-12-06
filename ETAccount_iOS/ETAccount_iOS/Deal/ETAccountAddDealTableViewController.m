@@ -27,12 +27,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    if ([[segue identifier] isEqualToString:@"ETAccountAddDealSegue"]) {
-//        [(ETAccountAddDealTableViewController *)[[(UINavigationController *)[segue destinationViewController] viewControllers] objectAtIndex:0] setAddDealDelegate:self];
-//    }
-}
-
 - (IBAction)close:(id)sender
 {
     UIAlertController *alertController = [ETUtility showAlert:@"ETAccount" Message:@"저장하지 않고 닫으시겠습니까?" atViewController:self withBlank:YES];
@@ -195,13 +189,13 @@
         
         NSDictionary *dataDic = [NSDictionary dictionaryWithObjects:objectsArray forKeys:keyArray];
         
-        [self writeToDB:dataDic];
+        [self writeToDB:dataDic Table:@"Deal"];
     }
 }
 
-- (void)writeToDB:(NSDictionary *)dataDic
+- (void)writeToDB:(NSDictionary *)dataDic Table:(NSString *)tableName
 {
-    if (![ETAccountDBManager insertToTable:@"Deal" dataDictionary:dataDic]) {
+    if (![ETAccountDBManager insertToTable:tableName dataDictionary:dataDic]) {
         UIAlertController *errorAlertController = [ETUtility showAlert:@"ETAccount" Message:@"저장하지 못했습니다." atViewController:self withBlank:YES];
         UIAlertAction *cancelAction = [UIAlertAction
                                        actionWithTitle:NSLocalizedString(@"확인", @"Cancel action")
@@ -266,7 +260,7 @@
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
             [cell setPlaceholder:@"날짜"];
             
-            [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:YES];
+            [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:YES DatePickerIndex:0];
             break;
         case 1:
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
@@ -373,7 +367,7 @@
 - (void)didEndEditText:(NSString *)insertedText CellIndex:(NSInteger)index
 {
     switch (index) {
-        case 0:
+        case 10:
             dealDateString = insertedText;
             break;
             

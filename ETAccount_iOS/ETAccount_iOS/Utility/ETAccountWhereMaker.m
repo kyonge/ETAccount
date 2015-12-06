@@ -59,7 +59,7 @@
                 break;
             }
                 
-            case FILTER_TYPE_COST: {
+            case FILTER_TYPE_PRICE: {
                 NSString *compareString;
                 if (tempCompare == FILTER_COMPARE_SAME)
                     compareString = @"=";

@@ -49,9 +49,11 @@ typedef enum : NSUInteger {
 } DEVICE_SCREEN_SIZE;
 
 typedef enum : NSUInteger {
+    ADD_DEAL_CELL_TYPE_DEFAULT = 0,
     ADD_DEAL_CELL_TYPE_BUTTON = 100,
     ADD_DEAL_CELL_TYPE_TEXT = 200,
-    ADD_DEAL_CELL_TYPE_NUMBERS = 300
+    ADD_DEAL_CELL_TYPE_NUMBERS = 300,
+    ADD_DEAL_CELL_TYPE_TEXT_WITH_ACC_BUTTON = 400
 } ADD_DEAL_CELL_TYPE;
 
 typedef enum : NSUInteger {
@@ -72,7 +74,7 @@ typedef enum : NSUInteger {
 typedef enum : NSUInteger {
     FILTER_TYPE_ITEM = 100,
     FILTER_TYPE_TAG = 200,
-    FILTER_TYPE_COST = 300
+    FILTER_TYPE_PRICE = 300
 } FILTER_TYPE;
 
 typedef enum : NSUInteger {
@@ -84,5 +86,12 @@ typedef enum : NSUInteger {
     FILTER_COMPARE_RIGHT = 300,
     FILTER_COMPARE_SAME_RIGHT = 350
 } FILTER_COMPARE;
+
+typedef enum : NSUInteger {
+    FILTER_DETAIL_TYPE = 0,
+    FILTER_DETAIL_ACCOUNT = 100,
+    FILTER_DETAIL_TAG = 200,
+    FILTER_DETAIL_PRICE = 300
+} FILTER_DETAIL;
 
 #endif

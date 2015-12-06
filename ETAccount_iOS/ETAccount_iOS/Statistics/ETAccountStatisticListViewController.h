@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-#import "ETAccountStatisticListTableViewCell.h"
 #import "ETAccountStatisticDetailViewController.h"
+#import "ETAccountAddStatisticViewController.h"
+#import "ETAccountStatisticListTableViewCell.h"
 
 #import "ETUtility.h"
 
-@interface ETAccountStatisticListViewController : UIViewController <UITableViewDataSource, UITabBarDelegate> {
+@interface ETAccountStatisticListViewController : UIViewController <UITableViewDataSource, UITabBarDelegate, ETAccountAddDealDelegate> {
     IBOutlet UIBarButtonItem *addItem;
     IBOutlet UITableView *statisticListTableView;
     

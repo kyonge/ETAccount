@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ETAccountStatisticListTableViewCell : UITableViewCell
+#import "ETAccountStatisticDetailTableViewCell.h"
+
+@interface ETAccountStatisticListTableViewCell : ETAccountStatisticDetailTableViewCell
 
 @end

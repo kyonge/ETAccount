@@ -28,9 +28,9 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"ETAccountStatisticDetailSegue"]) {
         statisticDetailViewController = (ETAccountStatisticDetailViewController *)[segue destinationViewController];
-//        ETAccountStatisticDetailViewController *statisticDetailViewController = (ETAccountStatisticDetailViewController *)[segue destinationViewController];
-//        [statisticDetailViewController setStatisticDictionary:tempStaticDictionary];
-//        [statisticDetailViewController initStatistic];
+    }
+    else if ([[segue identifier] isEqualToString:@"ETAccountAddStatisticSegue"]) {
+        [(ETAccountAddStatisticViewController *)[[(UINavigationController *)[segue destinationViewController] viewControllers] objectAtIndex:0] setAddDealDelegate:self];
     }
 }
 
@@ -85,17 +85,11 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(ETAccountStatisticListTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [[(ETAccountStatisticListTableViewCell *)cell nameLabel] setText:[[statisticArray objectAtIndex:indexPath.row] objectForKey:@"name"]];
+    [[(ETAccountStatisticDetailTableViewCell *)cell moneyLabel] setText:[[statisticArray objectAtIndex:indexPath.row] objectForKey:@"id"]];
+    
 //    NSLog(@"%@", [[statisticArray objectAtIndex:indexPath.row] objectForKey:@"name"]);
-    [[cell textLabel] setText:[[statisticArray objectAtIndex:indexPath.row] objectForKey:@"name"]];
-//    NSDictionary *tempAccountDictionary = [dealArray objectAtIndex:indexPath.row];
-//    NSString *tempDateString = [tempAccountDictionary objectForKey:@"date"];
-//    NSString *finalDateString = [ETFormatter dateColumnFormat:tempDateString];
-//    
-//    [[cell accountDateLabel] setText:finalDateString];
-//    [[cell accountNameLabel] setText:[tempAccountDictionary objectForKey:@"name"]];
-//    [[cell accountIncomeLabel] setText:[tempAccountDictionary objectForKey:@"account_1"]];
-//    [[cell accountExpenseLabel] setText:[tempAccountDictionary objectForKey:@"account_2"]];
-//    [[cell accountPriceLabel] setText:[tempAccountDictionary objectForKey:@"money"]];
+//    [[cell textLabel] setText:[[statisticArray objectAtIndex:indexPath.row] objectForKey:@"name"]];
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
@@ -129,5 +123,13 @@
 //    [tableView setEditing:YES animated:NO];
 //    return [NSArray arrayWithObject:deleteTagAction];
 //}
+
+#pragma mark ETAccountAddDealDelegate
+
+- (void)didAddDeal
+{
+    [self initStatistics];
+    [statisticListTableView reloadData];
+}
 
 @end

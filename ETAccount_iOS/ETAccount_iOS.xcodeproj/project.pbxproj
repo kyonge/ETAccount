@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF083F1B1C13FB3900641ED6 /* ETAccountAddStatisticTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DF083F1A1C13FB3900641ED6 /* ETAccountAddStatisticTableViewCell.m */; };
+		DF083F1E1C1438AF00641ED6 /* ETAccountFilterListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF083F1D1C1438AF00641ED6 /* ETAccountFilterListViewController.m */; };
+		DF083F221C144AAD00641ED6 /* ETAccountFilterDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF083F211C144AAD00641ED6 /* ETAccountFilterDetailTableViewController.m */; };
+		DF083F251C149C9C00641ED6 /* ETAccountAddFilterPriceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DF083F241C149C9C00641ED6 /* ETAccountAddFilterPriceTableViewCell.m */; };
 		DF0CD6181BEE4FB600648EE5 /* 151107_edit.csv in Resources */ = {isa = PBXBuildFile; fileRef = DF0CD6171BEE4FB600648EE5 /* 151107_edit.csv */; };
 		DF0CFB2C1BAC41FE00A98D88 /* ETAccountHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0CFB2B1BAC41FE00A98D88 /* ETAccountHomeViewController.m */; };
 		DF0CFB301BAC48FE00A98D88 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF0CFB2F1BAC48FE00A98D88 /* DetailViewController.m */; };
@@ -35,6 +39,7 @@
 		DF614C4B1BD0048F0015D662 /* ETAccountAddDealTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF614C451BD0048F0015D662 /* ETAccountAddDealTableViewController.m */; };
 		DF614C4C1BD0048F0015D662 /* ETAccountDealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF614C471BD0048F0015D662 /* ETAccountDealViewController.m */; };
 		DF614C4D1BD0048F0015D662 /* ETAccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DF614C491BD0048F0015D662 /* ETAccountTableViewCell.m */; };
+		DF638BFE1C11FBE600AB54B5 /* ETAccountAddStatisticViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF638BFD1C11FBE600AB54B5 /* ETAccountAddStatisticViewController.m */; };
 		DF65EA921C035CB80016ED69 /* ETAccountStatisticListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF65EA911C035CB80016ED69 /* ETAccountStatisticListViewController.m */; };
 		DF65EA961C035DAA0016ED69 /* ETAccountStatisticListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DF65EA951C035DAA0016ED69 /* ETAccountStatisticListTableViewCell.m */; };
 		DF9597C51C03881D005856FD /* ETAccountGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9597C41C03881D005856FD /* ETAccountGraphView.m */; };
@@ -57,6 +62,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DF083F191C13FB3900641ED6 /* ETAccountAddStatisticTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountAddStatisticTableViewCell.h; path = Statistics/ETAccountAddStatisticTableViewCell.h; sourceTree = "<group>"; };
+		DF083F1A1C13FB3900641ED6 /* ETAccountAddStatisticTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountAddStatisticTableViewCell.m; path = Statistics/ETAccountAddStatisticTableViewCell.m; sourceTree = "<group>"; };
+		DF083F1C1C1438AF00641ED6 /* ETAccountFilterListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountFilterListViewController.h; path = Filter/ETAccountFilterListViewController.h; sourceTree = "<group>"; };
+		DF083F1D1C1438AF00641ED6 /* ETAccountFilterListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountFilterListViewController.m; path = Filter/ETAccountFilterListViewController.m; sourceTree = "<group>"; };
+		DF083F201C144AAD00641ED6 /* ETAccountFilterDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountFilterDetailTableViewController.h; path = Filter/ETAccountFilterDetailTableViewController.h; sourceTree = "<group>"; };
+		DF083F211C144AAD00641ED6 /* ETAccountFilterDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountFilterDetailTableViewController.m; path = Filter/ETAccountFilterDetailTableViewController.m; sourceTree = "<group>"; };
+		DF083F231C149C9C00641ED6 /* ETAccountAddFilterPriceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountAddFilterPriceTableViewCell.h; path = Filter/ETAccountAddFilterPriceTableViewCell.h; sourceTree = "<group>"; };
+		DF083F241C149C9C00641ED6 /* ETAccountAddFilterPriceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountAddFilterPriceTableViewCell.m; path = Filter/ETAccountAddFilterPriceTableViewCell.m; sourceTree = "<group>"; };
 		DF0CD6171BEE4FB600648EE5 /* 151107_edit.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 151107_edit.csv; sourceTree = "<group>"; };
 		DF0CFB2A1BAC41FE00A98D88 /* ETAccountHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountHomeViewController.h; path = Home/ETAccountHomeViewController.h; sourceTree = "<group>"; };
 		DF0CFB2B1BAC41FE00A98D88 /* ETAccountHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountHomeViewController.m; path = Home/ETAccountHomeViewController.m; sourceTree = "<group>"; };
@@ -110,6 +123,8 @@
 		DF614C471BD0048F0015D662 /* ETAccountDealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountDealViewController.m; path = Deal/ETAccountDealViewController.m; sourceTree = "<group>"; };
 		DF614C481BD0048F0015D662 /* ETAccountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountTableViewCell.h; path = Deal/ETAccountTableViewCell.h; sourceTree = "<group>"; };
 		DF614C491BD0048F0015D662 /* ETAccountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountTableViewCell.m; path = Deal/ETAccountTableViewCell.m; sourceTree = "<group>"; };
+		DF638BFC1C11FBE600AB54B5 /* ETAccountAddStatisticViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountAddStatisticViewController.h; path = Statistics/ETAccountAddStatisticViewController.h; sourceTree = "<group>"; };
+		DF638BFD1C11FBE600AB54B5 /* ETAccountAddStatisticViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountAddStatisticViewController.m; path = Statistics/ETAccountAddStatisticViewController.m; sourceTree = "<group>"; };
 		DF65EA901C035CB80016ED69 /* ETAccountStatisticListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountStatisticListViewController.h; path = Statistics/ETAccountStatisticListViewController.h; sourceTree = "<group>"; };
 		DF65EA911C035CB80016ED69 /* ETAccountStatisticListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountStatisticListViewController.m; path = Statistics/ETAccountStatisticListViewController.m; sourceTree = "<group>"; };
 		DF65EA941C035DAA0016ED69 /* ETAccountStatisticListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountStatisticListTableViewCell.h; path = Statistics/ETAccountStatisticListTableViewCell.h; sourceTree = "<group>"; };
@@ -148,6 +163,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DF083F1F1C1438BA00641ED6 /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				DF083F1C1C1438AF00641ED6 /* ETAccountFilterListViewController.h */,
+				DF083F1D1C1438AF00641ED6 /* ETAccountFilterListViewController.m */,
+				DF083F201C144AAD00641ED6 /* ETAccountFilterDetailTableViewController.h */,
+				DF083F211C144AAD00641ED6 /* ETAccountFilterDetailTableViewController.m */,
+				DF083F231C149C9C00641ED6 /* ETAccountAddFilterPriceTableViewCell.h */,
+				DF083F241C149C9C00641ED6 /* ETAccountAddFilterPriceTableViewCell.m */,
+			);
+			name = Filter;
+			sourceTree = "<group>";
+		};
 		DF0CD6121BEE3C6200648EE5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -205,6 +233,7 @@
 				DF614C3F1BCFFE3E0015D662 /* Account */,
 				DFCF609A1BDDB0A90083F674 /* Tag */,
 				DF614C4E1BD004920015D662 /* Deal */,
+				DF083F1F1C1438BA00641ED6 /* Filter */,
 				DF65EA931C035CBD0016ED69 /* Statistic */,
 				DF337E731AD2F5F9001CA285 /* Main.storyboard */,
 				DF337E761AD2F5F9001CA285 /* Images.xcassets */,
@@ -341,9 +370,21 @@
 			name = "Add Deal";
 			sourceTree = "<group>";
 		};
+		DF638BFF1C11FBEC00AB54B5 /* Add Statistic */ = {
+			isa = PBXGroup;
+			children = (
+				DF638BFC1C11FBE600AB54B5 /* ETAccountAddStatisticViewController.h */,
+				DF638BFD1C11FBE600AB54B5 /* ETAccountAddStatisticViewController.m */,
+				DF083F191C13FB3900641ED6 /* ETAccountAddStatisticTableViewCell.h */,
+				DF083F1A1C13FB3900641ED6 /* ETAccountAddStatisticTableViewCell.m */,
+			);
+			name = "Add Statistic";
+			sourceTree = "<group>";
+		};
 		DF65EA931C035CBD0016ED69 /* Statistic */ = {
 			isa = PBXGroup;
 			children = (
+				DF638BFF1C11FBEC00AB54B5 /* Add Statistic */,
 				DF9597CA1C03888A005856FD /* Statistic Detail */,
 				DF9597C61C038821005856FD /* Graph */,
 				DF65EA901C035CB80016ED69 /* ETAccountStatisticListViewController.h */,
@@ -500,6 +541,7 @@
 				DFA5B7BA1BEDD87400243B88 /* ETAccountUtility.m in Sources */,
 				DF337E6C1AD2F5F9001CA285 /* AppDelegate.m in Sources */,
 				DF337E691AD2F5F9001CA285 /* main.m in Sources */,
+				DF083F221C144AAD00641ED6 /* ETAccountFilterDetailTableViewController.m in Sources */,
 				DF337EA61AD2F63E001CA285 /* ETHTTPUtility.m in Sources */,
 				DF9597C91C038886005856FD /* ETAccountStatisticDetailViewController.m in Sources */,
 				DFAA41DB1BD5356300DEC501 /* ETAccountDealDetailViewController.m in Sources */,
@@ -509,6 +551,7 @@
 				DF4E5BE01C0C81F400501AC6 /* ETAccountWhereMaker.m in Sources */,
 				DF9597CD1C038A16005856FD /* ETAccountStatisticDetailTableViewCell.m in Sources */,
 				DF0CFB371BAE5D6800A98D88 /* ETFormatter.m in Sources */,
+				DF083F1E1C1438AF00641ED6 /* ETAccountFilterListViewController.m in Sources */,
 				DF0CFB301BAC48FE00A98D88 /* DetailViewController.m in Sources */,
 				DF337EAA1AD2F63E001CA285 /* FMResultSet.m in Sources */,
 				DF614C4A1BD0048F0015D662 /* ETAccountAddTableViewCell.m in Sources */,
@@ -522,6 +565,9 @@
 				DF65EA921C035CB80016ED69 /* ETAccountStatisticListViewController.m in Sources */,
 				DF0CFB2C1BAC41FE00A98D88 /* ETAccountHomeViewController.m in Sources */,
 				DF337EAB1AD2F63E001CA285 /* MapTileOverlay.m in Sources */,
+				DF083F1B1C13FB3900641ED6 /* ETAccountAddStatisticTableViewCell.m in Sources */,
+				DF638BFE1C11FBE600AB54B5 /* ETAccountAddStatisticViewController.m in Sources */,
+				DF083F251C149C9C00641ED6 /* ETAccountAddFilterPriceTableViewCell.m in Sources */,
 				DF65EA961C035DAA0016ED69 /* ETAccountStatisticListTableViewCell.m in Sources */,
 				DF2BC52A1BD2A0DD00AAF616 /* ETAccountDBManager.m in Sources */,
 				DF358D451AD7479000972F9B /* ETAccountAddViewController.m in Sources */,

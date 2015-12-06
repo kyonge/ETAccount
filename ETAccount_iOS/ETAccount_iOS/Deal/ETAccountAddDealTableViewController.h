@@ -28,6 +28,7 @@
 
 - (void)setTagCell:(ETAccountAddTableViewCell *)cell;
 - (NSArray *)getSelectedTagsWithTargetId:(NSInteger)targetID;
+- (void)writeToDB:(NSDictionary *)dataDic Table:(NSString *)tableName;
 
 @property (assign, readwrite) id<ETAccountAddDealDelegate> addDealDelegate;
 

@@ -28,6 +28,12 @@
 - (void)setType:(ADD_DEAL_CELL_TYPE)type
 {
     switch (type) {
+        case ADD_DEAL_CELL_TYPE_DEFAULT:
+            [titleLabel setHidden:YES];
+            [titleTextField setHidden:YES];
+            [plusMinusButton setHidden:YES];
+            break;
+            
         case ADD_DEAL_CELL_TYPE_BUTTON:
             [titleLabel setHidden:NO];
             [titleTextField setHidden:YES];
@@ -41,7 +47,7 @@
             [plusMinusButton setHidden:YES];
             break;
             
-        case ADD_DEAL_CELL_TYPE_NUMBERS:
+        case ADD_DEAL_CELL_TYPE_NUMBERS: {
             [titleLabel setHidden:YES];
             [titleTextField setKeyboardType:UIKeyboardTypeNumberPad];
             [titleTextField setHidden:NO];
@@ -56,6 +62,14 @@
                                      nil]];
             [numberToolbar sizeToFit];
             [titleTextField setInputAccessoryView:numberToolbar];
+            break;
+        }
+            
+        case ADD_DEAL_CELL_TYPE_TEXT_WITH_ACC_BUTTON:
+            [titleLabel setHidden:YES];
+            [titleTextField setKeyboardType:UIKeyboardTypeDefault];
+            [titleTextField setHidden:NO];
+            [plusMinusButton setHidden:NO];
             break;
     }
 }
@@ -85,15 +99,16 @@
 
 #pragma mark - Date Picker
 
-- (void)setDatePicker:(UIDatePickerMode)datePickerMode WithCurrentTime:(BOOL)isCurrentTime
+- (void)setDatePicker:(UIDatePickerMode)datePickerMode WithCurrentTime:(BOOL)isCurrentTime DatePickerIndex:(NSInteger)index
 {
     datePicker = [[UIDatePicker alloc] init];
     [datePicker setDatePickerMode:datePickerMode];
+    datePickerIndex = index;
     
     UIToolbar* datePickerToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, DEVICE_SIZE.width, 50)];
     [datePickerToolbar setBarStyle:UIBarStyleBlackOpaque];
     [datePickerToolbar setItems:[NSArray arrayWithObjects:
-                                 [[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancleDatePicker)],
+                                 [[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelDatePicker)],
                                  [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
                                  [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(acceptDatepicker)],
                                  nil]];
@@ -104,10 +119,10 @@
     
     if (isCurrentTime)
         [titleTextField setText:[NSString stringWithFormat:@"%@", [ETFormatter dateStringForDeal:[datePicker date]]]];
-    [addDealCellDelegate didEndEditText:[titleTextField text] CellIndex:0];
+    [addDealCellDelegate didEndEditText:[titleTextField text] CellIndex:10 + datePickerIndex];
 }
 
-- (void)cancleDatePicker
+- (void)cancelDatePicker
 {
     [titleTextField resignFirstResponder];
 }
@@ -115,13 +130,13 @@
 - (void)acceptDatepicker
 {
     [titleTextField setText:[NSString stringWithFormat:@"%@", [ETFormatter dateStringForDeal:[datePicker date]]]];
-    [addDealCellDelegate didEndEditText:[titleTextField text] CellIndex:0];
+    [addDealCellDelegate didEndEditText:[titleTextField text] CellIndex:10 + datePickerIndex];
     
-    [self cancleDatePicker];
+    [self cancelDatePicker];
 }
 
 
-#pragma maek - Plus&Minus
+#pragma maek - Accessor Button: Plus&Minus
 
 - (IBAction)changePlusMinus:(id)sender
 {

@@ -20,19 +20,21 @@
     IBOutlet UIButton *plusMinusButton;
     
     UIDatePicker *datePicker;
+    
+    NSInteger datePickerIndex;
 }
 
 - (void)setType:(ADD_DEAL_CELL_TYPE)type;
 - (void)setTitle:(NSString *)titleString;
 - (void)setPlaceholder:(NSString *)placeholderString;
 #pragma mark - Date Picker
-- (void)setDatePicker:(UIDatePickerMode)datePickerMode WithCurrentTime:(BOOL)isCurrentTime;
+- (void)setDatePicker:(UIDatePickerMode)datePickerMode WithCurrentTime:(BOOL)isCurrentTime DatePickerIndex:(NSInteger)index;
 #pragma maek - Plus&Minus
 - (IBAction)changePlusMinus:(id)sender;
 
 @property (readwrite) NSInteger cellSection;
 @property (readonly) UITextField *titleTextField;
-@property (readonly) UIButton *plusMinusButton;
+@property (readwrite) UIButton *plusMinusButton;
 
 @property (assign, readwrite) id<ETAccountAddDealCellDelegate> addDealCellDelegate;
 
