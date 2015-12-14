@@ -68,9 +68,9 @@
     [[self navigationController] pushViewController:addTagViewController animated:YES];
 }
 
-- (void)writeToDB:(NSDictionary *)dataDic
+- (void)writeToDB:(NSDictionary *)dataDic Table:(NSString *)tableName
 {
-    if (![ETAccountDBManager updateToTable:@"Deal" dataDictionary:dataDic ToId:dealId]) {
+    if (![ETAccountDBManager updateToTable:tableName dataDictionary:dataDic ToId:dealId]) {
         UIAlertController *errorAlertController = [ETUtility showAlert:@"ETAccount" Message:@"저장하지 못했습니다." atViewController:self withBlank:YES];
         UIAlertAction *cancelAction = [UIAlertAction
                                        actionWithTitle:NSLocalizedString(@"확인", @"Cancel action")
