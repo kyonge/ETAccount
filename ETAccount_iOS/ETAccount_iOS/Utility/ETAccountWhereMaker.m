@@ -28,7 +28,7 @@
         whereString = [NSString stringWithFormat:@"%@ Deal.date>'%@' AND", whereString, date_1String];
     NSString *date_2String = [tempStatisticDictionary objectForKey:@"date_2"];
     if (![date_2String isEqualToString:@"0"])
-        whereString = [NSString stringWithFormat:@"%@ Deal.date>'%@' AND", whereString, date_2String];
+        whereString = [NSString stringWithFormat:@"%@ Deal.date<'%@' AND", whereString, date_2String];
 //    NSLog(@"%@", whereString);
     
     // 필터 내용들을 Deal SELECT 쿼리에 추가

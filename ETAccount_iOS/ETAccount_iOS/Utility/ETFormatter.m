@@ -56,6 +56,14 @@
     return finalDateString;
 }
 
++ (NSDate *)dateFromDateSting:(NSString *)dateString
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"YYYY-MM-dd HH:mm"];
+    
+    return [formatter dateFromString:dateString];
+}
+
 + (NSString *)moneyFormatFromString:(NSString *)moneyString
 {
     NSInteger money = [moneyString integerValue];

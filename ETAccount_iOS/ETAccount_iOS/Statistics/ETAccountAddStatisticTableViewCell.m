@@ -15,10 +15,17 @@
 
 #pragma mark - Date Picker
 
-- (void)setDatePicker:(UIDatePickerMode)datePickerMode WithCurrentTime:(BOOL)isCurrentTime DatePickerIndex:(NSInteger)index
+- (void)setDatePicker:(UIDatePickerMode)datePickerMode WithCurrentTime:(BOOL)isCurrentTime DatePickerIndex:(NSInteger)index DateString:(NSString *)dateString
 {
     datePicker = [[UIDatePicker alloc] init];
     [datePicker setDatePickerMode:datePickerMode];
+    if (isCurrentTime)
+        [datePicker setDate:[NSDate date]];
+    else
+        [datePicker setDate:[ETFormatter dateFromDateSting:dateString]];
+    
+    NSLog(@"%@", [ETFormatter dateStringForDeal:[datePicker date]]);
+         
     datePickerIndex = index;
     
     UIToolbar* datePickerToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, DEVICE_SIZE.width, 50)];
@@ -33,8 +40,8 @@
     [titleTextField setInputAccessoryView:datePickerToolbar];
     [titleTextField setInputView:datePicker];
     
-    if (isCurrentTime)
-        [titleTextField setText:[NSString stringWithFormat:@"%@", [ETFormatter dateStringForDeal:[datePicker date]]]];
+    [titleTextField setText:[NSString stringWithFormat:@"%@", [ETFormatter dateStringForDeal:[datePicker date]]]];
+    NSLog(@"asdf : %@", [titleTextField text]);
     [addDealCellDelegate didEndEditText:[titleTextField text] CellIndex:10 + datePickerIndex];
 }
 

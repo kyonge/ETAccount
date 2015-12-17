@@ -21,4 +21,6 @@
     BOOL isFavorite;
 }
 
+@property (assign, readwrite) id<ETAccountAddDealDelegate> addStatisticDelegate;
+
 @end

@@ -30,7 +30,7 @@
         statisticDetailViewController = (ETAccountStatisticDetailViewController *)[segue destinationViewController];
     }
     else if ([[segue identifier] isEqualToString:@"ETAccountAddStatisticSegue"]) {
-        [(ETAccountAddStatisticViewController *)[[(UINavigationController *)[segue destinationViewController] viewControllers] objectAtIndex:0] setAddDealDelegate:self];
+        [(ETAccountAddStatisticViewController *)[[(UINavigationController *)[segue destinationViewController] viewControllers] objectAtIndex:0] setAddStatisticDelegate:self];
     }
 }
 

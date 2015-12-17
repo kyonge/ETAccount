@@ -72,6 +72,7 @@
     
     // ORDER BY
     querryString = [NSString stringWithFormat:@"%@ ORDER BY datetime(Deal.Date) DESC", querryString];
+//    NSLog(@"%@", querryString);
     
     // Deal SELECT
     columnArray = [NSArray arrayWithObjects:@"id", @"name", @"tag_target_id", @"account_1", @"tag_target_id_1", @"account_2", @"tag_target_id_2", @"money", @"description", @"date", nil];

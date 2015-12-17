@@ -14,6 +14,8 @@
 
 @implementation ETAccountAddStatisticViewController
 
+@synthesize addStatisticDelegate;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -33,19 +35,10 @@
 }
 
 
-#pragma mark - Tag 컨트롤
+#pragma mark - Filter 컨트롤
 
 - (void)setFilterCell:(ETAccountAddTableViewCell *)cell
 {
-//    if ([filterArray count] > 0) {
-//        NSString *tagString = [[filterArray objectAtIndex:0] objectForKey:@"name"];
-//        
-//        for (NSInteger index = 1; index < [filterArray count]; index++)
-//            tagString = [NSString stringWithFormat:@"%@, %@", tagString, [[filterArray objectAtIndex:index] objectForKey:@"name"]];
-//        
-//        [cell setTitle:tagString];
-//    }
-//    else [[cell textLabel] setText:@"필터 추가"];
     [[cell textLabel] setText:@"필터 추가"];
 }
 
@@ -57,33 +50,6 @@
     
     return tempSelectedTagsArray;
 }
-
-//- (void)openAddTagViewController
-//{
-//    ETAccountAddTagViewController *addTagViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"ETAccountAddTagViewController"];
-//    [addTagViewController setSelectedTags:selectedTagsArray];
-//    [addTagViewController setChangeTagDelegate:self];
-//    
-//    [[self navigationController] pushViewController:addTagViewController animated:YES];
-//}
-//
-//- (BOOL)saveTagsWithTargetId:(NSInteger)targetId
-//{
-//    for (NSDictionary *tempTagDictionary in selectedTagsArray) {
-//        NSArray *keyArray = [NSArray arrayWithObjects:@"tag_id", @"tag_target_id", nil];
-//        NSArray *objectsArray = [NSArray arrayWithObjects:
-//                                 [NSString stringWithFormat:@"'%ld'", (long)[[tempTagDictionary objectForKey:@"id"] integerValue]],
-//                                 [NSString stringWithFormat:@"'%ld'", (long)targetId], nil];
-//        
-//        NSDictionary *dataDic = [NSDictionary dictionaryWithObjects:objectsArray forKeys:keyArray];
-//        
-//        if (![ETAccountDBManager insertToTable:@"Tag_match" dataDictionary:dataDic]) {
-//            return NO;
-//        }
-//    }
-//    
-//    return YES;
-//}
 
 
 #pragma mark - 저장
@@ -119,37 +85,76 @@
                              [NSNumber numberWithInteger:statisticOrder], nil];
     
     NSDictionary *dataDic = [NSDictionary dictionaryWithObjects:objectsArray forKeys:keyArray];
+//    NSLog(@"%@", dataDic);
+    NSInteger tempId = [self writeStatisticToDB:dataDic Table:@"Statistic"];
     
     // 필터
-    
-//    [super writeToDB:dataDic Table:@"Statistic"];
-    
-    
-    
-    
-//    // 태그
-//    NSInteger statistic_id;
+    NSInteger statistic_id;
 //    if (dealTagTarget == 0) statistic_id = [ETAccountUtility getTagFromViewController:self];
 //    else statistic_id = dealTagTarget;
-//    
-//    if (statistic_id == -1)
-//        return;
-//    else {
-//        if (![self saveTagsWithTargetId:tag_target_1]) {
-//            [ETUtility showAlert:@"ETAccount" Message:@"태그를 저장하지 못했습니다." atViewController:self withBlank:NO];
-//            return;
-//        }
-//        
-//        NSArray *keyArray = [NSArray arrayWithObjects:@"name", @"account_id_1", @"account_id_2", @"tag_target_id", @"description", @"'date'", @"money", nil];
-//        NSArray *objectsArray = [NSArray arrayWithObjects:tempDealNameString,
-//                                 [NSNumber numberWithInteger:accountLeftId], [NSNumber numberWithInteger:accountRightId],
-//                                 [NSNumber numberWithInteger:tag_target_1],
-//                                 tempDealDescription, tempDealDateString, dealCost, nil];
-//        
-//        NSDictionary *dataDic = [NSDictionary dictionaryWithObjects:objectsArray forKeys:keyArray];
-//        
-//        [self writeToDB:dataDic Table:@"Deal"];
-//    }
+    statistic_id = tempId;
+    
+    if (statistic_id == -1)
+        return;
+    else {
+        if (![self saveFiltersWithTargetId:statistic_id]) {
+            [ETUtility showAlert:@"ETAccount" Message:@"필터를 저장하지 못했습니다." atViewController:self withBlank:NO];
+            return;
+        }
+        
+        [addStatisticDelegate didAddDeal];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+- (NSInteger)writeStatisticToDB:(NSDictionary *)dataDic Table:(NSString *)tableName
+{
+    if (![ETAccountDBManager insertToTable:tableName dataDictionary:dataDic]) {
+        UIAlertController *errorAlertController = [ETUtility showAlert:@"ETAccount" Message:@"저장하지 못했습니다." atViewController:self withBlank:YES];
+        UIAlertAction *cancelAction = [UIAlertAction
+                                       actionWithTitle:NSLocalizedString(@"확인", @"Cancel action")
+                                       style:UIAlertActionStyleCancel
+                                       handler:nil];
+        [errorAlertController addAction:cancelAction];
+    }
+    
+    NSString *querryString = @"SELECT id FROM Statistic ORDER BY id DESC LIMIT 1";
+    NSArray *resultArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:[NSArray arrayWithObject:@"id"]];
+    NSInteger insertedId = [[[resultArray objectAtIndex:0] objectForKey:@"id"] integerValue];
+    
+    return insertedId;
+}
+
+- (BOOL)saveFiltersWithTargetId:(NSInteger)targetId
+{
+    for (NSDictionary *tempFilterDictionary in filterArray) {
+        NSArray *keyArray = [NSArray arrayWithObjects:@"type", @"item", @"compare", nil];
+        NSArray *objectsArray = [NSArray arrayWithObjects:
+                                 [NSString stringWithFormat:@"'%ld'", (long)[[tempFilterDictionary objectForKey:@"type"] integerValue]],
+                                 [NSString stringWithFormat:@"'%ld'", (long)[[tempFilterDictionary objectForKey:@"item"] integerValue]],
+                                 [NSString stringWithFormat:@"'%ld'", (long)[[tempFilterDictionary objectForKey:@"compare"] integerValue]], nil];
+        NSDictionary *dataDic = [NSDictionary dictionaryWithObjects:objectsArray forKeys:keyArray];
+        
+        if (![ETAccountDBManager insertToTable:@"Filter" dataDictionary:dataDic]) {
+            return NO;
+        }
+        
+        NSString *querryString = @"SELECT id FROM Filter ORDER BY id DESC LIMIT 1";
+        NSArray *resultArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:[NSArray arrayWithObject:@"id"]];
+        NSInteger insertedFilterId = [[[resultArray objectAtIndex:0] objectForKey:@"id"] integerValue];
+        
+        keyArray = [NSArray arrayWithObjects:@"statistic_id", @"filter_id", nil];
+        objectsArray = [NSArray arrayWithObjects:
+                        [NSString stringWithFormat:@"'%ld'", (long)targetId],
+                        [NSString stringWithFormat:@"'%ld'", (long)insertedFilterId], nil];
+        dataDic = [NSDictionary dictionaryWithObjects:objectsArray forKeys:keyArray];
+        
+        if (![ETAccountDBManager insertToTable:@"Statistics_filter_match" dataDictionary:dataDic]) {
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 
@@ -210,16 +215,24 @@
             break;
         case 1:
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
-            if (indexPath.row == 0)
+            if (indexPath.row == 0) {
                 [cell setPlaceholder:@"시작"];
-            else if (indexPath.row == 1)
+                if (!dealDateString || [dealDateString length] == 0)
+                    [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:YES DatePickerIndex:0 DateString:@""];
+                else [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:NO DatePickerIndex:0 DateString:dealDateString];
+            }
+            else if (indexPath.row == 1) {
                 [cell setPlaceholder:@"종료"];
+                if (!endDateString || [endDateString length] == 0)
+                    [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:YES DatePickerIndex:1 DateString:@""];
+                else [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:NO DatePickerIndex:1 DateString:endDateString];
+            }
             
             [[cell plusMinusButton] setHidden:NO];
             [[cell plusMinusButton] setTag:ADD_DEAL_CELL_TYPE_TEXT];
             [[cell plusMinusButton] setTitle:@"X" forState:UIControlStateNormal];
             
-            [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:YES DatePickerIndex:indexPath.row];
+//            [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:YES DatePickerIndex:indexPath.row];
             break;
         case 2: {
             if (indexPath.row == [filterArray count]) {
@@ -301,6 +314,7 @@
 
 - (void)didEndEditText:(NSString *)insertedText CellIndex:(NSInteger)index
 {
+    NSLog(@"insertedText : %@ to %ld", insertedText, (long)index);
     switch (index) {
         case 0:
             dealNameString = insertedText;
