@@ -68,14 +68,12 @@
         tempDealNameString = dealNameString;
     }
     tempDealNameString = [NSString stringWithFormat:@"'%@'", tempDealNameString];
-//    NSLog(@"%@", tempDealNameString);
     
     // 시작 날짜
     NSString *tempDealDateString = [NSString stringWithFormat:@"'%@'", dealDateString];
-//    NSLog(@"%@", tempDealDateString);
     
+    // 종료 날짜
     NSString *tempEndDateString = [NSString stringWithFormat:@"'%@'", endDateString];
-//    NSLog(@"%@", tempEndDateString);
     
     NSInteger statisticOrder = [ETAccountDBManager getLast:@"statistic_order" FromTable:@"Statistic"] + 1;
 
@@ -85,29 +83,10 @@
                              [NSNumber numberWithInteger:statisticOrder], nil];
     
     NSDictionary *dataDic = [NSDictionary dictionaryWithObjects:objectsArray forKeys:keyArray];
-//    NSLog(@"%@", dataDic);
-    NSInteger tempId = [self writeStatisticToDB:dataDic Table:@"Statistic"];
-    
-    // 필터
-    NSInteger statistic_id;
-//    if (dealTagTarget == 0) statistic_id = [ETAccountUtility getTagFromViewController:self];
-//    else statistic_id = dealTagTarget;
-    statistic_id = tempId;
-    
-    if (statistic_id == -1)
-        return;
-    else {
-        if (![self saveFiltersWithTargetId:statistic_id]) {
-            [ETUtility showAlert:@"ETAccount" Message:@"필터를 저장하지 못했습니다." atViewController:self withBlank:NO];
-            return;
-        }
-        
-        [addStatisticDelegate didAddDeal];
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
+    [self writeToDB:dataDic Table:@"Statistic"];
 }
 
-- (NSInteger)writeStatisticToDB:(NSDictionary *)dataDic Table:(NSString *)tableName
+- (void)writeToDB:(NSDictionary *)dataDic Table:(NSString *)tableName
 {
     if (![ETAccountDBManager insertToTable:tableName dataDictionary:dataDic]) {
         UIAlertController *errorAlertController = [ETUtility showAlert:@"ETAccount" Message:@"저장하지 못했습니다." atViewController:self withBlank:YES];
@@ -122,7 +101,21 @@
     NSArray *resultArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:[NSArray arrayWithObject:@"id"]];
     NSInteger insertedId = [[[resultArray objectAtIndex:0] objectForKey:@"id"] integerValue];
     
-    return insertedId;
+    // 필터
+    NSInteger statistic_id;
+    statistic_id = insertedId;
+    
+    if (statistic_id == -1)
+        return;
+    else {
+        if (![self saveFiltersWithTargetId:statistic_id]) {
+            [ETUtility showAlert:@"ETAccount" Message:@"필터를 저장하지 못했습니다." atViewController:self withBlank:NO];
+            return;
+        }
+        
+        [addStatisticDelegate didAddDeal];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (BOOL)saveFiltersWithTargetId:(NSInteger)targetId
@@ -211,6 +204,7 @@
         case 0:
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT_WITH_ACC_BUTTON];
             [cell setPlaceholder:@"통계명"];
+            [[cell titleTextField] setText:dealNameString];
             [[cell plusMinusButton] setTag:ADD_DEAL_CELL_TYPE_TEXT_WITH_ACC_BUTTON];
             break;
         case 1:
@@ -314,7 +308,6 @@
 
 - (void)didEndEditText:(NSString *)insertedText CellIndex:(NSInteger)index
 {
-    NSLog(@"insertedText : %@ to %ld", insertedText, (long)index);
     switch (index) {
         case 0:
             dealNameString = insertedText;
@@ -346,7 +339,7 @@
 {
 //    NSLog(@"%@", filterDataDictionary);
     [filterArray addObject:filterDataDictionary];
-    NSLog(@"%@", filterArray);
+//    NSLog(@"%@", filterArray);
     
     [statisticTableView reloadData];
 }

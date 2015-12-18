@@ -11,6 +11,7 @@
 #import "ETAccountDealDetailViewController.h"
 
 #import "ETAccountStatisticDetailTableViewCell.h"
+#import "ETAccountEditStatisticViewController.h"
 //#import "ETAccountGraphView.h"
 #import "ETAccountTableViewCell.h"
 

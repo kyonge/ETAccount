@@ -21,11 +21,13 @@
     [datePicker setDatePickerMode:datePickerMode];
     if (isCurrentTime)
         [datePicker setDate:[NSDate date]];
-    else
-        [datePicker setDate:[ETFormatter dateFromDateSting:dateString]];
+    else {
+        if (![dateString isEqualToString:@"0"])
+            [datePicker setDate:[ETFormatter dateFromDateSting:dateString]];
+//        else
+//            //날짜 설정 안한 경우
+    }
     
-    NSLog(@"%@", [ETFormatter dateStringForDeal:[datePicker date]]);
-         
     datePickerIndex = index;
     
     UIToolbar* datePickerToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, DEVICE_SIZE.width, 50)];
@@ -41,7 +43,7 @@
     [titleTextField setInputView:datePicker];
     
     [titleTextField setText:[NSString stringWithFormat:@"%@", [ETFormatter dateStringForDeal:[datePicker date]]]];
-    NSLog(@"asdf : %@", [titleTextField text]);
+//    NSLog(@"asdf : %@", [titleTextField text]);
     [addDealCellDelegate didEndEditText:[titleTextField text] CellIndex:10 + datePickerIndex];
 }
 

@@ -24,7 +24,13 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue identifier] isEqualToString:@"ETAccountAddStatisticSegue"]) {
+    if ([[segue identifier] isEqualToString:@"ETAccountEditStatisticSegue"]) {
+        ETAccountEditStatisticViewController *editStatisticViewController = (ETAccountEditStatisticViewController *)[[(UINavigationController *)[segue destinationViewController] viewControllers] objectAtIndex:0];
+        [editStatisticViewController initStatisticName:[statisticDictionary objectForKey:@"name"]
+                                            DateString:[statisticDictionary objectForKey:@"date_1"]
+                                         EndDateString:[statisticDictionary objectForKey:@"date_2"]
+                                           StatisticId:[[statisticDictionary objectForKey:@"id"] integerValue]];
+        
 //        [(ETAccountAddDealTableViewController *)[[(UINavigationController *)[segue destinationViewController] viewControllers] objectAtIndex:0] setAddDealDelegate:self];
     }
     else if ([[segue identifier] isEqualToString:@"ETAccountDetailStatisticItemSegue"]) {
@@ -330,11 +336,11 @@
 {
     if (indexPath.section == 1) {
         [[(ETAccountStatisticDetailTableViewCell *)cell nameLabel] setText:[[resultAccountArray objectAtIndex:indexPath.row] objectForKey:@"name"]];
-        [[(ETAccountStatisticDetailTableViewCell *)cell moneyLabel] setText:[[resultAccountArray objectAtIndex:indexPath.row] objectForKey:@"money"]];
+        [[(ETAccountStatisticDetailTableViewCell *)cell moneyLabel] setText:[ETFormatter moneyFormatFromString:[[resultAccountArray objectAtIndex:indexPath.row] objectForKey:@"money"]]];
     }
     else if (indexPath.section == 2) {
         [[(ETAccountStatisticDetailTableViewCell *)cell nameLabel] setText:[[resultTagArray objectAtIndex:indexPath.row] objectForKey:@"name"]];
-        [[(ETAccountStatisticDetailTableViewCell *)cell moneyLabel] setText:[[resultTagArray objectAtIndex:indexPath.row] objectForKey:@"money"]];
+        [[(ETAccountStatisticDetailTableViewCell *)cell moneyLabel] setText:[ETFormatter moneyFormatFromString:[[resultTagArray objectAtIndex:indexPath.row] objectForKey:@"money"]]];
     }
     else if (indexPath.section == 3) {
         NSDictionary *tempAccountDictionary = [resultArray objectAtIndex:indexPath.row];
