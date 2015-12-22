@@ -99,11 +99,23 @@
 
 #pragma mark - Date Picker
 
-- (void)setDatePicker:(UIDatePickerMode)datePickerMode WithCurrentTime:(BOOL)isCurrentTime DatePickerIndex:(NSInteger)index
+- (void)setDatePicker:(UIDatePickerMode)datePickerMode WithCurrentTime:(BOOL)isCurrentTime DatePickerIndex:(NSInteger)index DateString:(NSString *)dateString
 {
     datePicker = [[UIDatePicker alloc] init];
     [datePicker setDatePickerMode:datePickerMode];
-    datePickerIndex = index;
+    if (isCurrentTime)
+        [datePicker setDate:[NSDate date]];
+    else {
+        if (![dateString isEqualToString:@"0"])
+            [datePicker setDate:[ETFormatter dateFromDateSting:dateString]];
+//        else
+//            //날짜 설정 안한 경우
+    }
+//- (void)setDatePicker:(UIDatePickerMode)datePickerMode WithCurrentTime:(BOOL)isCurrentTime DatePickerIndex:(NSInteger)index
+//{
+//    datePicker = [[UIDatePicker alloc] init];
+//    [datePicker setDatePickerMode:datePickerMode];
+//    datePickerIndex = index;
     
     UIToolbar* datePickerToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, DEVICE_SIZE.width, 50)];
     [datePickerToolbar setBarStyle:UIBarStyleBlackOpaque];

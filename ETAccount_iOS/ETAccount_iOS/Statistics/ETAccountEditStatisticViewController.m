@@ -31,12 +31,18 @@
     endDateString = end;
     statisticId = initId;
     
+    NSString *querryString = [NSString stringWithFormat:@"SELECT Filter.id, Filter.type, Filter.item, Filter.compare FROM Filter JOIN Statistics_filter_match ON Statistics_filter_match.filter_id = Filter.id WHERE statistic_id = %ld", (long)initId];
+    filterArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:[NSArray arrayWithObjects:@"id", @"type", @"item", @"compare", nil]];
+    
     [statisticTableView reloadData];
 }
 
 - (void)writeToDB:(NSDictionary *)dataDic Table:(NSString *)tableName
 {
+//    NSLog(@"%@", filterArray);
     NSLog(@"%@", dataDic);
+    NSLog(@"%@", filterArray);
+    
 //    if (![ETAccountDBManager insertToTable:tableName dataDictionary:dataDic]) {
 //        UIAlertController *errorAlertController = [ETUtility showAlert:@"ETAccount" Message:@"저장하지 못했습니다." atViewController:self withBlank:YES];
 //        UIAlertAction *cancelAction = [UIAlertAction
@@ -65,6 +71,22 @@
 //        [addStatisticDelegate didAddDeal];
 //        [self dismissViewControllerAnimated:YES completion:nil];
 //    }
+}
+
+
+#pragma mark - 델리게이트 메서드
+
+#pragma mark Table view data source
+
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"%@", indexPath);
+    NSLog(@"%d", indexPath.section);
+    NSLog(@"%d", indexPath.row);
+    NSLog(@"%d", [filterArray count]);
+    if (indexPath.section == 2 && indexPath.row == [filterArray count])
+        return YES;
+    return NO;
 }
 
 @end

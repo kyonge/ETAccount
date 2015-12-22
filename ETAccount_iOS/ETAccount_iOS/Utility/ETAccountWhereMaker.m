@@ -29,6 +29,8 @@
     NSString *date_2String = [tempStatisticDictionary objectForKey:@"date_2"];
     if (![date_2String isEqualToString:@"0"])
         whereString = [NSString stringWithFormat:@"%@ Deal.date<'%@' AND", whereString, date_2String];
+    
+    whereString = [whereString substringToIndex:[whereString length] - 3];
 //    NSLog(@"%@", whereString);
     
     // 필터 내용들을 Deal SELECT 쿼리에 추가
@@ -40,7 +42,10 @@
         
         switch (tempType) {
             case FILTER_TYPE_ITEM:
-                whereString = [NSString stringWithFormat:@"%@ (Deal.account_id_1='%ld' OR Deal.account_id_2='%ld') AND", whereString, (long)tempItem, (long)tempItem];
+                if ([filterArray indexOfObject:tempFilterDictionary] == 0)
+                    whereString = [NSString stringWithFormat:@"%@ AND (Deal.account_id_1='%ld' OR Deal.account_id_2='%ld')", whereString, (long)tempItem, (long)tempItem];
+                else
+                    whereString = [NSString stringWithFormat:@"%@ OR (Deal.account_id_1='%ld' OR Deal.account_id_2='%ld')", whereString, (long)tempItem, (long)tempItem];
                 break;
                 
             case FILTER_TYPE_TAG: {
@@ -48,13 +53,17 @@
                 NSArray *tagColumnArray = [NSArray arrayWithObjects:@"id", @"tag_target_id", @"tag_id", nil];
                 NSArray *tagTargetArray = [ETUtility selectDataWithQuerry:tagQuerryString FromFile:_DB WithColumn:tagColumnArray];
                 
-                whereString = [NSString stringWithFormat:@"%@ (", whereString];
+                if ([filterArray indexOfObject:tempFilterDictionary] == 0)
+                    whereString = [NSString stringWithFormat:@"%@ AND (", whereString];
+                else
+                    whereString = [NSString stringWithFormat:@"%@ OR (", whereString];
+                
                 for (NSDictionary *tempTagTargetDictionary in tagTargetArray) {
                     NSNumber *tempItem = [tempTagTargetDictionary objectForKey:@"tag_id"];
-                    whereString = [NSString stringWithFormat:@"%@ Deal.tag_target_id='%@' OR tag_target_id_1='%@' OR tag_target_id_2='%@' OR", whereString, tempItem, tempItem, tempItem];
+                    whereString = [NSString stringWithFormat:@"%@ Deal.tag_target_id='%@' OR tag_target_id_1='%@' OR tag_target_id_2='%@'", whereString, tempItem, tempItem, tempItem];
                 }
-                whereString = [whereString substringToIndex:[whereString length] - 3];
-                whereString = [NSString stringWithFormat:@"%@) AND", whereString];
+//                whereString = [whereString substringToIndex:[whereString length] - 2];
+                whereString = [NSString stringWithFormat:@"%@)", whereString];
                 
                 break;
             }
@@ -72,7 +81,7 @@
                 else if (tempCompare == FILTER_COMPARE_SAME_RIGHT)
                     compareString = @"<=";
                 
-                whereString = [NSString stringWithFormat:@"%@ ABS(money)%@%ld AND", whereString, compareString, (long)tempItem];
+                whereString = [NSString stringWithFormat:@"%@ AND ABS(money)%@%ld", whereString, compareString, (long)tempItem];
                 
                 break;
             }
@@ -81,7 +90,7 @@
                 break;
         }
     }
-    whereString = [whereString substringToIndex:[whereString length] - 4];
+//    whereString = [whereString substringToIndex:[whereString length] - 4];
 //    NSLog(@"%@", whereString);
     
     return whereString;

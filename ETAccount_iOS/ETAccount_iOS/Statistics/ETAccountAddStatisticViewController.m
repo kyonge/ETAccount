@@ -19,7 +19,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    filterArray = [NSMutableArray array];
+    if (!filterArray)
+        filterArray = [NSMutableArray array];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -240,10 +241,14 @@
                 
                 if (filterType == FILTER_TYPE_ITEM) {
                     NSString *tempItemName = [ETAccountDBManager getItem:@"name" OfId:[[tempFilterDictionary objectForKey:@"item"] integerValue] FromTable:@"Account"];
+                    [[cell titleTextField] setHidden:YES];
+//                    [cell setTitle:@""];
                     [[cell textLabel] setText:[NSString stringWithFormat:@"항목명 : %@", tempItemName]];
                 }
                 else if (filterType == FILTER_TYPE_TAG) {
                     NSString *tempItemName = [ETAccountDBManager getItem:@"name" OfId:[[tempFilterDictionary objectForKey:@"item"] integerValue] FromTable:@"Tag"];
+                    [[cell titleTextField] setHidden:YES];
+//                    [cell setTitle:@""];
                     [[cell textLabel] setText:[NSString stringWithFormat:@"태그 : %@", tempItemName]];
                 }
                 else if (filterType == FILTER_TYPE_PRICE) {

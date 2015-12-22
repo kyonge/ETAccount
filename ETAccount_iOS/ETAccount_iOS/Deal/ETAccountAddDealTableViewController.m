@@ -260,7 +260,10 @@
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
             [cell setPlaceholder:@"날짜"];
             
-            [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:YES DatePickerIndex:0];
+//            [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:YES DatePickerIndex:0];
+            if (!dealDateString || [dealDateString length] == 0)
+                [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:YES DatePickerIndex:0 DateString:@""];
+            else [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:NO DatePickerIndex:0 DateString:dealDateString];
             break;
         case 1:
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
