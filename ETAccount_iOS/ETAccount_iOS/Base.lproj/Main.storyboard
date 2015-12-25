@@ -1045,7 +1045,7 @@
             </objects>
             <point key="canvasLocation" x="3399" y="615"/>
         </scene>
-        <!--통계 추가-->
+        <!--통계 수정-->
         <scene sceneID="eEq-IE-Wx3">
             <objects>
                 <tableViewController id="Oyj-7J-s7W" customClass="ETAccountEditStatisticViewController" sceneMemberID="viewController">
@@ -1121,7 +1121,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="통계 추가" id="UrQ-lS-Tww">
+                    <navigationItem key="navigationItem" title="통계 수정" id="UrQ-lS-Tww">
                         <barButtonItem key="leftBarButtonItem" title="Close" id="XI5-q9-LAg">
                             <connections>
                                 <action selector="close:" destination="Oyj-7J-s7W" id="yg5-er-vIs"/>

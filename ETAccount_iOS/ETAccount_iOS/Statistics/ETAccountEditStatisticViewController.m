@@ -78,15 +78,18 @@
 
 #pragma mark Table view data source
 
-- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSLog(@"%@", indexPath);
-    NSLog(@"%d", indexPath.section);
-    NSLog(@"%d", indexPath.row);
-    NSLog(@"%d", [filterArray count]);
-    if (indexPath.section == 2 && indexPath.row == [filterArray count])
-        return YES;
-    return NO;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *CellIdentifier = @"ETAccountEditStatisticCell";
+    
+    ETAccountAddStatisticTableViewCell *cell = (ETAccountAddStatisticTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[ETAccountAddStatisticTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    
+    [cell setAddDealCellDelegate:self];
+    [cell setCellSection:indexPath.section];
+    
+    return cell;
 }
 
 @end

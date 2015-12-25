@@ -201,6 +201,11 @@
     [cell setAddDealCellDelegate:self];
     [cell setCellSection:indexPath.section];
     
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(ETAccountAddStatisticTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
     switch (indexPath.section) {
         case 0:
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT_WITH_ACC_BUTTON];
@@ -263,12 +268,9 @@
                     [[cell textLabel] setText:[NSString stringWithFormat:@"가격 %@ %@", tempCompareString, [tempFilterDictionary objectForKey:@"item"]]];
                 }
             }
-            
             break;
         }
     }
-    
-    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(nonnull NSIndexPath *)indexPath
