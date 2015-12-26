@@ -11,6 +11,7 @@
 @interface ETAccountAddStatisticTableViewCell : ETAccountAddTableViewCell
 
 - (void)setDatePicker:(UIDatePickerMode)datePickerMode WithCurrentTime:(BOOL)isCurrentTime DatePickerIndex:(NSInteger)index DateString:(NSString *)dateString;
+- (void)setButtonTag:(STATISTIC_ACCESSOR)tag;
 
 @property (readwrite) NSInteger cellSection;
 @property (assign, readwrite) id<ETAccountAddDealCellDelegate> addDealCellDelegate;

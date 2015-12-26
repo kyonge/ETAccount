@@ -22,10 +22,13 @@
     if (isCurrentTime)
         [datePicker setDate:[NSDate date]];
     else {
-        if (![dateString isEqualToString:@"0"])
+        if (![dateString isEqualToString:@"~"])
             [datePicker setDate:[ETFormatter dateFromDateSting:dateString]];
-//        else
-//            //날짜 설정 안한 경우
+        else {
+            //날짜 설정 안한 경우
+//            [datePicker setDate:[NSDate dateWithTimeIntervalSince1970:0]];
+            [titleTextField setText:dateString];
+        }
     }
     
     datePickerIndex = index;
@@ -42,7 +45,8 @@
     [titleTextField setInputAccessoryView:datePickerToolbar];
     [titleTextField setInputView:datePicker];
     
-    [titleTextField setText:[NSString stringWithFormat:@"%@", [ETFormatter dateStringForDeal:[datePicker date]]]];
+    if (![dateString isEqualToString:@"~"])
+        [titleTextField setText:[NSString stringWithFormat:@"%@", [ETFormatter dateStringForDeal:[datePicker date]]]];
 //    NSLog(@"asdf : %@", [titleTextField text]);
     [addDealCellDelegate didEndEditText:[titleTextField text] CellIndex:10 + datePickerIndex];
 }
@@ -61,20 +65,16 @@
 }
 
 
-#pragma maek - Accessor Button: Plus&Minus
+#pragma maek - Accessor Button
+
+- (void)setButtonTag:(STATISTIC_ACCESSOR)tag
+{
+    [plusMinusButton setTag:tag];
+}
 
 - (IBAction)changePlusMinus:(id)sender
 {
-    NSLog(@"AA");
-    [addDealCellDelegate didEndEditText:[titleTextField text] CellIndex:10 + datePickerIndex];
-//    if ([sender tag] == NUMBER_SIGN_PLUS) {
-//        [sender setTag:NUMBER_SIGN_MINUS];
-//        [titleTextField setTextColor:[UIColor redColor]];
-//    }
-//    else {
-//        [sender setTag:NUMBER_SIGN_PLUS];
-//        [titleTextField setTextColor:[UIColor blackColor]];
-//    }
+    [addDealCellDelegate selectAccessor:[sender tag]];
 }
 
 

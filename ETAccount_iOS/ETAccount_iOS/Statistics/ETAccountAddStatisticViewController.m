@@ -211,7 +211,8 @@
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT_WITH_ACC_BUTTON];
             [cell setPlaceholder:@"통계명"];
             [[cell titleTextField] setText:dealNameString];
-            [[cell plusMinusButton] setTag:ADD_DEAL_CELL_TYPE_TEXT_WITH_ACC_BUTTON];
+//            [[cell plusMinusButton] setTag:ADD_DEAL_CELL_TYPE_TEXT_WITH_ACC_BUTTON];
+            [cell setButtonTag:ACCESSOR_FAV_NO];
             break;
         case 1:
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
@@ -220,16 +221,18 @@
                 if (!dealDateString || [dealDateString isEqualToString:@"(null)"] || [dealDateString length] == 0)
                     [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:YES DatePickerIndex:0 DateString:@""];
                 else [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:NO DatePickerIndex:0 DateString:dealDateString];
+                [cell setButtonTag:ACCESSOR_DATE_1];
             }
             else if (indexPath.row == 1) {
                 [cell setPlaceholder:@"종료"];
                 if (!endDateString || [endDateString isEqualToString:@"(null)"] || [endDateString length] == 0)
                     [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:YES DatePickerIndex:1 DateString:@""];
                 else [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:NO DatePickerIndex:1 DateString:endDateString];
+                [cell setButtonTag:ACCESSOR_DATE_2];
             }
             
             [[cell plusMinusButton] setHidden:NO];
-            [[cell plusMinusButton] setTag:ADD_DEAL_CELL_TYPE_TEXT];
+//            [[cell plusMinusButton] setTag:ADD_DEAL_CELL_TYPE_TEXT];
             [[cell plusMinusButton] setTitle:@"X" forState:UIControlStateNormal];
             
 //            [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:YES DatePickerIndex:indexPath.row];
@@ -280,34 +283,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    switch (indexPath.section) {
-        case 0:
-            break;
-        case 1:
-            break;
-        case 2: {
-            if (indexPath.row != [filterArray count]) {
-                
-            }
-            else {
-//                ETAccountFilterListViewController *filterListViewController = [ETAccountFilterListViewController new];
-//                [[self navigationController] pushViewController:filterListViewController animated:YES];
-            }
-            break;
-        }
-//        case 3: {
-//            if (indexPath.row == 0)
-//                direction = ACCOUNT_DIRECTION_LEFT;
-//            else if(indexPath.row == 1)
-//                direction = ACCOUNT_DIRECTION_RIGHT;
-//            
-//            ETAccountAddAccountTableViewController *addItemTableViewController = [[ETAccountAddAccountTableViewController alloc] init];
-//            [addItemTableViewController setAddDelegate:self];
-//            [[self navigationController] pushViewController:addItemTableViewController animated:YES];
-//            break;
-//        }
-    }
-    
     [tableView reloadData];
 }
 
@@ -334,6 +309,31 @@
             
         case 4:
             dealDescriptionString = insertedText;
+            
+        default:
+            break;
+    }
+}
+
+- (void)selectAccessor:(STATISTIC_ACCESSOR)accessor
+{
+    switch (accessor) {
+        case ACCESSOR_FAV_NO:
+//            <#statements#>
+            break;
+            
+        case ACCESSOR_FAV_YES:
+            break;
+            
+        case ACCESSOR_DATE_1:
+            dealDateString = @"~";
+            [statisticTableView reloadData];
+            break;
+            
+        case ACCESSOR_DATE_2:
+            endDateString = @"~";
+            [statisticTableView reloadData];
+            break;
             
         default:
             break;

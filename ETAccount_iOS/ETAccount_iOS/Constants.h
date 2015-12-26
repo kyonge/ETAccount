@@ -94,4 +94,11 @@ typedef enum : NSUInteger {
     FILTER_DETAIL_PRICE = 300
 } FILTER_DETAIL;
 
+typedef enum : NSUInteger {
+    ACCESSOR_FAV_YES,
+    ACCESSOR_FAV_NO,
+    ACCESSOR_DATE_1,
+    ACCESSOR_DATE_2
+} STATISTIC_ACCESSOR;
+
 #endif

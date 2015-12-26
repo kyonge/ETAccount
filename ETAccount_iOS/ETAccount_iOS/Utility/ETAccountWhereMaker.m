@@ -12,6 +12,8 @@
 
 + (NSString *)whereStringWithDictionary:(NSDictionary *)tempStatisticDictionary
 {
+    BOOL noDateCondition = NO;
+    
     // 필터
     NSString *querryString = [NSString stringWithFormat:@"SELECT Filter.id, Filter.type, Filter.item, Filter.compare FROM Filter Filter JOIN Statistics_filter_match Match ON Filter.id = Match.filter_id WHERE Match.statistic_id=%@", [tempStatisticDictionary objectForKey:@"id"]];
     NSArray *columnArray = [NSArray arrayWithObjects:@"id", @"type", @"item", @"compare", nil];
@@ -24,13 +26,15 @@
     
     // date 조건
     NSString *date_1String = [tempStatisticDictionary objectForKey:@"date_1"];
-    if (![date_1String isEqualToString:@"0"])
+    if (![date_1String isEqualToString:@"~"])
         whereString = [NSString stringWithFormat:@"%@ Deal.date>'%@' AND", whereString, date_1String];
     NSString *date_2String = [tempStatisticDictionary objectForKey:@"date_2"];
-    if (![date_2String isEqualToString:@"0"])
+    if (![date_2String isEqualToString:@"~"])
         whereString = [NSString stringWithFormat:@"%@ Deal.date<'%@' AND", whereString, date_2String];
     
-    whereString = [whereString substringToIndex:[whereString length] - 3];
+    if (![date_1String isEqualToString:@"~"] || ![date_2String isEqualToString:@"~"])
+        whereString = [whereString substringToIndex:[whereString length] - 3];
+    else noDateCondition = YES;
 //    NSLog(@"%@", whereString);
     
     // 필터 내용들을 Deal SELECT 쿼리에 추가
@@ -42,7 +46,11 @@
         
         switch (tempType) {
             case FILTER_TYPE_ITEM:
-                if ([filterArray indexOfObject:tempFilterDictionary] == 0)
+                if (noDateCondition) {
+                    whereString = [NSString stringWithFormat:@"%@ (Deal.account_id_1='%ld' OR Deal.account_id_2='%ld')", whereString, (long)tempItem, (long)tempItem];
+                    noDateCondition = NO;
+                }
+                else if ([filterArray indexOfObject:tempFilterDictionary] == 0)
                     whereString = [NSString stringWithFormat:@"%@ AND (Deal.account_id_1='%ld' OR Deal.account_id_2='%ld')", whereString, (long)tempItem, (long)tempItem];
                 else
                     whereString = [NSString stringWithFormat:@"%@ OR (Deal.account_id_1='%ld' OR Deal.account_id_2='%ld')", whereString, (long)tempItem, (long)tempItem];
@@ -53,16 +61,20 @@
                 NSArray *tagColumnArray = [NSArray arrayWithObjects:@"id", @"tag_target_id", @"tag_id", nil];
                 NSArray *tagTargetArray = [ETUtility selectDataWithQuerry:tagQuerryString FromFile:_DB WithColumn:tagColumnArray];
                 
-                if ([filterArray indexOfObject:tempFilterDictionary] == 0)
+                if (noDateCondition) {
+                    whereString = [NSString stringWithFormat:@"%@ (", whereString];
+                    noDateCondition = NO;
+                }
+                else if ([filterArray indexOfObject:tempFilterDictionary] == 0)
                     whereString = [NSString stringWithFormat:@"%@ AND (", whereString];
                 else
                     whereString = [NSString stringWithFormat:@"%@ OR (", whereString];
                 
                 for (NSDictionary *tempTagTargetDictionary in tagTargetArray) {
                     NSNumber *tempItem = [tempTagTargetDictionary objectForKey:@"tag_id"];
-                    whereString = [NSString stringWithFormat:@"%@ Deal.tag_target_id='%@' OR tag_target_id_1='%@' OR tag_target_id_2='%@'", whereString, tempItem, tempItem, tempItem];
+                    whereString = [NSString stringWithFormat:@"%@ Deal.tag_target_id='%@' OR tag_target_id_1='%@' OR tag_target_id_2='%@' OR", whereString, tempItem, tempItem, tempItem];
                 }
-//                whereString = [whereString substringToIndex:[whereString length] - 2];
+                whereString = [whereString substringToIndex:[whereString length] - 2];
                 whereString = [NSString stringWithFormat:@"%@)", whereString];
                 
                 break;
@@ -81,7 +93,12 @@
                 else if (tempCompare == FILTER_COMPARE_SAME_RIGHT)
                     compareString = @"<=";
                 
-                whereString = [NSString stringWithFormat:@"%@ AND ABS(money)%@%ld", whereString, compareString, (long)tempItem];
+                if (noDateCondition) {
+                    whereString = [NSString stringWithFormat:@"%@ ABS(money)%@%ld", whereString, compareString, (long)tempItem];
+                    noDateCondition = NO;
+                }
+                else
+                    whereString = [NSString stringWithFormat:@"%@ AND ABS(money)%@%ld", whereString, compareString, (long)tempItem];
                 
                 break;
             }

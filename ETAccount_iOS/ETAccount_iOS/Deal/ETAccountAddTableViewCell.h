@@ -44,5 +44,7 @@
 @protocol ETAccountAddDealCellDelegate <NSObject>
 
 - (void)didEndEditText:(NSString *)insertedText CellIndex:(NSInteger)index;
+@optional
+- (void)selectAccessor:(STATISTIC_ACCESSOR)accessor;
 
 @end
