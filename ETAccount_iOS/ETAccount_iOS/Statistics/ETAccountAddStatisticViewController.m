@@ -268,7 +268,7 @@
                     else if (tempCompare == FILTER_COMPARE_RIGHT) tempCompareString = @"<";
                     else if (tempCompare == FILTER_COMPARE_SAME_RIGHT) tempCompareString = @"<=";
                     
-                    [[cell textLabel] setText:[NSString stringWithFormat:@"가격 %@ %@", tempCompareString, [tempFilterDictionary objectForKey:@"item"]]];
+                    [[cell textLabel] setText:[NSString stringWithFormat:@"금액 %@ %@", tempCompareString, [ETFormatter moneyFormatFromString:[tempFilterDictionary objectForKey:@"item"]]]];
                 }
             }
             break;
