@@ -7,11 +7,16 @@
 //
 
 #import "ETAccountAddStatisticViewController.h"
+#import "ETAccountEditStatisticTableViewCell.h"
 
 @interface ETAccountEditStatisticViewController : ETAccountAddStatisticViewController{
+    NSArray *lastFilterArray;
+    
     NSInteger statisticId;
 }
 
 - (void)initStatisticName:(NSString *)name DateString:(NSString *)date EndDateString:(NSString *)end StatisticId:(NSInteger)initId;
+
+@property (assign, readwrite) id<ETAccountAddDealDelegate> addStatisticDelegate;
 
 @end

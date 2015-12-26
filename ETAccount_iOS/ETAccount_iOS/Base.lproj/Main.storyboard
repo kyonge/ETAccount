@@ -992,7 +992,7 @@
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ETAccountAddFilterCell" id="XIS-fB-tAg">
-                                        <rect key="frame" x="0.0" y="50" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="114" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XIS-fB-tAg" id="y8x-nE-YvC">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -1000,7 +1000,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ETAccountAddFilterPriceCell" id="htc-rW-cg0" customClass="ETAccountAddFilterPriceTableViewCell">
-                                        <rect key="frame" x="0.0" y="94" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="158" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="htc-rW-cg0" id="x8f-z7-U7P">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -1054,7 +1054,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ETAccountAddStatisticCell" id="4OI-0Y-LKb" customClass="ETAccountAddStatisticTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ETAccountEditStatisticCell" id="4OI-0Y-LKb" customClass="ETAccountEditStatisticTableViewCell">
                                 <rect key="frame" x="0.0" y="114" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4OI-0Y-LKb" id="Zwe-0u-7iB">
@@ -1111,7 +1111,113 @@
                                     <outlet property="plusMinusButton" destination="Qxu-eY-70v" id="9pB-Nb-Nue"/>
                                     <outlet property="titleLabel" destination="rWW-Dq-rgG" id="u8B-Vd-pUg"/>
                                     <outlet property="titleTextField" destination="GCj-ax-Ep2" id="BKj-Ra-W8l"/>
-                                    <segue destination="K83-VV-96T" kind="show" id="Yrl-UG-jkQ"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ETAccountEditStatisticDateCell" id="byQ-cz-F3g" customClass="ETAccountEditStatisticTableViewCell">
+                                <rect key="frame" x="0.0" y="158" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="byQ-cz-F3g" id="uLT-mj-Mr4">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xiL-Yw-8G8">
+                                            <rect key="frame" x="8" y="11" width="584" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uF0-PH-Zs0">
+                                            <rect key="frame" x="8" y="7" width="584" height="30"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                            <connections>
+                                                <action selector="closeKeyboard:" destination="byQ-cz-F3g" eventType="editingDidEndOnExit" id="VMS-Ud-Jx9"/>
+                                                <outlet property="delegate" destination="byQ-cz-F3g" id="34c-t7-jOA"/>
+                                            </connections>
+                                        </textField>
+                                        <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sJd-mY-2QV">
+                                            <rect key="frame" x="546" y="7" width="46" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="KDX-b8-ynO"/>
+                                                <constraint firstAttribute="width" constant="46" id="OW7-uq-dzr"/>
+                                            </constraints>
+                                            <state key="normal" title="Fav"/>
+                                            <connections>
+                                                <action selector="changePlusMinus:" destination="byQ-cz-F3g" eventType="touchUpInside" id="Ji7-6q-unP"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="uF0-PH-Zs0" secondAttribute="trailing" constant="8" id="8Sv-Ii-DPT"/>
+                                        <constraint firstAttribute="trailing" secondItem="xiL-Yw-8G8" secondAttribute="trailing" constant="8" id="8di-hq-Mqt"/>
+                                        <constraint firstItem="sJd-mY-2QV" firstAttribute="centerY" secondItem="uLT-mj-Mr4" secondAttribute="centerY" id="BDG-uQ-Vxt"/>
+                                        <constraint firstItem="uF0-PH-Zs0" firstAttribute="top" secondItem="uLT-mj-Mr4" secondAttribute="top" constant="7" id="CGR-zi-udG"/>
+                                        <constraint firstAttribute="trailing" secondItem="sJd-mY-2QV" secondAttribute="trailing" constant="8" id="XDh-BO-pCe"/>
+                                        <constraint firstAttribute="bottom" secondItem="xiL-Yw-8G8" secondAttribute="bottom" constant="11" id="dX5-9C-NJ1"/>
+                                        <constraint firstItem="xiL-Yw-8G8" firstAttribute="top" secondItem="uLT-mj-Mr4" secondAttribute="top" constant="11" id="ehr-CR-4mh"/>
+                                        <constraint firstItem="xiL-Yw-8G8" firstAttribute="leading" secondItem="uLT-mj-Mr4" secondAttribute="leading" constant="8" id="hV9-lA-rfQ"/>
+                                        <constraint firstAttribute="bottom" secondItem="uF0-PH-Zs0" secondAttribute="bottom" constant="6" id="vBF-mA-xcK"/>
+                                        <constraint firstItem="uF0-PH-Zs0" firstAttribute="leading" secondItem="uLT-mj-Mr4" secondAttribute="leading" constant="8" id="xWd-GC-b0d"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="plusMinusButton" destination="sJd-mY-2QV" id="ISs-xS-0Yx"/>
+                                    <outlet property="titleLabel" destination="xiL-Yw-8G8" id="THh-hc-ngY"/>
+                                    <outlet property="titleTextField" destination="uF0-PH-Zs0" id="e1b-Mj-8zb"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ETAccountEditStatisticFilterCell" id="bhW-dG-9Wc" customClass="ETAccountEditStatisticTableViewCell">
+                                <rect key="frame" x="0.0" y="202" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bhW-dG-9Wc" id="JTT-83-9al">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hya-b6-KCt">
+                                            <rect key="frame" x="8" y="11" width="584" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ITL-GQ-KWS">
+                                            <rect key="frame" x="8" y="7" width="584" height="30"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                            <connections>
+                                                <action selector="closeKeyboard:" destination="bhW-dG-9Wc" eventType="editingDidEndOnExit" id="AHx-Pg-4qN"/>
+                                                <outlet property="delegate" destination="bhW-dG-9Wc" id="EVs-2k-NN5"/>
+                                            </connections>
+                                        </textField>
+                                        <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kjt-lo-DdK">
+                                            <rect key="frame" x="546" y="7" width="46" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="gJd-UM-tvQ"/>
+                                                <constraint firstAttribute="width" constant="46" id="zOA-Er-Z1h"/>
+                                            </constraints>
+                                            <state key="normal" title="Fav"/>
+                                            <connections>
+                                                <action selector="changePlusMinus:" destination="bhW-dG-9Wc" eventType="touchUpInside" id="SvK-NA-PJM"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="ITL-GQ-KWS" secondAttribute="bottom" constant="6" id="4Z7-Bo-i15"/>
+                                        <constraint firstAttribute="trailing" secondItem="Hya-b6-KCt" secondAttribute="trailing" constant="8" id="5J9-kc-7du"/>
+                                        <constraint firstItem="Hya-b6-KCt" firstAttribute="leading" secondItem="JTT-83-9al" secondAttribute="leading" constant="8" id="5r3-BE-i0o"/>
+                                        <constraint firstAttribute="bottom" secondItem="Hya-b6-KCt" secondAttribute="bottom" constant="11" id="Pxq-yQ-BxT"/>
+                                        <constraint firstItem="ITL-GQ-KWS" firstAttribute="leading" secondItem="JTT-83-9al" secondAttribute="leading" constant="8" id="SNj-77-9Gi"/>
+                                        <constraint firstItem="ITL-GQ-KWS" firstAttribute="top" secondItem="JTT-83-9al" secondAttribute="top" constant="7" id="cdi-f7-vUy"/>
+                                        <constraint firstAttribute="trailing" secondItem="ITL-GQ-KWS" secondAttribute="trailing" constant="8" id="eOW-6p-ExJ"/>
+                                        <constraint firstItem="Kjt-lo-DdK" firstAttribute="centerY" secondItem="JTT-83-9al" secondAttribute="centerY" id="nfV-qP-r87"/>
+                                        <constraint firstItem="Hya-b6-KCt" firstAttribute="top" secondItem="JTT-83-9al" secondAttribute="top" constant="11" id="xFM-zW-xSK"/>
+                                        <constraint firstAttribute="trailing" secondItem="Kjt-lo-DdK" secondAttribute="trailing" constant="8" id="znJ-d8-Qro"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="plusMinusButton" destination="Kjt-lo-DdK" id="8Pa-zw-Hnd"/>
+                                    <outlet property="titleLabel" destination="Hya-b6-KCt" id="QKf-ZN-FHu"/>
+                                    <outlet property="titleTextField" destination="ITL-GQ-KWS" id="kZS-Rf-NiP"/>
+                                    <segue destination="DrC-Au-hbx" kind="show" identifier="ETAccountAddFilterSegue" id="fi7-ua-4ee"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1147,6 +1253,5 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="Y7y-Qi-ihB"/>
-        <segue reference="Yrl-UG-jkQ"/>
     </inferredMetricsTieBreakers>
 </document>

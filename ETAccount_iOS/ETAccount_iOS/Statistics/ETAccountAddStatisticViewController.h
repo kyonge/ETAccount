@@ -21,6 +21,8 @@
     BOOL isFavorite;
 }
 
+- (void)setFilterCell:(ETAccountAddTableViewCell *)cell;
+
 @property (assign, readwrite) id<ETAccountAddDealDelegate> addStatisticDelegate;
 
 @end

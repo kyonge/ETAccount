@@ -26,12 +26,11 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"ETAccountEditStatisticSegue"]) {
         ETAccountEditStatisticViewController *editStatisticViewController = (ETAccountEditStatisticViewController *)[[(UINavigationController *)[segue destinationViewController] viewControllers] objectAtIndex:0];
+        [editStatisticViewController setAddStatisticDelegate:self];
         [editStatisticViewController initStatisticName:[statisticDictionary objectForKey:@"name"]
                                             DateString:[statisticDictionary objectForKey:@"date_1"]
                                          EndDateString:[statisticDictionary objectForKey:@"date_2"]
                                            StatisticId:[[statisticDictionary objectForKey:@"id"] integerValue]];
-        
-//        [(ETAccountAddDealTableViewController *)[[(UINavigationController *)[segue destinationViewController] viewControllers] objectAtIndex:0] setAddDealDelegate:self];
     }
     else if ([[segue identifier] isEqualToString:@"ETAccountDetailStatisticItemSegue"]) {
         NSDictionary *selectedDeal = [resultArray objectAtIndex:selectedRow];
@@ -178,7 +177,7 @@
     for (NSDictionary *tempDataDictionary in resultDataArray)
     {
         NSInteger tempId = [[tempDataDictionary objectForKey:@"id"] integerValue];
-        if (![ETUtility hasArray:tempPreResultArray hasDictionaryWithId:tempId])
+        if (![ETUtility doesArray:tempPreResultArray hasDictionaryWithId:tempId])
             [tempPreResultArray addObject:tempDataDictionary];
     }
 }
@@ -193,7 +192,7 @@
     
     NSArray *keyArray = [NSArray arrayWithObjects:@"id", @"name", @"money", nil];
     
-    if (![ETUtility hasArray:tempResultArray hasDictionaryWithId:tempId]) {
+    if (![ETUtility doesArray:tempResultArray hasDictionaryWithId:tempId]) {
         NSArray *tempObjectArray = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%ld", (long)tempId], tempName, [NSString stringWithFormat:@"%ld", (long)tempMoney], nil];
         NSDictionary *tempAccountDataDictionary = [NSDictionary dictionaryWithObjects:tempObjectArray forKeys:keyArray];
         [tempResultArray addObject:tempAccountDataDictionary];

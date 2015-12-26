@@ -30,6 +30,30 @@
     return lastId;
 }
 
++ (NSMutableArray *)getAllItems:(NSArray *)columnArray FromTable:(NSString *)table
+{
+    NSString *querryString = [NSString stringWithFormat:@"SELECT %@", [columnArray objectAtIndex:0]];
+    for (NSInteger tempIndex = 1; tempIndex < [columnArray count]; tempIndex++)
+        querryString = [NSString stringWithFormat:@"%@, %@", querryString, [columnArray objectAtIndex:tempIndex]];
+    
+    querryString = [NSString stringWithFormat:@"%@ FROM %@", querryString, table];
+    NSMutableArray *resultArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray];
+    
+    return resultArray;
+}
+
++ (NSMutableArray *)getItems:(NSArray *)columnArray Object:(NSString *)object ForKey:(NSString *)key FromTable:(NSString *)table
+{
+    NSString *querryString = [NSString stringWithFormat:@"SELECT %@", [columnArray objectAtIndex:0]];
+    for (NSInteger tempIndex = 1; tempIndex < [columnArray count]; tempIndex++)
+        querryString = [NSString stringWithFormat:@"%@, %@", querryString, [columnArray objectAtIndex:tempIndex]];
+    
+    querryString = [NSString stringWithFormat:@"%@ FROM %@ WHERE %@ = %@", querryString, table, key, object];
+    NSMutableArray *resultArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray];
+    
+    return resultArray;
+}
+
 + (NSString *)getItem:(NSString *)itemName OfId:(NSInteger)itemIdx FromTable:(NSString *)table
 {
     NSString *querryString = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE id = %ld",itemName, table, (long)itemIdx];

@@ -50,6 +50,7 @@
 		DFAA41DB1BD5356300DEC501 /* ETAccountDealDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAA41DA1BD5356300DEC501 /* ETAccountDealDetailViewController.m */; };
 		DFCF609D1BDDB3C70083F674 /* ETAccountAddTagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCF609C1BDDB3C70083F674 /* ETAccountAddTagViewController.m */; };
 		DFCFE39F1C0F5B1600D5E3BC /* ETAccount.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = DFCFE39E1C0F5B1600D5E3BC /* ETAccount.sqlite */; };
+		DFF0FD481C2E4FD3009CA1BE /* ETAccountEditStatisticTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF0FD471C2E4FD3009CA1BE /* ETAccountEditStatisticTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,6 +146,8 @@
 		DFCF609B1BDDB3C70083F674 /* ETAccountAddTagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountAddTagViewController.h; path = Tag/ETAccountAddTagViewController.h; sourceTree = "<group>"; };
 		DFCF609C1BDDB3C70083F674 /* ETAccountAddTagViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountAddTagViewController.m; path = Tag/ETAccountAddTagViewController.m; sourceTree = "<group>"; };
 		DFCFE39E1C0F5B1600D5E3BC /* ETAccount.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = ETAccount.sqlite; sourceTree = "<group>"; };
+		DFF0FD461C2E4FD3009CA1BE /* ETAccountEditStatisticTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountEditStatisticTableViewCell.h; path = Statistics/ETAccountEditStatisticTableViewCell.h; sourceTree = "<group>"; };
+		DFF0FD471C2E4FD3009CA1BE /* ETAccountEditStatisticTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountEditStatisticTableViewCell.m; path = Statistics/ETAccountEditStatisticTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -344,6 +347,8 @@
 			children = (
 				DF4EC8591C231D2100AB96E3 /* ETAccountEditStatisticViewController.h */,
 				DF4EC85A1C231D2100AB96E3 /* ETAccountEditStatisticViewController.m */,
+				DFF0FD461C2E4FD3009CA1BE /* ETAccountEditStatisticTableViewCell.h */,
+				DFF0FD471C2E4FD3009CA1BE /* ETAccountEditStatisticTableViewCell.m */,
 			);
 			name = "Edit Statistic";
 			sourceTree = "<group>";
@@ -561,6 +566,7 @@
 				DF337EA71AD2F63E001CA285 /* ETUtility.m in Sources */,
 				DF4EC85B1C231D2100AB96E3 /* ETAccountEditStatisticViewController.m in Sources */,
 				DF614C3E1BCFFE320015D662 /* ETAccountAddAccountTableViewController.m in Sources */,
+				DFF0FD481C2E4FD3009CA1BE /* ETAccountEditStatisticTableViewCell.m in Sources */,
 				DF614C4B1BD0048F0015D662 /* ETAccountAddDealTableViewController.m in Sources */,
 				DF4E5BE01C0C81F400501AC6 /* ETAccountWhereMaker.m in Sources */,
 				DF9597CD1C038A16005856FD /* ETAccountStatisticDetailTableViewCell.m in Sources */,

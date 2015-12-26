@@ -199,7 +199,7 @@
     return [array count];
 }
 
-+ (BOOL)hasArray:(NSArray *)targetArray hasDictionaryWithId:(NSInteger)targetId
++ (BOOL)doesArray:(NSArray *)targetArray hasDictionaryWithId:(NSInteger)targetId
 {
     for (NSDictionary *tempDictionary in targetArray) {
         if ([[tempDictionary objectForKey:@"id"] integerValue] == targetId)

@@ -29,7 +29,7 @@
 // NSArray 내에서 NSDictionary 탐색
 + (NSDictionary *)selectDictionaryWithValue:(id)value OfKey:(NSString *)key inArray:(NSArray *)array;
 + (NSInteger)indexOfDictionaryWithValue:(id)value OfKey:(NSString *)key inArray:(NSArray *)array;
-+ (BOOL)hasArray:(NSArray *)targetArray hasDictionaryWithId:(NSInteger)targetId;
++ (BOOL)doesArray:(NSArray *)targetArray hasDictionaryWithId:(NSInteger)targetId;
 
 // iOS8.0 이후 Alert 처리
 + (UIAlertController *)showAlert:(NSString *)titleString Message:(NSString *)messageString atViewController:(UIViewController *)viewController withBlank:(BOOL)blank;

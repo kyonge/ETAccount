@@ -13,6 +13,8 @@
 @interface ETAccountDBManager : NSObject
 
 + (NSInteger)getLast:(NSString *)key FromTable:(NSString *)table;
++ (NSMutableArray *)getAllItems:(NSArray *)columnArray FromTable:(NSString *)table;
++ (NSMutableArray *)getItems:(NSArray *)columnArray Object:(NSString *)object ForKey:(NSString *)key FromTable:(NSString *)table;
 + (NSString *)getItem:(NSString *)itemName OfId:(NSInteger)itemIdx FromTable:(NSString *)table;
 + (NSString *)getItem:(NSString *)itemName OfId:(NSInteger)itemIdx Key:(NSString *)key FromTable:(NSString *)table;
 + (BOOL)insertToTable:(NSString *)table dataDictionary:(NSDictionary *)dataDic;

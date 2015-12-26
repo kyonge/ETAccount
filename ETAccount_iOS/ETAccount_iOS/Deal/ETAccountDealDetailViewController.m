@@ -113,7 +113,7 @@
         // 제외된 태그 삭제
         NSInteger tempTagId = [[tempTagDictionary objectForKey:@"id"] integerValue];
         
-        if (![ETUtility hasArray:selectedTagsArray hasDictionaryWithId:tempTagId]) {
+        if (![ETUtility doesArray:selectedTagsArray hasDictionaryWithId:tempTagId]) {
             // DB에서 삭제
             NSString *querryString = [NSString stringWithFormat:@"DELETE FROM Tag_match WHERE tag_id = %ld AND tag_target_id = %ld", (long)tempTagId, (long)targetId];
             
@@ -150,7 +150,7 @@
             
             [[cell titleTextField] setText:dealDateString];
 //            [cell setDatePicker:UIDatePickerModeDateAndTime WithCurrentTime:NO DatePickerIndex:indexPath.row DateString:@""];
-            if (!dealDateString || [dealDateString length] == 0)
+            if (!dealDateString || [dealDateString isEqualToString:@"(null)"] || [dealDateString length] == 0)
                 [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:YES DatePickerIndex:0 DateString:@""];
             else [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:NO DatePickerIndex:0 DateString:dealDateString];
             

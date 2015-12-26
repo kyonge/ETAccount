@@ -261,7 +261,7 @@
             [cell setPlaceholder:@"날짜"];
             
 //            [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:YES DatePickerIndex:0];
-            if (!dealDateString || [dealDateString length] == 0)
+            if (!dealDateString || [dealDateString isEqualToString:@"(null)"] || [dealDateString length] == 0)
                 [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:YES DatePickerIndex:0 DateString:@""];
             else [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:NO DatePickerIndex:0 DateString:dealDateString];
             break;

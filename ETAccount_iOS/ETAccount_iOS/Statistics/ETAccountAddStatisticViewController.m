@@ -217,13 +217,13 @@
             [cell setType:ADD_DEAL_CELL_TYPE_TEXT];
             if (indexPath.row == 0) {
                 [cell setPlaceholder:@"시작"];
-                if (!dealDateString || [dealDateString length] == 0)
+                if (!dealDateString || [dealDateString isEqualToString:@"(null)"] || [dealDateString length] == 0)
                     [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:YES DatePickerIndex:0 DateString:@""];
                 else [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:NO DatePickerIndex:0 DateString:dealDateString];
             }
             else if (indexPath.row == 1) {
                 [cell setPlaceholder:@"종료"];
-                if (!endDateString || [endDateString length] == 0)
+                if (!endDateString || [endDateString isEqualToString:@"(null)"] || [endDateString length] == 0)
                     [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:YES DatePickerIndex:1 DateString:@""];
                 else [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:NO DatePickerIndex:1 DateString:endDateString];
             }
