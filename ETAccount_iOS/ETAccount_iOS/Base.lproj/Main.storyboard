@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--가계부-->
@@ -839,23 +840,34 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="좌변" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWZ-NP-Fts">
                                                     <rect key="frame" x="0.0" y="1" width="25" height="21"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="width" constant="25" id="CNx-oe-RIi"/>
                                                         <constraint firstAttribute="height" constant="21" id="PAJ-Ry-hed"/>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="lfC-ct-4YX"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="초기화" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hEV-cl-hDS">
-                                                    <rect key="frame" x="0.0" y="22" width="120" height="28"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="초기화" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hEV-cl-hDS">
+                                                    <rect key="frame" x="0.0" y="22" width="292" height="28"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="28" id="Xjl-k7-b5K"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
+                                                <constraint firstItem="hEV-cl-hDS" firstAttribute="trailing" secondItem="Sci-82-y3D" secondAttribute="trailingMargin" id="HFE-kr-pij"/>
                                                 <constraint firstAttribute="trailing" secondItem="TWZ-NP-Fts" secondAttribute="trailing" id="NWI-jx-xQp"/>
                                                 <constraint firstItem="TWZ-NP-Fts" firstAttribute="leading" secondItem="Sci-82-y3D" secondAttribute="leading" id="RJE-rY-fi4"/>
+                                                <constraint firstItem="hEV-cl-hDS" firstAttribute="leading" secondItem="Sci-82-y3D" secondAttribute="leadingMargin" constant="-8" id="dzU-Z1-Gta"/>
                                                 <constraint firstItem="TWZ-NP-Fts" firstAttribute="top" secondItem="Sci-82-y3D" secondAttribute="top" constant="1" id="hlP-Sq-zMh"/>
+                                                <constraint firstItem="TWZ-NP-Fts" firstAttribute="leading" secondItem="Sci-82-y3D" secondAttribute="leading" id="rjA-yC-sux"/>
+                                                <constraint firstItem="TWZ-NP-Fts" firstAttribute="top" secondItem="Sci-82-y3D" secondAttribute="top" constant="1" id="tu2-iQ-sB9"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="hEV-cl-hDS" secondAttribute="bottom" constant="-8" id="vD3-qD-fyh"/>
+                                                <constraint firstItem="hEV-cl-hDS" firstAttribute="top" secondItem="TWZ-NP-Fts" secondAttribute="bottom" id="wAv-Ez-obc"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">

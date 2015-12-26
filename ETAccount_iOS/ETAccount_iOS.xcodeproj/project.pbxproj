@@ -27,7 +27,6 @@
 		DF337EA81AD2F63E001CA285 /* ETXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337E981AD2F63E001CA285 /* ETXMLParser.m */; };
 		DF337EA91AD2F63E001CA285 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337E9B1AD2F63E001CA285 /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DF337EAA1AD2F63E001CA285 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337E9D1AD2F63E001CA285 /* FMResultSet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		DF337EAB1AD2F63E001CA285 /* MapTileOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337EA01AD2F63E001CA285 /* MapTileOverlay.m */; };
 		DF337EAC1AD2F63E001CA285 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337EA31AD2F63E001CA285 /* MKMapView+ZoomLevel.m */; };
 		DF337EAD1AD2F63E001CA285 /* PODataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337EA51AD2F63E001CA285 /* PODataManager.m */; };
 		DF337EB01AD2F659001CA285 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DF337EAF1AD2F659001CA285 /* libsqlite3.0.dylib */; };
@@ -102,8 +101,6 @@
 		DF337E9B1AD2F63E001CA285 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		DF337E9C1AD2F63E001CA285 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		DF337E9D1AD2F63E001CA285 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
-		DF337E9F1AD2F63E001CA285 /* MapTileOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapTileOverlay.h; sourceTree = "<group>"; };
-		DF337EA01AD2F63E001CA285 /* MapTileOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapTileOverlay.m; sourceTree = "<group>"; };
 		DF337EA21AD2F63E001CA285 /* MKMapView+ZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+ZoomLevel.h"; sourceTree = "<group>"; };
 		DF337EA31AD2F63E001CA285 /* MKMapView+ZoomLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+ZoomLevel.m"; sourceTree = "<group>"; };
 		DF337EA41AD2F63E001CA285 /* PODataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PODataManager.h; sourceTree = "<group>"; };
@@ -297,7 +294,6 @@
 				DF4E5BDE1C0C81F300501AC6 /* ETAccountWhereMaker.h */,
 				DF4E5BDF1C0C81F300501AC6 /* ETAccountWhereMaker.m */,
 				DF337E991AD2F63E001CA285 /* FMDatabase */,
-				DF337E9E1AD2F63E001CA285 /* MapTileOverlay */,
 				DF337EA11AD2F63E001CA285 /* MKMapView+ZoomLevel */,
 				DF337EA41AD2F63E001CA285 /* PODataManager.h */,
 				DF337EA51AD2F63E001CA285 /* PODataManager.m */,
@@ -314,15 +310,6 @@
 				DF337E9D1AD2F63E001CA285 /* FMResultSet.m */,
 			);
 			path = FMDatabase;
-			sourceTree = "<group>";
-		};
-		DF337E9E1AD2F63E001CA285 /* MapTileOverlay */ = {
-			isa = PBXGroup;
-			children = (
-				DF337E9F1AD2F63E001CA285 /* MapTileOverlay.h */,
-				DF337EA01AD2F63E001CA285 /* MapTileOverlay.m */,
-			);
-			path = MapTileOverlay;
 			sourceTree = "<group>";
 		};
 		DF337EA11AD2F63E001CA285 /* MKMapView+ZoomLevel */ = {
@@ -584,7 +571,6 @@
 				DF337EAD1AD2F63E001CA285 /* PODataManager.m in Sources */,
 				DF65EA921C035CB80016ED69 /* ETAccountStatisticListViewController.m in Sources */,
 				DF0CFB2C1BAC41FE00A98D88 /* ETAccountHomeViewController.m in Sources */,
-				DF337EAB1AD2F63E001CA285 /* MapTileOverlay.m in Sources */,
 				DF083F1B1C13FB3900641ED6 /* ETAccountAddStatisticTableViewCell.m in Sources */,
 				DF638BFE1C11FBE600AB54B5 /* ETAccountAddStatisticViewController.m in Sources */,
 				DF083F251C149C9C00641ED6 /* ETAccountAddFilterPriceTableViewCell.m in Sources */,
