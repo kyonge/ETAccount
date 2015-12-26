@@ -52,6 +52,60 @@
 }
 
 
+#pragma mark - 삭제
+
+- (void)askDelete:(NSIndexPath *)indexPath TableView:(UITableView*)tableView
+{
+    UIAlertController *deleteAccountAlertControl = [UIAlertController
+                                                    alertControllerWithTitle:@"통계 삭제"
+                                                    message:@"통계 데이터를 삭제하시겠습니까?"
+                                                    preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"삭제", @"Close action")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action)
+                               {
+                                   [self delete:indexPath TableView:tableView];
+                               }];
+    [deleteAccountAlertControl addAction:okAction];
+    
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"취소", @"Cancel action")
+                                   style:UIAlertActionStyleCancel
+                                   handler:nil];
+    [deleteAccountAlertControl addAction:cancelAction];
+    
+    [self presentViewController:deleteAccountAlertControl animated:YES completion:nil];
+}
+
+- (void)delete:(NSIndexPath *)indexPath TableView:(UITableView*)tableView
+{
+    NSDictionary *dealDictionary = [statisticArray objectAtIndex:indexPath.row];
+//    NSLog(@"%@", dealDictionary);
+    
+    // Filter 검색
+    NSString *querryString = [NSString stringWithFormat:@"SELECT Filter.id, Filter.type, Filter.item, Filter.compare, Statistics_filter_match.id match_id FROM Filter JOIN Statistics_filter_match ON Statistics_filter_match.filter_id = Filter.id WHERE statistic_id = %@", [dealDictionary objectForKey:@"id"]];
+    NSArray *filterArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:[NSArray arrayWithObjects:@"id", @"type", @"item", @"compare", @"match_id", nil]];
+    
+    for (NSDictionary *tempFilterDictionary in filterArray) {
+        if (![ETAccountDBManager deleteFromTable:@"Filter" OfId:[[tempFilterDictionary objectForKey:@"id"] integerValue]])
+            [ETUtility showAlert:@"ETAccount" Message:@"Filter를 삭제하지 못했습니다." atViewController:self withBlank:NO];
+        if (![ETAccountDBManager deleteFromTable:@"Statistics_filter_match" OfId:[[tempFilterDictionary objectForKey:@"id"] integerValue] Key:@"filter_id"])
+            [ETUtility showAlert:@"ETAccount" Message:@"Filter_match를 삭제하지 못했습니다." atViewController:self withBlank:NO];
+    }
+    
+    // Statistic에서 삭제
+    NSInteger targetStatisticId = [[dealDictionary objectForKey:@"id"] integerValue];
+    if (![ETAccountDBManager deleteFromTable:@"Statistic" OfId:targetStatisticId]) {
+        [ETUtility showAlert:@"ETAccount" Message:@"삭제하지 못했습니다." atViewController:self withBlank:NO];
+    }
+    
+    [statisticArray removeObject:dealDictionary];
+    
+    [tableView reloadData];
+}
+
+
 #pragma mark - 델리게이트 메서드
 
 #pragma mark UITableViewDelegate
@@ -87,42 +141,30 @@
 {
     [[(ETAccountStatisticListTableViewCell *)cell nameLabel] setText:[[statisticArray objectAtIndex:indexPath.row] objectForKey:@"name"]];
     [[(ETAccountStatisticDetailTableViewCell *)cell moneyLabel] setText:[[statisticArray objectAtIndex:indexPath.row] objectForKey:@"id"]];
-    
-//    NSLog(@"%@", [[statisticArray objectAtIndex:indexPath.row] objectForKey:@"name"]);
-//    [[cell textLabel] setText:[[statisticArray objectAtIndex:indexPath.row] objectForKey:@"name"]];
-}
-
-- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
-{
-//    selectedRow = indexPath.row;
-    
-    return YES;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    tempStaticDictionary = [statisticArray objectAtIndex:indexPath.row];
     [statisticDetailViewController setStatisticDictionary:[statisticArray objectAtIndex:indexPath.row]];
     [statisticDetailViewController initStatistic];
     
     [tableView reloadData];
-//    [challengerDelegate searchChallengerNick:[challengerListArray objectAtIndex:indexPath.row]];
 }
 
-//- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
-//{
-//    UITableViewRowAction *deleteTagAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
-//                                                                               title:@"Delete"
-//                                                                             handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-//                                                                                 [tableView setEditing:NO animated:NO];
-//                                                                                 
-//                                                                                 [self askDelete:indexPath TableView:tableView];
-//                                                                             }];
-//    [deleteTagAction setBackgroundColor:[UIColor redColor]];
-//    
-//    [tableView setEditing:YES animated:NO];
-//    return [NSArray arrayWithObject:deleteTagAction];
-//}
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
+    UITableViewRowAction *deleteTagAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
+                                                                               title:@"Delete"
+                                                                             handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+                                                                                 [tableView setEditing:NO animated:NO];
+                                                                                 
+                                                                                 [self askDelete:indexPath TableView:tableView];
+                                                                             }];
+    [deleteTagAction setBackgroundColor:[UIColor redColor]];
+    
+    [tableView setEditing:YES animated:NO];
+    return [NSArray arrayWithObject:deleteTagAction];
+}
 
 #pragma mark ETAccountAddDealDelegate
 
