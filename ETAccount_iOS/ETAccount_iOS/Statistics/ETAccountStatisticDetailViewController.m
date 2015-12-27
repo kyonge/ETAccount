@@ -247,9 +247,9 @@
             lastDate = [NSString stringWithString:tempLastDate];
     }
     
-//    NSLog(@"%@", firstDate);
-//    NSLog(@"%@", lastDate);
-//    
+    NSLog(@"%@", firstDate);
+    NSLog(@"%@", lastDate);
+//
 //    [graphView setStartDateString:firstDate];
 //    [graphView setEndDateString:lastDate];
 //    [graphView initInnerView];
