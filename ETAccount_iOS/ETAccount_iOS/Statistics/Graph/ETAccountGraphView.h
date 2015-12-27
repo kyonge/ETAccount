@@ -8,6 +8,26 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ETAccountGraphView : UIView
+#import "ETFormatter.h"
+
+#import "ETAccountGraphInnerView.h"
+
+@interface ETAccountGraphView : UIView {
+    ETAccountGraphInnerView *innerView;
+    
+    UIScrollView *innerScrollView;
+    
+    NSArray *dataArray;
+    NSString *startDateString, *endDateString;
+    
+    BOOL basicSet;
+    BOOL innerViewSet;
+}
+
+- (BOOL)setBaseWithFrame:(CGRect)frame;
+- (void)setDataArray:(NSArray *)array;
+- (void)setStartDateString:(NSString *)dateString;
+- (void)setEndDateString:(NSString *)dateString;
+- (void)initInnerView;
 
 @end

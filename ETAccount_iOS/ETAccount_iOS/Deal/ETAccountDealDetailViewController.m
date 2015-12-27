@@ -151,8 +151,8 @@
             [[cell titleTextField] setText:dealDateString];
 //            [cell setDatePicker:UIDatePickerModeDateAndTime WithCurrentTime:NO DatePickerIndex:indexPath.row DateString:@""];
             if (!dealDateString || [dealDateString isEqualToString:@"(null)"] || [dealDateString length] == 0)
-                [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:YES DatePickerIndex:0 DateString:@""];
-            else [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:NO DatePickerIndex:0 DateString:dealDateString];
+                [cell setDatePicker:UIDatePickerModeDateAndTime WithCurrentTime:YES DatePickerIndex:0 DateString:@""];
+            else [cell setDatePicker:UIDatePickerModeDateAndTime WithCurrentTime:NO DatePickerIndex:0 DateString:dealDateString];
             
             break;
         case 1:

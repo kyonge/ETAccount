@@ -25,7 +25,7 @@
 + (NSString *)dateStringForDeal:(NSDate *)date
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"YYYY-MM-dd HH:mm"];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     
     return [formatter stringFromDate:date];
 }

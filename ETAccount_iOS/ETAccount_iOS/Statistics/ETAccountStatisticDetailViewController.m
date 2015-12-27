@@ -61,6 +61,9 @@
     statisticDictionary = [NSDictionary dictionaryWithDictionary:inputDictionary];
 }
 
+
+#pragma mark - 통계
+
 - (void)initStatistic
 {
     // 통계 기본 데이터
@@ -206,6 +209,53 @@
 }
 
 
+#pragma mark - 그래프
+
+- (void)setGraphData
+{
+    // Test
+    NSArray *testArray = [NSArray arrayWithObjects:@"1", @"2", nil];
+    
+    graphArray = [NSMutableArray array];
+    
+    NSString *firstDate, *lastDate;
+    
+    for (NSInteger tempIndex = 0; tempIndex < [testArray count]; tempIndex++) {
+        NSInteger tempTarget = [[testArray objectAtIndex:tempIndex] integerValue];
+        NSMutableArray *graphDataArray = [NSMutableArray array];
+        
+        for (NSDictionary *tempDictionary in resultArray) {
+            NSInteger tag_target_id = [[tempDictionary objectForKey:@"tag_target_id"] integerValue];
+            NSInteger tag_target_id_1 = [[tempDictionary objectForKey:@"tag_target_id_1"] integerValue];
+            NSInteger tag_target_id_2 = [[tempDictionary objectForKey:@"tag_target_id_2"] integerValue];
+            
+            if (tag_target_id == tempTarget || tag_target_id_1 == tempTarget || tag_target_id_2 == tempTarget)
+                [graphDataArray addObject:tempDictionary];
+        }
+        
+        [graphArray addObject:graphDataArray];
+        
+        if ([graphDataArray count] == 0)
+            continue;
+        
+        NSString *tempFirstDate = [[graphDataArray objectAtIndex:0] objectForKey:@"date"];
+        NSString *tempLastDate = [[graphDataArray lastObject] objectForKey:@"date"];
+        
+        if (!firstDate || ([ETFormatter dateFromDateSting:firstDate] > [ETFormatter dateFromDateSting:tempFirstDate]))
+            firstDate = [NSString stringWithString:tempFirstDate];
+        if (!lastDate || ([ETFormatter dateFromDateSting:lastDate] < [ETFormatter dateFromDateSting:tempLastDate]))
+            lastDate = [NSString stringWithString:tempLastDate];
+    }
+    
+//    NSLog(@"%@", firstDate);
+//    NSLog(@"%@", lastDate);
+//    
+//    [graphView setStartDateString:firstDate];
+//    [graphView setEndDateString:lastDate];
+//    [graphView initInnerView];
+}
+
+
 #pragma mark - 삭제
 
 - (void)askDelete:(NSIndexPath *)indexPath TableView:(UITableView*)tableView
@@ -299,7 +349,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 1 || indexPath.section == 2) {
+    if (indexPath.section == 0) {
+        NSString *CellIdentifier = @"ETAccountStatisticResultGraphTableViewCellIdentifier";
+        
+        ETAccountGraphTableViewCell *cell = (ETAccountGraphTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[ETAccountGraphTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }
+        
+        return cell;
+    }
+    else if (indexPath.section == 1 || indexPath.section == 2) {
         NSString *CellIdentifier = @"ETAccountStatisticResultSummaryTableViewCellIdentifier";
         
         ETAccountStatisticDetailTableViewCell *cell = (ETAccountStatisticDetailTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -310,7 +370,7 @@
         
         return cell;
     }
-    if (indexPath.section == 3) {
+    else if (indexPath.section == 3) {
         static NSString *CellIdentifier = @"ETAccountStatisticResultDataListTableViewCellIdentifier";
         
         ETAccountTableViewCell *cell = (ETAccountTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -321,7 +381,7 @@
         return cell;
     }
     
-    static NSString *CellIdentifier = @"ETAccountStatisticResultValueListTableViewCellIdentifier";
+    static NSString *CellIdentifier = @"UITableViewCellIdentifier";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -333,7 +393,15 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(ETAccountTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 1) {
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            graphView = [(ETAccountGraphTableViewCell *)cell graphView];
+            [graphView setBaseWithFrame:CGRectMake(0, 0, [[cell contentView] frame].size.width - 16, [[self view] frame].size.width - 16)];
+            
+            [self setGraphData];
+        }
+    }
+    else if (indexPath.section == 1) {
         [[(ETAccountStatisticDetailTableViewCell *)cell nameLabel] setText:[[resultAccountArray objectAtIndex:indexPath.row] objectForKey:@"name"]];
         [[(ETAccountStatisticDetailTableViewCell *)cell moneyLabel] setText:[ETFormatter moneyFormatFromString:[[resultAccountArray objectAtIndex:indexPath.row] objectForKey:@"money"]]];
     }

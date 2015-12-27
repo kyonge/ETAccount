@@ -12,7 +12,8 @@
 
 #import "ETAccountStatisticDetailTableViewCell.h"
 #import "ETAccountEditStatisticViewController.h"
-//#import "ETAccountGraphView.h"
+#import "ETAccountGraphView.h"
+#import "ETAccountGraphTableViewCell.h"
 #import "ETAccountTableViewCell.h"
 
 #import "ETUtility.h"
@@ -21,8 +22,11 @@
 
 @interface ETAccountStatisticDetailViewController : UITableViewController <ETAccountAddDealDelegate> {
 //    IBOutlet ETAccountGraphView *graphView;
+    ETAccountGraphView *graphView;
+    
     IBOutlet UITableView *statisticTableView;
     NSDictionary *statisticDictionary;
+    NSMutableArray *graphArray;
     NSArray *resultArray, *resultAccountArray, *resultTagArray;
     NSString *whereString;
     
