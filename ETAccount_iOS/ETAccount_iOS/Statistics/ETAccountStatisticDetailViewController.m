@@ -233,6 +233,7 @@
                 [graphDataArray addObject:tempDictionary];
         }
         
+//        NSLog(@"%@", graphDataArray);
         [graphArray addObject:graphDataArray];
         
         if ([graphDataArray count] == 0)
@@ -247,12 +248,15 @@
             lastDate = [NSString stringWithString:tempLastDate];
     }
     
-    NSLog(@"%@", firstDate);
-    NSLog(@"%@", lastDate);
-//
-//    [graphView setStartDateString:firstDate];
-//    [graphView setEndDateString:lastDate];
-//    [graphView initInnerView];
+//    NSLog(@"%@", firstDate);
+//    NSLog(@"%@", lastDate);
+    
+    if (!firstDate || !lastDate)
+        return;
+
+    [graphView setStartDateString:firstDate];
+    [graphView setEndDateString:lastDate];
+    [graphView initInnerView];
 }
 
 
