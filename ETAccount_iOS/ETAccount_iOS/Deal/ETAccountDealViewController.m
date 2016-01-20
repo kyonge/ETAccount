@@ -66,7 +66,7 @@
     NSArray *columnArray = [NSArray arrayWithObjects:@"id", @"name", @"tag_target_id", @"account_1", @"account_2", @"money", @"description", @"date", nil];
     
     if (isUntillToday)
-        querryString = [NSString stringWithFormat:@"%@ WHERE Deal.date<=datetime('%@')", querryString, [[[ETFormatter dateStringForDeal:[NSDate date]] componentsSeparatedByString:@" "] objectAtIndex:0]];
+        querryString = [NSString stringWithFormat:@"%@ WHERE Deal.date<=datetime('%@', '+1 day')", querryString, [[[ETFormatter dateStringForDeal:[NSDate date]] componentsSeparatedByString:@" "] objectAtIndex:0]];
     
      querryString = [NSString stringWithFormat:@"%@ ORDER BY datetime(Deal.Date) DESC", querryString];
     
