@@ -130,6 +130,11 @@
                     <tabBarItem key="tabBarItem" title="가계부" id="FBL-pi-QZe"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="가계부" id="mOI-FS-AaM">
+                        <barButtonItem key="leftBarButtonItem" title="오늘까지/전체" id="9Sy-ia-VrC">
+                            <connections>
+                                <action selector="changeDateOption:" destination="JEX-9P-axG" id="Fgk-XV-KiX"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Lcf-V7-Oik">
                             <connections>
                                 <segue destination="Mnr-Pj-6nr" kind="presentation" identifier="ETAccountAddDealSegue" id="qkV-lj-2Aa"/>

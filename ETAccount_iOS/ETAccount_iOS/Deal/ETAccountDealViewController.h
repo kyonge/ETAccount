@@ -10,24 +10,21 @@
 
 #import "DetailViewController.h"
 #import "ETAccountTableViewCell.h"
-#import "ETAccountAddViewController.h"
 #import "ETAccountAddDealTableViewController.h"
 #import "ETAccountDealDetailViewController.h"
 
 #import "ETUtility.h"
 #import "ETFormatter.h"
 
-@interface ETAccountDealViewController : DetailViewController <UITableViewDataSource, UITableViewDelegate, ETAccountAddDelegate, ETAccountAddDealDelegate> {
+@interface ETAccountDealViewController : DetailViewController <UITableViewDataSource, UITableViewDelegate, ETAccountAddDealDelegate> {
     NSMutableArray *dealArray;
     
     IBOutlet UIBarButtonItem *addItem;
     IBOutlet UITableView *dealListTableView;
     
-    ETAccountAddViewController *addViewController;
-    
     NSInteger selectedRow;
+    
+    BOOL isUntillToday;
 }
-
-@property (strong) ETAccountAddViewController *addViewController;
 
 @end

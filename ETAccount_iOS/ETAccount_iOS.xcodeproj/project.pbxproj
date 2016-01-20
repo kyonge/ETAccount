@@ -30,8 +30,6 @@
 		DF337EAC1AD2F63E001CA285 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337EA31AD2F63E001CA285 /* MKMapView+ZoomLevel.m */; };
 		DF337EAD1AD2F63E001CA285 /* PODataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337EA51AD2F63E001CA285 /* PODataManager.m */; };
 		DF337EB01AD2F659001CA285 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DF337EAF1AD2F659001CA285 /* libsqlite3.0.dylib */; };
-		DF358D451AD7479000972F9B /* ETAccountAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF358D431AD7479000972F9B /* ETAccountAddViewController.m */; };
-		DF358D461AD7479000972F9B /* ETAccountAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF358D441AD7479000972F9B /* ETAccountAddViewController.xib */; };
 		DF4E5BE01C0C81F400501AC6 /* ETAccountWhereMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4E5BDF1C0C81F300501AC6 /* ETAccountWhereMaker.m */; };
 		DF4EC85B1C231D2100AB96E3 /* ETAccountEditStatisticViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4EC85A1C231D2100AB96E3 /* ETAccountEditStatisticViewController.m */; };
 		DF614C3E1BCFFE320015D662 /* ETAccountAddAccountTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF614C3D1BCFFE320015D662 /* ETAccountAddAccountTableViewController.m */; };
@@ -109,9 +107,6 @@
 		DF337EA51AD2F63E001CA285 /* PODataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PODataManager.m; sourceTree = "<group>"; };
 		DF337EAE1AD2F646001CA285 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		DF337EAF1AD2F659001CA285 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
-		DF358D421AD7479000972F9B /* ETAccountAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountAddViewController.h; path = Account/ETAccountAddViewController.h; sourceTree = "<group>"; };
-		DF358D431AD7479000972F9B /* ETAccountAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountAddViewController.m; path = Account/ETAccountAddViewController.m; sourceTree = "<group>"; };
-		DF358D441AD7479000972F9B /* ETAccountAddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ETAccountAddViewController.xib; path = Account/ETAccountAddViewController.xib; sourceTree = "<group>"; };
 		DF4E5BDE1C0C81F300501AC6 /* ETAccountWhereMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ETAccountWhereMaker.h; sourceTree = "<group>"; };
 		DF4E5BDF1C0C81F300501AC6 /* ETAccountWhereMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ETAccountWhereMaker.m; sourceTree = "<group>"; };
 		DF4EC8591C231D2100AB96E3 /* ETAccountEditStatisticViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountEditStatisticViewController.h; path = Statistics/ETAccountEditStatisticViewController.h; sourceTree = "<group>"; };
@@ -201,16 +196,6 @@
 				DF0CFB2B1BAC41FE00A98D88 /* ETAccountHomeViewController.m */,
 			);
 			name = Home;
-			sourceTree = "<group>";
-		};
-		DF0CFB3B1BAE749900A98D88 /* deprecated (addView) */ = {
-			isa = PBXGroup;
-			children = (
-				DF358D421AD7479000972F9B /* ETAccountAddViewController.h */,
-				DF358D431AD7479000972F9B /* ETAccountAddViewController.m */,
-				DF358D441AD7479000972F9B /* ETAccountAddViewController.xib */,
-			);
-			name = "deprecated (addView)";
 			sourceTree = "<group>";
 		};
 		DF337E5A1AD2F5F9001CA285 = {
@@ -358,7 +343,6 @@
 		DF614C4E1BD004920015D662 /* Deal */ = {
 			isa = PBXGroup;
 			children = (
-				DF0CFB3B1BAE749900A98D88 /* deprecated (addView) */,
 				DF614C4F1BD005220015D662 /* Add Deal */,
 				DFAA41DC1BD5356B00DEC501 /* Deal Detail */,
 				DF614C461BD0048F0015D662 /* ETAccountDealViewController.h */,
@@ -533,7 +517,6 @@
 				DF337E751AD2F5F9001CA285 /* Main.storyboard in Resources */,
 				DF0CD6181BEE4FB600648EE5 /* 151107_edit.csv in Resources */,
 				DF337E7A1AD2F5F9001CA285 /* LaunchScreen.xib in Resources */,
-				DF358D461AD7479000972F9B /* ETAccountAddViewController.xib in Resources */,
 				DFCFE39F1C0F5B1600D5E3BC /* ETAccount.sqlite in Resources */,
 				DF337E771AD2F5F9001CA285 /* Images.xcassets in Resources */,
 			);
@@ -589,7 +572,6 @@
 				DF083F251C149C9C00641ED6 /* ETAccountAddFilterPriceTableViewCell.m in Sources */,
 				DF65EA961C035DAA0016ED69 /* ETAccountStatisticListTableViewCell.m in Sources */,
 				DF2BC52A1BD2A0DD00AAF616 /* ETAccountDBManager.m in Sources */,
-				DF358D451AD7479000972F9B /* ETAccountAddViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -670,7 +652,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "5bd79dc9-9579-4f3e-941d-eb8016edfde1";
+				PROVISIONING_PROFILE = "2691411e-a678-4c48-84ad-091d3ef44ecf";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -707,7 +689,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "5bd79dc9-9579-4f3e-941d-eb8016edfde1";
+				PROVISIONING_PROFILE = "2691411e-a678-4c48-84ad-091d3ef44ecf";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -724,7 +706,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Eten.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ad303631-663f-41aa-8eb3-c996497c738d";
+				PROVISIONING_PROFILE = "2691411e-a678-4c48-84ad-091d3ef44ecf";
 			};
 			name = Debug;
 		};
@@ -738,7 +720,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Eten.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ad303631-663f-41aa-8eb3-c996497c738d";
+				PROVISIONING_PROFILE = "2691411e-a678-4c48-84ad-091d3ef44ecf";
 			};
 			name = Release;
 		};
