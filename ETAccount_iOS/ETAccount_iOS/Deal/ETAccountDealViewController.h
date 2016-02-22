@@ -12,6 +12,7 @@
 #import "ETAccountTableViewCell.h"
 #import "ETAccountAddDealTableViewController.h"
 #import "ETAccountDealDetailViewController.h"
+#import "ETAccountDealRepeatViewController.h"
 
 #import "ETUtility.h"
 #import "ETFormatter.h"

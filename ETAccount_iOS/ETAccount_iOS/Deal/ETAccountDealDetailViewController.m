@@ -47,6 +47,11 @@
     isAccountLeftFilled = YES;
     isAccountRightFilled = YES;
     
+    [self reloadView];
+}
+
+- (void)reloadView
+{
     [addDealTableView reloadData];
 }
 

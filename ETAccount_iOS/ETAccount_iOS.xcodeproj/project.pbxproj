@@ -32,6 +32,7 @@
 		DF337EB01AD2F659001CA285 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DF337EAF1AD2F659001CA285 /* libsqlite3.0.dylib */; };
 		DF4E5BE01C0C81F400501AC6 /* ETAccountWhereMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4E5BDF1C0C81F300501AC6 /* ETAccountWhereMaker.m */; };
 		DF4EC85B1C231D2100AB96E3 /* ETAccountEditStatisticViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4EC85A1C231D2100AB96E3 /* ETAccountEditStatisticViewController.m */; };
+		DF5EE9941C7B614600E75C9F /* ETAccountDealRepeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5EE9931C7B614600E75C9F /* ETAccountDealRepeatViewController.m */; };
 		DF614C3E1BCFFE320015D662 /* ETAccountAddAccountTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF614C3D1BCFFE320015D662 /* ETAccountAddAccountTableViewController.m */; };
 		DF614C4A1BD0048F0015D662 /* ETAccountAddTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DF614C431BD0048F0015D662 /* ETAccountAddTableViewCell.m */; };
 		DF614C4B1BD0048F0015D662 /* ETAccountAddDealTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF614C451BD0048F0015D662 /* ETAccountAddDealTableViewController.m */; };
@@ -111,6 +112,8 @@
 		DF4E5BDF1C0C81F300501AC6 /* ETAccountWhereMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ETAccountWhereMaker.m; sourceTree = "<group>"; };
 		DF4EC8591C231D2100AB96E3 /* ETAccountEditStatisticViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountEditStatisticViewController.h; path = Statistics/ETAccountEditStatisticViewController.h; sourceTree = "<group>"; };
 		DF4EC85A1C231D2100AB96E3 /* ETAccountEditStatisticViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountEditStatisticViewController.m; path = Statistics/ETAccountEditStatisticViewController.m; sourceTree = "<group>"; };
+		DF5EE9921C7B614600E75C9F /* ETAccountDealRepeatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountDealRepeatViewController.h; path = Deal/ETAccountDealRepeatViewController.h; sourceTree = "<group>"; };
+		DF5EE9931C7B614600E75C9F /* ETAccountDealRepeatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountDealRepeatViewController.m; path = Deal/ETAccountDealRepeatViewController.m; sourceTree = "<group>"; };
 		DF614C3C1BCFFE320015D662 /* ETAccountAddAccountTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountAddAccountTableViewController.h; path = Item/ETAccountAddAccountTableViewController.h; sourceTree = "<group>"; };
 		DF614C3D1BCFFE320015D662 /* ETAccountAddAccountTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountAddAccountTableViewController.m; path = Item/ETAccountAddAccountTableViewController.m; sourceTree = "<group>"; };
 		DF614C421BD0048F0015D662 /* ETAccountAddTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountAddTableViewCell.h; path = Deal/ETAccountAddTableViewCell.h; sourceTree = "<group>"; };
@@ -331,6 +334,15 @@
 			name = "Edit Statistic";
 			sourceTree = "<group>";
 		};
+		DF5EE9951C7B614A00E75C9F /* Repeat Deal */ = {
+			isa = PBXGroup;
+			children = (
+				DF5EE9921C7B614600E75C9F /* ETAccountDealRepeatViewController.h */,
+				DF5EE9931C7B614600E75C9F /* ETAccountDealRepeatViewController.m */,
+			);
+			name = "Repeat Deal";
+			sourceTree = "<group>";
+		};
 		DF614C3F1BCFFE3E0015D662 /* Account */ = {
 			isa = PBXGroup;
 			children = (
@@ -345,6 +357,7 @@
 			children = (
 				DF614C4F1BD005220015D662 /* Add Deal */,
 				DFAA41DC1BD5356B00DEC501 /* Deal Detail */,
+				DF5EE9951C7B614A00E75C9F /* Repeat Deal */,
 				DF614C461BD0048F0015D662 /* ETAccountDealViewController.h */,
 				DF614C471BD0048F0015D662 /* ETAccountDealViewController.m */,
 				DF614C481BD0048F0015D662 /* ETAccountTableViewCell.h */,
@@ -564,6 +577,7 @@
 				DFCF609D1BDDB3C70083F674 /* ETAccountAddTagViewController.m in Sources */,
 				DF337EAC1AD2F63E001CA285 /* MKMapView+ZoomLevel.m in Sources */,
 				DF337EA91AD2F63E001CA285 /* FMDatabase.m in Sources */,
+				DF5EE9941C7B614600E75C9F /* ETAccountDealRepeatViewController.m in Sources */,
 				DF337EAD1AD2F63E001CA285 /* PODataManager.m in Sources */,
 				DF65EA921C035CB80016ED69 /* ETAccountStatisticListViewController.m in Sources */,
 				DF0CFB2C1BAC41FE00A98D88 /* ETAccountHomeViewController.m in Sources */,

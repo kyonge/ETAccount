@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eOm-rG-bjx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eOm-rG-bjx">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--가계부-->
@@ -135,11 +136,23 @@
                                 <action selector="changeDateOption:" destination="JEX-9P-axG" id="Fgk-XV-KiX"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Lcf-V7-Oik">
-                            <connections>
-                                <segue destination="Mnr-Pj-6nr" kind="presentation" identifier="ETAccountAddDealSegue" id="qkV-lj-2Aa"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="Lcf-V7-Oik">
+                                <connections>
+                                    <segue destination="Mnr-Pj-6nr" kind="presentation" identifier="ETAccountAddDealSegue" id="qkV-lj-2Aa"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem style="plain" id="vSX-bV-hI8">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gcJ-uK-vvm">
+                                    <rect key="frame" x="411" y="7" width="133" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" title="Repeat"/>
+                                    <connections>
+                                        <segue destination="tnP-kP-YQd" kind="presentation" identifier="ETAccountRepeatDealSegue" id="jmu-S4-F0J"/>
+                                    </connections>
+                                </button>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="addItem" destination="Lcf-V7-Oik" id="20H-ES-CqY"/>
@@ -957,6 +970,81 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wzp-JK-DMP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1242" y="1361"/>
+        </scene>
+        <!--Account Deal Repeat View Controller-->
+        <scene sceneID="neu-dX-wzA">
+            <objects>
+                <viewController storyboardIdentifier="ETAccountDealRepeatViewController" id="tnP-kP-YQd" customClass="ETAccountDealRepeatViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="H6F-Xy-z82"/>
+                        <viewControllerLayoutGuide type="bottom" id="Qem-3N-RxW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Doc-a6-f1p">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="oSV-Lh-ISF">
+                                <rect key="frame" x="240" y="28" width="121" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="121" id="DcK-jq-rai"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="k/n"/>
+                                    <segment title="n"/>
+                                </segments>
+                                <connections>
+                                    <action selector="changePage:" destination="tnP-kP-YQd" eventType="valueChanged" id="eKr-X6-JMk"/>
+                                </connections>
+                            </segmentedControl>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Uv-gM-izZ">
+                                <rect key="frame" x="20" y="64" width="560" height="516"/>
+                                <color key="backgroundColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                            </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZAD-Ok-E00">
+                                <rect key="frame" x="20" y="27" width="48" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="1pj-xO-Pe6"/>
+                                    <constraint firstAttribute="width" constant="48" id="XFy-o9-VEn"/>
+                                </constraints>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancel:" destination="tnP-kP-YQd" eventType="touchUpInside" id="pHC-Nk-vje"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DK1-9Y-hZC">
+                                <rect key="frame" x="525" y="27" width="55" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="55" id="6pd-dn-l3b"/>
+                                    <constraint firstAttribute="height" constant="30" id="Kyv-uX-YgI"/>
+                                </constraints>
+                                <state key="normal" title="Confirm"/>
+                                <connections>
+                                    <action selector="confirm:" destination="tnP-kP-YQd" eventType="touchUpInside" id="VFf-mz-ngI"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="oSV-Lh-ISF" firstAttribute="top" secondItem="H6F-Xy-z82" secondAttribute="bottom" constant="8" id="9PY-1g-SKH"/>
+                            <constraint firstAttribute="trailing" secondItem="DK1-9Y-hZC" secondAttribute="trailing" constant="20" id="ChY-i7-Cyf"/>
+                            <constraint firstItem="DK1-9Y-hZC" firstAttribute="top" secondItem="H6F-Xy-z82" secondAttribute="bottom" constant="7" id="EsI-3Y-KSh"/>
+                            <constraint firstItem="Qem-3N-RxW" firstAttribute="top" secondItem="6Uv-gM-izZ" secondAttribute="bottom" constant="20" id="HjN-JW-tkM"/>
+                            <constraint firstAttribute="trailing" secondItem="6Uv-gM-izZ" secondAttribute="trailing" constant="20" id="MSl-Lf-a4O"/>
+                            <constraint firstItem="6Uv-gM-izZ" firstAttribute="leading" secondItem="Doc-a6-f1p" secondAttribute="leading" constant="20" id="MvP-a3-y6L"/>
+                            <constraint firstItem="ZAD-Ok-E00" firstAttribute="top" secondItem="H6F-Xy-z82" secondAttribute="bottom" constant="7" id="hl0-aA-hLK"/>
+                            <constraint firstItem="6Uv-gM-izZ" firstAttribute="centerX" secondItem="Doc-a6-f1p" secondAttribute="centerX" id="kny-sw-YqO"/>
+                            <constraint firstItem="6Uv-gM-izZ" firstAttribute="top" secondItem="oSV-Lh-ISF" secondAttribute="bottom" constant="8" id="qn2-O2-rKK"/>
+                            <constraint firstItem="ZAD-Ok-E00" firstAttribute="leading" secondItem="Doc-a6-f1p" secondAttribute="leading" constant="20" id="tce-cS-pDz"/>
+                            <constraint firstItem="oSV-Lh-ISF" firstAttribute="centerX" secondItem="Doc-a6-f1p" secondAttribute="centerX" id="xnw-0l-Po5"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="pageSegmentedControl" destination="oSV-Lh-ISF" id="OaS-Kb-pWw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pXH-0s-a95" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2697" y="-1504"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="EC0-Jd-40w">

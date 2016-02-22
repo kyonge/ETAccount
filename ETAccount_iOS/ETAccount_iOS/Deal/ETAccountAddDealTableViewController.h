@@ -15,7 +15,7 @@
 
 @protocol ETAccountAddDealDelegate;
 
-@interface ETAccountAddDealTableViewController : UITableViewController <UINavigationControllerDelegate, ETAccountAddAccountDelegate, ETAccountAddDealCellDelegate, ETAccountChangeTagDelegate> {
+@interface ETAccountAddDealTableViewController : UIViewController <UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, ETAccountAddAccountDelegate, ETAccountAddDealCellDelegate, ETAccountChangeTagDelegate> {
     IBOutlet UITableView *addDealTableView;
     
     NSArray *selectedTagsArray;

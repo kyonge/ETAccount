@@ -32,27 +32,32 @@
     else if ([[segue identifier] isEqualToString:@"ETAccountViewDealSegue"]) {
         NSDictionary *selectedDeal = [dealArray objectAtIndex:selectedRow];
         
-        NSString *tempDateString = [selectedDeal objectForKey:@"date"];
-//        NSString *finalDateString = [ETFormatter dateColumnFormat:tempDateString];
-        
-        NSString *querryString_1 = [NSString stringWithFormat:@"SELECT Account.id FROM Account WHERE Account.name = '%@'", [selectedDeal objectForKey:@"account_1"]];
-        NSArray *columnArray = [NSArray arrayWithObject:@"id"];
-        NSArray *account_1_id = [ETUtility selectDataWithQuerry:querryString_1 FromFile:_DB WithColumn:columnArray];
-        NSString *querryString_2 = [NSString stringWithFormat:@"SELECT Account.id FROM Account WHERE Account.name = '%@'", [selectedDeal objectForKey:@"account_2"]];
-        NSArray *account_2_id = [ETUtility selectDataWithQuerry:querryString_2 FromFile:_DB WithColumn:columnArray];
-        
-        [(ETAccountDealDetailViewController *)[segue destinationViewController] setAddDealDelegate:self];
-        [(ETAccountDealDetailViewController *)[segue destinationViewController] initDealDetailWithDate:tempDateString
-                                                                                                  Name:[selectedDeal objectForKey:@"name"]
-                                                                                                  Money:[selectedDeal objectForKey:@"money"]
-                                                                                                  Left:[[[account_1_id objectAtIndex:0] objectForKey:@"id"] integerValue]
-                                                                                                 Right:[[[account_2_id objectAtIndex:0] objectForKey:@"id"] integerValue]
-                                                                                           Description:[selectedDeal objectForKey:@"description"]
-                                                                                             tagTarget:[[selectedDeal objectForKey:@"tag_target_id"] integerValue]
-                                                                                                    Id:[[selectedDeal objectForKey:@"id"] integerValue]];
+        [self sendDealDateDictionray:selectedDeal ToDetailViewController:(ETAccountDealDetailViewController *)[segue destinationViewController]];
     }
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+}
+
+- (void)sendDealDateDictionray:(NSDictionary *)dealDataDictionary ToDetailViewController:(ETAccountDealDetailViewController *)detailViewController
+{
+    NSString *tempDateString = [dealDataDictionary objectForKey:@"date"];
+//    NSString *finalDateString = [ETFormatter dateColumnFormat:tempDateString];
+    
+    NSString *querryString_1 = [NSString stringWithFormat:@"SELECT Account.id FROM Account WHERE Account.name = '%@'", [dealDataDictionary objectForKey:@"account_1"]];
+    NSArray *columnArray = [NSArray arrayWithObject:@"id"];
+    NSArray *account_1_id = [ETUtility selectDataWithQuerry:querryString_1 FromFile:_DB WithColumn:columnArray];
+    NSString *querryString_2 = [NSString stringWithFormat:@"SELECT Account.id FROM Account WHERE Account.name = '%@'", [dealDataDictionary objectForKey:@"account_2"]];
+    NSArray *account_2_id = [ETUtility selectDataWithQuerry:querryString_2 FromFile:_DB WithColumn:columnArray];
+    
+    [detailViewController setAddDealDelegate:self];
+    [detailViewController initDealDetailWithDate:tempDateString
+                                            Name:[dealDataDictionary objectForKey:@"name"]
+                                           Money:[dealDataDictionary objectForKey:@"money"]
+                                            Left:[[[account_1_id objectAtIndex:0] objectForKey:@"id"] integerValue]
+                                           Right:[[[account_2_id objectAtIndex:0] objectForKey:@"id"] integerValue]
+                                     Description:[dealDataDictionary objectForKey:@"description"]
+                                       tagTarget:[[dealDataDictionary objectForKey:@"tag_target_id"] integerValue]
+                                              Id:[[dealDataDictionary objectForKey:@"id"] integerValue]];
 }
 
 
@@ -88,6 +93,19 @@
 - (IBAction)addAccount:(id)sender
 {
     [sender setEnabled:NO];
+}
+
+
+#pragma mark - 반복
+
+- (void)repeatDeals:(NSIndexPath *)indexPath
+{
+    NSDictionary *selectedDeal = [dealArray objectAtIndex:indexPath.row];
+    
+    ETAccountDealRepeatViewController *repeatDealViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ETAccountDealRepeatViewController"];
+    [self sendDealDateDictionray:selectedDeal ToDetailViewController:repeatDealViewController];
+    
+    [self presentViewController:repeatDealViewController animated:YES completion:nil];
 }
 
 
@@ -198,6 +216,15 @@
 
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
+    UITableViewRowAction *repeatTagAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
+                                                                               title:@"Repeat"
+                                                                             handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+                                                                                 [tableView setEditing:NO animated:NO];
+                                                                                 
+                                                                                 [self repeatDeals:indexPath];
+                                                                             }];
+    [repeatTagAction setBackgroundColor:[UIColor blueColor]];
+    
     UITableViewRowAction *deleteTagAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
                                                                                title:@"Delete"
                                                                              handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
@@ -208,7 +235,7 @@
     [deleteTagAction setBackgroundColor:[UIColor redColor]];
     
     [tableView setEditing:YES animated:NO];
-    return [NSArray arrayWithObject:deleteTagAction];
+    return [NSArray arrayWithObjects:repeatTagAction, deleteTagAction, nil];
 }
 
 #pragma mark ETAccountAddDelegate
