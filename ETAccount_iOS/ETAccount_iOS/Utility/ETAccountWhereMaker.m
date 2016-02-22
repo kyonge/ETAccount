@@ -47,11 +47,14 @@
         switch (tempType) {
             case FILTER_TYPE_ITEM:
                 if (noDateCondition) {
-                    whereString = [NSString stringWithFormat:@"%@ (Deal.account_id_1='%ld' OR Deal.account_id_2='%ld')", whereString, (long)tempItem, (long)tempItem];
+                    if ([filterArray indexOfObject:tempFilterDictionary] == 0)
+                        whereString = [NSString stringWithFormat:@"%@ ((Deal.account_id_1='%ld' OR Deal.account_id_2='%ld')", whereString, (long)tempItem, (long)tempItem];
+                    else
+                        whereString = [NSString stringWithFormat:@"%@ (Deal.account_id_1='%ld' OR Deal.account_id_2='%ld')", whereString, (long)tempItem, (long)tempItem];
                     noDateCondition = NO;
                 }
                 else if ([filterArray indexOfObject:tempFilterDictionary] == 0)
-                    whereString = [NSString stringWithFormat:@"%@ AND (Deal.account_id_1='%ld' OR Deal.account_id_2='%ld')", whereString, (long)tempItem, (long)tempItem];
+                    whereString = [NSString stringWithFormat:@"%@ AND ((Deal.account_id_1='%ld' OR Deal.account_id_2='%ld')", whereString, (long)tempItem, (long)tempItem];
                 else
                     whereString = [NSString stringWithFormat:@"%@ OR (Deal.account_id_1='%ld' OR Deal.account_id_2='%ld')", whereString, (long)tempItem, (long)tempItem];
                 break;
@@ -109,6 +112,8 @@
     }
 //    whereString = [whereString substringToIndex:[whereString length] - 4];
 //    NSLog(@"%@", whereString);
+    
+    whereString = [NSString stringWithFormat:@"%@)", whereString];
     
     return whereString;
 }
