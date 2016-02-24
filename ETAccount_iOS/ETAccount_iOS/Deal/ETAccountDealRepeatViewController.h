@@ -8,8 +8,22 @@
 
 #import "ETAccountDealDetailViewController.h"
 
-@interface ETAccountDealRepeatViewController : ETAccountDealDetailViewController {
-    IBOutlet UISegmentedControl *pageSegmentedControl;
+typedef enum : NSUInteger {
+    PERIOD_DAILY,
+    PERIOD_WEEKLY,
+    PERIOD_MONTHLY,
+    PERIOD_ANNUALLY
+} PERIOD;
+
+@interface ETAccountDealRepeatViewController : ETAccountDealDetailViewController <UIScrollViewDelegate, UITextFieldDelegate> {
+    IBOutlet UISegmentedControl *pageSegmentedControl, *periodSegmentedControl;
+    UIScrollView *pageScrollView;
+    
+    UITextField *divideCountTextField;
+    UISlider *divideCountSlider;
+    
+    UITextField *repeatCountTextField;
+    UISwitch *displaySwitch;
 }
 
 @end

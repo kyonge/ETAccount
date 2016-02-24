@@ -110,6 +110,8 @@
     
     querryString = [NSString stringWithFormat:@"%@WHERE id = %ld", querryString, (long)itemId];
     
+    NSLog(@"querryString : %@", querryString);
+    
     return [ETUtility runQuerry:querryString FromFile:_DB];
 }
 

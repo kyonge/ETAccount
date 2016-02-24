@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eOm-rG-bjx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eOm-rG-bjx">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--가계부-->
@@ -119,6 +118,13 @@
                                     <outlet property="delegate" destination="JEX-9P-axG" id="0VZ-YN-P6M"/>
                                 </connections>
                             </tableView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lK8-Ac-u5C">
+                                <rect key="frame" x="233" y="285" width="133" height="30"/>
+                                <state key="normal" title="Repeat"/>
+                                <connections>
+                                    <segue destination="tnP-kP-YQd" kind="presentation" id="It4-hL-Has"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -136,23 +142,11 @@
                                 <action selector="changeDateOption:" destination="JEX-9P-axG" id="Fgk-XV-KiX"/>
                             </connections>
                         </barButtonItem>
-                        <rightBarButtonItems>
-                            <barButtonItem systemItem="add" id="Lcf-V7-Oik">
-                                <connections>
-                                    <segue destination="Mnr-Pj-6nr" kind="presentation" identifier="ETAccountAddDealSegue" id="qkV-lj-2Aa"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem style="plain" id="vSX-bV-hI8">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gcJ-uK-vvm">
-                                    <rect key="frame" x="411" y="7" width="133" height="30"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" title="Repeat"/>
-                                    <connections>
-                                        <segue destination="tnP-kP-YQd" kind="presentation" identifier="ETAccountRepeatDealSegue" id="jmu-S4-F0J"/>
-                                    </connections>
-                                </button>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Lcf-V7-Oik">
+                            <connections>
+                                <segue destination="Mnr-Pj-6nr" kind="presentation" identifier="ETAccountAddDealSegue" id="qkV-lj-2Aa"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="addItem" destination="Lcf-V7-Oik" id="20H-ES-CqY"/>
@@ -996,10 +990,19 @@
                                     <action selector="changePage:" destination="tnP-kP-YQd" eventType="valueChanged" id="eKr-X6-JMk"/>
                                 </connections>
                             </segmentedControl>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Uv-gM-izZ">
-                                <rect key="frame" x="20" y="64" width="560" height="516"/>
-                                <color key="backgroundColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
-                            </scrollView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Sxx-SK-75d">
+                                <rect key="frame" x="180" y="70" width="240" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="Uz0-5R-es3"/>
+                                    <constraint firstAttribute="width" constant="240" id="rC3-c2-fmn"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Daily"/>
+                                    <segment title="Weekly"/>
+                                    <segment title="Monthly"/>
+                                    <segment title="Annually"/>
+                                </segments>
+                            </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZAD-Ok-E00">
                                 <rect key="frame" x="20" y="27" width="48" height="30"/>
                                 <constraints>
@@ -1025,21 +1028,19 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Sxx-SK-75d" firstAttribute="centerX" secondItem="Doc-a6-f1p" secondAttribute="centerX" id="7dB-5f-Gpx"/>
                             <constraint firstItem="oSV-Lh-ISF" firstAttribute="top" secondItem="H6F-Xy-z82" secondAttribute="bottom" constant="8" id="9PY-1g-SKH"/>
                             <constraint firstAttribute="trailing" secondItem="DK1-9Y-hZC" secondAttribute="trailing" constant="20" id="ChY-i7-Cyf"/>
                             <constraint firstItem="DK1-9Y-hZC" firstAttribute="top" secondItem="H6F-Xy-z82" secondAttribute="bottom" constant="7" id="EsI-3Y-KSh"/>
-                            <constraint firstItem="Qem-3N-RxW" firstAttribute="top" secondItem="6Uv-gM-izZ" secondAttribute="bottom" constant="20" id="HjN-JW-tkM"/>
-                            <constraint firstAttribute="trailing" secondItem="6Uv-gM-izZ" secondAttribute="trailing" constant="20" id="MSl-Lf-a4O"/>
-                            <constraint firstItem="6Uv-gM-izZ" firstAttribute="leading" secondItem="Doc-a6-f1p" secondAttribute="leading" constant="20" id="MvP-a3-y6L"/>
                             <constraint firstItem="ZAD-Ok-E00" firstAttribute="top" secondItem="H6F-Xy-z82" secondAttribute="bottom" constant="7" id="hl0-aA-hLK"/>
-                            <constraint firstItem="6Uv-gM-izZ" firstAttribute="centerX" secondItem="Doc-a6-f1p" secondAttribute="centerX" id="kny-sw-YqO"/>
-                            <constraint firstItem="6Uv-gM-izZ" firstAttribute="top" secondItem="oSV-Lh-ISF" secondAttribute="bottom" constant="8" id="qn2-O2-rKK"/>
+                            <constraint firstItem="Sxx-SK-75d" firstAttribute="top" secondItem="oSV-Lh-ISF" secondAttribute="bottom" constant="14" id="hqx-aq-yIA"/>
                             <constraint firstItem="ZAD-Ok-E00" firstAttribute="leading" secondItem="Doc-a6-f1p" secondAttribute="leading" constant="20" id="tce-cS-pDz"/>
                             <constraint firstItem="oSV-Lh-ISF" firstAttribute="centerX" secondItem="Doc-a6-f1p" secondAttribute="centerX" id="xnw-0l-Po5"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="pageSegmentedControl" destination="oSV-Lh-ISF" id="OaS-Kb-pWw"/>
+                        <outlet property="periodSegmentedControl" destination="Sxx-SK-75d" id="wuU-0Y-R6H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pXH-0s-a95" userLabel="First Responder" sceneMemberID="firstResponder"/>
