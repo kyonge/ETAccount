@@ -8,12 +8,25 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ETFormatter.h"
+
+@interface ETAccountGraphDataItem : NSObject
+
+@property (readwrite) NSInteger itemIndex;
+@property (readwrite) NSString *itemName;
+@property (readwrite) NSInteger itemValue;
+@property (readwrite) NSInteger itemRealValue;
+@property (readwrite) UIColor *itemColor;
+
+@end
+
+
 @interface ETAccountGraphInnerView : UIView
 
-@property (assign, nonatomic) CGFloat gridSpacing;
+@property (strong, readwrite) NSMutableArray *graphInnerDataArray;
+@property (assign, readwrite) CGFloat zeroPositionX;
+
 @property (assign, nonatomic) CGFloat gridLineWidth;
-@property (assign, nonatomic) CGFloat gridXOffset;
-@property (assign, nonatomic) CGFloat gridYOffset;
 @property (strong, nonatomic) UIColor *gridLineColor;
 
 @end

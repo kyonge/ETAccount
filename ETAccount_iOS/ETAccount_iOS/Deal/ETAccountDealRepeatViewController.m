@@ -249,7 +249,7 @@
                              [NSNumber numberWithInteger:tag],
                              [NSString stringWithFormat:@"'%@'", description],
                              [NSString stringWithFormat:@"'%@'", dateString],
-                             [NSString stringWithFormat:@"%d", price], nil];
+                             [NSString stringWithFormat:@"%ld", (long)price], nil];
     NSDictionary *dataDic = [NSDictionary dictionaryWithObjects:objectsArray forKeys:keyArray];
     
     return dataDic;

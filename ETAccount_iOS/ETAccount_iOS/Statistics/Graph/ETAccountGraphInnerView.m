@@ -8,13 +8,21 @@
 
 #import "ETAccountGraphInnerView.h"
 
+@implementation ETAccountGraphDataItem
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"itemIndex : %ld itemName : %@   itemRealValue: %ld  itemValue : %ld", (long)[self itemIndex], [self itemName], (long)[self itemRealValue], (long)[self itemValue]];
+}
+
+@end
+
+
 @implementation ETAccountGraphInnerView
 
-@synthesize gridSpacing;
-@synthesize gridLineWidth;
-@synthesize gridXOffset;
-@synthesize gridYOffset;
-@synthesize gridLineColor;
+//+ (Class)layerClass {
+//    return [CATiledLayer class];
+//}
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -22,6 +30,7 @@
     if (self) {
         [self setDefaults];
     }
+    
     return self;
 }
 
@@ -36,32 +45,76 @@
 
 #pragma mark - Private Methods
 
+- (CGFloat)getAbsoluteLocationWithRelativeValue:(NSInteger)relativeValue
+{
+    CGFloat standardHeight = CGRectGetHeight(self.bounds) - 20;
+    
+    return (standardHeight - 20) * (100 - relativeValue) / 100.0 + 20;
+}
+
 - (void)drawRect:(CGRect)rect
 {
     CGFloat width = CGRectGetWidth(self.bounds);
     CGFloat height = CGRectGetHeight(self.bounds);
     
     UIBezierPath *path = [UIBezierPath bezierPath];
-    path.lineWidth = self.gridLineWidth;
+    path.lineWidth = [self gridLineWidth];
+    [[self gridLineColor] setStroke];
     
-    CGFloat x = self.gridXOffset;
-    while (x <= width)
-    {
-        [path moveToPoint:CGPointMake(x, 0.0)];
-        [path addLineToPoint:CGPointMake(x, height)];
-        x += self.gridSpacing;
-    }
-    
-    CGFloat y = self.gridYOffset;
-    while (y <= height)
-    {
-        [path moveToPoint:CGPointMake(0.0, y)];
-        [path addLineToPoint:CGPointMake(width, y)];
-        y += self.gridSpacing;
-    }
-    
-    [self.gridLineColor setStroke];
+    [path moveToPoint:CGPointMake(20.0, 0.0)];
+    [path addLineToPoint:CGPointMake(20.0, height)];
     [path stroke];
+    
+    CGFloat locationYZero = [self getAbsoluteLocationWithRelativeValue:[self zeroPositionX]];
+    [path moveToPoint:CGPointMake(0.0, locationYZero)];
+    [path addLineToPoint:CGPointMake(width, locationYZero)];
+    [path stroke];
+    
+//    NSLog(@"%ld -> %f", (long)[self zeroPositionX], locationYZero);
+    for (ETAccountGraphDataItem *item in [self graphInnerDataArray]) {
+//        NSLog(@"item : %@", item);
+        NSInteger index = [[self graphInnerDataArray] indexOfObject:item];
+        CGFloat locationY = [self getAbsoluteLocationWithRelativeValue:[item itemValue]];
+//        NSLog(@"%ld -> %f", (long)[item itemValue], locationY);
+        
+        UIBezierPath *path;
+        [[item itemColor] setFill];
+        CGFloat relativeLocationX = 40.0 + 40.0 * index;
+        
+        if (locationYZero < locationY) {
+            path = [UIBezierPath bezierPathWithRect:CGRectMake(relativeLocationX, locationYZero, 20, locationY - locationYZero)];
+        }
+        else {
+            path = [UIBezierPath bezierPathWithRect:CGRectMake(relativeLocationX, locationY, 20, locationYZero - locationY)];
+        }
+        [path fill];
+        
+        UILabel *nameLabel = [[UILabel alloc] init];
+        [nameLabel setTextAlignment:NSTextAlignmentCenter];
+        [nameLabel setFont:[UIFont systemFontOfSize:8]];
+        [nameLabel setText:[item itemName]];
+        [nameLabel sizeToFit];
+        
+        UILabel *priceLabel = [[UILabel alloc] init];
+        [priceLabel setTextAlignment:NSTextAlignmentCenter];
+        [priceLabel setFont:[UIFont systemFontOfSize:8]];
+        [priceLabel setText:[ETFormatter moneyFormatFromString:[NSString stringWithFormat:@"%ld", (long)[item itemRealValue]]]];
+        [priceLabel sizeToFit];
+        
+        CGFloat nameLabelWidth = [nameLabel frame].size.width;
+        CGFloat nameLabelHeight = [nameLabel frame].size.height;
+        
+        CGFloat priceLabelWidth = [priceLabel frame].size.width;
+        CGFloat priceLabelHeight = [priceLabel frame].size.height;
+        
+        if (locationY > locationYZero) [nameLabel setFrame:CGRectMake(relativeLocationX + 10 - nameLabelWidth / 2, locationY + nameLabelHeight, nameLabelWidth, nameLabelHeight)];
+        else [nameLabel setFrame:CGRectMake(relativeLocationX + 10 - nameLabelWidth / 2, locationY - priceLabelHeight - nameLabelHeight, nameLabelWidth, nameLabelHeight)];
+        [self addSubview:nameLabel];
+        
+        if (locationY > locationYZero) [priceLabel setFrame:CGRectMake(relativeLocationX + 10 - priceLabelWidth / 2, locationY, priceLabelWidth, priceLabelHeight)];
+        else [priceLabel setFrame:CGRectMake(relativeLocationX + 10 - priceLabelWidth / 2, locationY - priceLabelHeight, priceLabelWidth, priceLabelHeight)];
+        [self addSubview:priceLabel];
+    }
 }
 
 
@@ -72,21 +125,7 @@
     self.backgroundColor = [UIColor whiteColor];
     self.opaque = YES;
     
-    self.gridSpacing = 20.0;
-    
-    if (self.contentScaleFactor == 2.0)
-    {
-        self.gridLineWidth = 0.5;
-        self.gridXOffset = 0.25;
-        self.gridYOffset = 0.25;
-    }
-    else
-    {
-        self.gridLineWidth = 1.0;
-        self.gridXOffset = 0.5;
-        self.gridYOffset = 0.5;
-    }
-    
+    self.gridLineWidth = 0.5;
     self.gridLineColor = [UIColor blueColor];
 }
 

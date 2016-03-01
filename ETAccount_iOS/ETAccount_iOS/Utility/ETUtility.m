@@ -209,6 +209,16 @@
     return NO;
 }
 
++ (BOOL)doesArray:(NSArray *)targetArray hasDictionaryWithId:(NSString *)targetId WithKey:(NSString *)keyString
+{
+    for (NSDictionary *tempDictionary in targetArray) {
+        if ([[tempDictionary objectForKey:keyString] isEqualToString:targetId])
+            return YES;
+    }
+    
+    return NO;
+}
+
 
 #pragma mark - Alert
 

@@ -19,14 +19,15 @@
 #import "ETUtility.h"
 #import "ETFormatter.h"
 #import "ETAccountWhereMaker.h"
+//#import "ETAccountGraphSharedData.h"
 
 @interface ETAccountStatisticDetailViewController : UITableViewController <ETAccountAddDealDelegate> {
 //    IBOutlet ETAccountGraphView *graphView;
-    ETAccountGraphView *graphView;
+//    ETAccountGraphView *graphView;
     
     IBOutlet UITableView *statisticTableView;
     NSDictionary *statisticDictionary;
-    NSMutableArray *graphArray;
+    NSMutableArray *tempGraphDataArray;
     NSArray *resultArray, *resultAccountArray, *resultTagArray;
     NSString *whereString;
     

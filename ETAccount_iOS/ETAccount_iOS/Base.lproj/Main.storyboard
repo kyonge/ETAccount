@@ -778,7 +778,7 @@
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="czg-Gq-ROv" customClass="ETAccountGraphView">
                                             <rect key="frame" x="8" y="8" width="584" height="43"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </view>
                                     </subviews>
                                     <constraints>
@@ -1373,6 +1373,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="srU-UB-T4T"/>
+        <segue reference="Y7y-Qi-ihB"/>
     </inferredMetricsTieBreakers>
 </document>

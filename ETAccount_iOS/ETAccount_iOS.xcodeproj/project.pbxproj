@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF03F3BF1C820E3700DAB0CA /* ETAccountGraphSharedData.m in Sources */ = {isa = PBXBuildFile; fileRef = DF03F3BE1C820E3700DAB0CA /* ETAccountGraphSharedData.m */; };
 		DF083F1B1C13FB3900641ED6 /* ETAccountAddStatisticTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DF083F1A1C13FB3900641ED6 /* ETAccountAddStatisticTableViewCell.m */; };
 		DF083F1E1C1438AF00641ED6 /* ETAccountFilterListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF083F1D1C1438AF00641ED6 /* ETAccountFilterListViewController.m */; };
 		DF083F221C144AAD00641ED6 /* ETAccountFilterDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF083F211C144AAD00641ED6 /* ETAccountFilterDetailTableViewController.m */; };
@@ -64,6 +65,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DF03F3BD1C820E3700DAB0CA /* ETAccountGraphSharedData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountGraphSharedData.h; path = Statistics/Graph/ETAccountGraphSharedData.h; sourceTree = "<group>"; };
+		DF03F3BE1C820E3700DAB0CA /* ETAccountGraphSharedData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountGraphSharedData.m; path = Statistics/Graph/ETAccountGraphSharedData.m; sourceTree = "<group>"; };
 		DF083F191C13FB3900641ED6 /* ETAccountAddStatisticTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountAddStatisticTableViewCell.h; path = Statistics/ETAccountAddStatisticTableViewCell.h; sourceTree = "<group>"; };
 		DF083F1A1C13FB3900641ED6 /* ETAccountAddStatisticTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountAddStatisticTableViewCell.m; path = Statistics/ETAccountAddStatisticTableViewCell.m; sourceTree = "<group>"; };
 		DF083F1C1C1438AF00641ED6 /* ETAccountFilterListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountFilterListViewController.h; path = Filter/ETAccountFilterListViewController.h; sourceTree = "<group>"; };
@@ -410,6 +413,8 @@
 				DF9597C41C03881D005856FD /* ETAccountGraphView.m */,
 				DFBC1A6F1C2F4C1F00E64C8D /* ETAccountGraphInnerView.h */,
 				DFBC1A701C2F4C1F00E64C8D /* ETAccountGraphInnerView.m */,
+				DF03F3BD1C820E3700DAB0CA /* ETAccountGraphSharedData.h */,
+				DF03F3BE1C820E3700DAB0CA /* ETAccountGraphSharedData.m */,
 			);
 			name = Graph;
 			sourceTree = "<group>";
@@ -555,6 +560,7 @@
 				DF337E6C1AD2F5F9001CA285 /* AppDelegate.m in Sources */,
 				DF337E691AD2F5F9001CA285 /* main.m in Sources */,
 				DF083F221C144AAD00641ED6 /* ETAccountFilterDetailTableViewController.m in Sources */,
+				DF03F3BF1C820E3700DAB0CA /* ETAccountGraphSharedData.m in Sources */,
 				DF337EA61AD2F63E001CA285 /* ETHTTPUtility.m in Sources */,
 				DF9597C91C038886005856FD /* ETAccountStatisticDetailViewController.m in Sources */,
 				DFAA41DB1BD5356300DEC501 /* ETAccountDealDetailViewController.m in Sources */,
