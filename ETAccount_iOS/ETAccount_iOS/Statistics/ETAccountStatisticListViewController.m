@@ -20,6 +20,13 @@
     [self initStatistics];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self loadStatisticsData];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -49,6 +56,41 @@
     
     statisticArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray];
 //    NSLog(@"%@", statisticArray);
+    [self loadStatisticsData];
+}
+
+- (void)loadStatisticsData
+{
+    NSString *path = [ETUtility documentString:@"GraphData.plist"];
+    NSMutableArray *graphSaveDataArray = [NSMutableArray arrayWithContentsOfFile:path];
+    
+//    tempGraphDataArray = [NSMutableArray array];
+    
+    for (NSMutableDictionary *statisticsDictionary in statisticArray) {
+        NSInteger statisticsId = [[statisticsDictionary objectForKey:@"id"] integerValue];
+        NSInteger statisticsTotal = 0;
+        
+        if ([ETUtility doesArray:graphSaveDataArray hasDictionaryWithId:statisticsId]) {
+            NSString *statisticsIdString = [statisticsDictionary objectForKey:@"id"];
+            NSDictionary *selectedDictionary = [ETUtility selectDictionaryWithValue:statisticsIdString OfKey:@"id" inArray:graphSaveDataArray];
+            NSArray *selectedArray = [selectedDictionary objectForKey:@"selectedArray"];
+            
+            NSString *querryString = [NSString stringWithFormat:@"SELECT Statistic.id, Statistic.date_1, Statistic.date_2, Statistic.type, Statistic.is_favorite, Statistic.name, Statistic.statistic_order FROM Statistic Statistic WHERE Statistic.id=%@", statisticsIdString];
+            NSArray *columnArray = [NSArray arrayWithObjects:@"id", @"date_1", @"date_2", @"type", @"is_favorite", @"name", @"statistic_order", nil];
+            NSDictionary *statisticDictionary = [[ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray] objectAtIndex:0];
+            NSString *whereString = [ETAccountWhereMaker whereStringWithDictionary:statisticDictionary];
+            NSArray *resultAccountArray = [NSArray arrayWithArray:[ETAccountStatisticDetailViewController getResultOfAccounts:whereString Order:@"datetime(Deal.Date) DESC"]];
+            
+            for (NSString *tempId in selectedArray) {
+                NSMutableDictionary *tempDictionary = [NSMutableDictionary dictionaryWithDictionary:[ETUtility selectDictionaryWithValue:tempId OfKey:@"id" inArray:resultAccountArray]];
+//                NSLog(@"tempDictionary : %@", tempDictionary);
+                statisticsTotal += [[tempDictionary objectForKey:@"money"] integerValue];
+            }
+//            [[ETAccountGraphView sharedView] setGraphType:[[selectedDictionary objectForKey:@"graphTypeString"] integerValue]];
+        }
+        [statisticsDictionary setObject:[NSString stringWithFormat:@"%ld", (long)statisticsTotal] forKey:@"total"];
+    }
+    [statisticListTableView reloadData];
 }
 
 
@@ -139,8 +181,13 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(ETAccountStatisticListTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [[(ETAccountStatisticListTableViewCell *)cell nameLabel] setText:[[statisticArray objectAtIndex:indexPath.row] objectForKey:@"name"]];
-    [[(ETAccountStatisticDetailTableViewCell *)cell moneyLabel] setText:[[statisticArray objectAtIndex:indexPath.row] objectForKey:@"id"]];
+    NSDictionary *tempStatisticsDictionary = [statisticArray objectAtIndex:indexPath.row];
+    [[(ETAccountStatisticListTableViewCell *)cell nameLabel] setText:[tempStatisticsDictionary objectForKey:@"name"]];
+//    [[(ETAccountStatisticDetailTableViewCell *)cell moneyLabel] setText:[[statisticArray objectAtIndex:indexPath.row] objectForKey:@"id"]];
+    NSInteger tempTotal = [[tempStatisticsDictionary objectForKey:@"total"] integerValue];
+    if (tempTotal != 0)
+        [[(ETAccountStatisticDetailTableViewCell *)cell moneyLabel] setText:[ETFormatter moneyFormatFromString:[tempStatisticsDictionary objectForKey:@"total"]]];
+    else [[(ETAccountStatisticDetailTableViewCell *)cell moneyLabel] setText:@"-"];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

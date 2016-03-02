@@ -36,5 +36,6 @@
 
 - (void)setStatisticDictionary:(NSDictionary *)inputDictionary;
 - (void)initStatistic;
++ (NSMutableArray *)getResultOfAccounts:(NSString *)localWhereString Order:(NSString *)localOrderString;
 
 @end

@@ -114,11 +114,12 @@ static ETAccountGraphView *sharedView = nil;
                 ETAccountGraphDataItem *tempItem = [ETAccountGraphDataItem new];
                 [tempItem setItemIndex:[[[ETAccountGraphView sharedView] globalDataArray] indexOfObject:tempDataDictionary]];
                 [tempItem setItemName:[tempDataDictionary objectForKey:@"name"]];
-                NSString *colorString = [tempDataDictionary objectForKey:@"color"];
-                NSArray *colorArray = [colorString componentsSeparatedByString:@" "];
-                [tempItem setItemColor:[UIColor colorWithRed:[[colorArray objectAtIndex:0] floatValue]
-                                                       green:[[colorArray objectAtIndex:1] floatValue]
-                                                        blue:[[colorArray objectAtIndex:2] floatValue] alpha:1.0]];
+//                NSString *colorString = [tempDataDictionary objectForKey:@"color"];
+//                NSArray *colorArray = [colorString componentsSeparatedByString:@" "];
+//                [tempItem setItemColor:[UIColor colorWithRed:[[colorArray objectAtIndex:0] floatValue]
+//                                                       green:[[colorArray objectAtIndex:1] floatValue]
+//                                                        blue:[[colorArray objectAtIndex:2] floatValue] alpha:1.0]];
+                [tempItem setItemColor:[tempDataDictionary objectForKey:@"color"]];
                 NSInteger realValue = [[tempDataDictionary objectForKey:@"money"] integerValue];
                 NSInteger relativeValue = 0;
                 
