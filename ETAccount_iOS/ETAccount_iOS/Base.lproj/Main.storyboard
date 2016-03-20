@@ -518,6 +518,45 @@
                                     <outlet property="titleTextField" destination="auT-Cs-mVq" id="5du-XG-Ong"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="AddDescriptionCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddDescriptionCell" id="dH1-s3-XAl" customClass="ETAccountAddTableViewDescriptionCell">
+                                <rect key="frame" x="0.0" y="158" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dH1-s3-XAl" id="mwy-Qo-Ykx">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mBI-bN-mN8">
+                                            <rect key="frame" x="8" y="11" width="584" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="설명" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WUw-jk-W2c">
+                                            <rect key="frame" x="8" y="7" width="584" height="30"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                            <connections>
+                                                <action selector="closeKeyboard:" destination="dH1-s3-XAl" eventType="editingDidEndOnExit" id="ucx-4r-S58"/>
+                                                <outlet property="delegate" destination="dH1-s3-XAl" id="DEP-qX-AQj"/>
+                                            </connections>
+                                        </textField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="mBI-bN-mN8" firstAttribute="leading" secondItem="mwy-Qo-Ykx" secondAttribute="leading" constant="8" id="2AJ-m1-CGH"/>
+                                        <constraint firstItem="WUw-jk-W2c" firstAttribute="leading" secondItem="mwy-Qo-Ykx" secondAttribute="leading" constant="8" id="6UN-N4-aeH"/>
+                                        <constraint firstItem="mBI-bN-mN8" firstAttribute="top" secondItem="mwy-Qo-Ykx" secondAttribute="top" constant="11" id="P0r-gA-jU0"/>
+                                        <constraint firstAttribute="bottom" secondItem="WUw-jk-W2c" secondAttribute="bottom" constant="6" id="Toe-ic-sut"/>
+                                        <constraint firstAttribute="trailing" secondItem="WUw-jk-W2c" secondAttribute="trailing" constant="8" id="aJk-be-QkU"/>
+                                        <constraint firstAttribute="trailing" secondItem="mBI-bN-mN8" secondAttribute="trailing" constant="8" id="ea4-at-jXZ"/>
+                                        <constraint firstAttribute="bottom" secondItem="mBI-bN-mN8" secondAttribute="bottom" constant="11" id="pWF-FR-Tf4"/>
+                                        <constraint firstItem="WUw-jk-W2c" firstAttribute="top" secondItem="mwy-Qo-Ykx" secondAttribute="top" constant="7" id="tBf-LG-VgP"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="titleLabel" destination="mBI-bN-mN8" id="5B7-mD-j09"/>
+                                    <outlet property="titleTextField" destination="WUw-jk-W2c" id="lE3-TS-Hna"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="O83-6F-Wxb" id="LsH-Vq-mI9"/>

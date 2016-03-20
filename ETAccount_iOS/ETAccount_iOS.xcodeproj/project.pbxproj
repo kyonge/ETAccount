@@ -31,7 +31,6 @@
 		DF337EAC1AD2F63E001CA285 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337EA31AD2F63E001CA285 /* MKMapView+ZoomLevel.m */; };
 		DF337EAD1AD2F63E001CA285 /* PODataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DF337EA51AD2F63E001CA285 /* PODataManager.m */; };
 		DF337EB01AD2F659001CA285 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DF337EAF1AD2F659001CA285 /* libsqlite3.0.dylib */; };
-		DF338CFD1C9B21B100419FCB /* ETAccountAddTableViewDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DF338CFC1C9B21B100419FCB /* ETAccountAddTableViewDescriptionCell.m */; };
 		DF4E5BE01C0C81F400501AC6 /* ETAccountWhereMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4E5BDF1C0C81F300501AC6 /* ETAccountWhereMaker.m */; };
 		DF4EC85B1C231D2100AB96E3 /* ETAccountEditStatisticViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4EC85A1C231D2100AB96E3 /* ETAccountEditStatisticViewController.m */; };
 		DF5EE9941C7B614600E75C9F /* ETAccountDealRepeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5EE9931C7B614600E75C9F /* ETAccountDealRepeatViewController.m */; };
@@ -112,8 +111,6 @@
 		DF337EA51AD2F63E001CA285 /* PODataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PODataManager.m; sourceTree = "<group>"; };
 		DF337EAE1AD2F646001CA285 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		DF337EAF1AD2F659001CA285 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
-		DF338CFB1C9B21B100419FCB /* ETAccountAddTableViewDescriptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountAddTableViewDescriptionCell.h; path = Deal/ETAccountAddTableViewDescriptionCell.h; sourceTree = "<group>"; };
-		DF338CFC1C9B21B100419FCB /* ETAccountAddTableViewDescriptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ETAccountAddTableViewDescriptionCell.m; path = Deal/ETAccountAddTableViewDescriptionCell.m; sourceTree = "<group>"; };
 		DF4E5BDE1C0C81F300501AC6 /* ETAccountWhereMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ETAccountWhereMaker.h; sourceTree = "<group>"; };
 		DF4E5BDF1C0C81F300501AC6 /* ETAccountWhereMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ETAccountWhereMaker.m; sourceTree = "<group>"; };
 		DF4EC8591C231D2100AB96E3 /* ETAccountEditStatisticViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ETAccountEditStatisticViewController.h; path = Statistics/ETAccountEditStatisticViewController.h; sourceTree = "<group>"; };
@@ -379,8 +376,6 @@
 				DF614C451BD0048F0015D662 /* ETAccountAddDealTableViewController.m */,
 				DF614C421BD0048F0015D662 /* ETAccountAddTableViewCell.h */,
 				DF614C431BD0048F0015D662 /* ETAccountAddTableViewCell.m */,
-				DF338CFB1C9B21B100419FCB /* ETAccountAddTableViewDescriptionCell.h */,
-				DF338CFC1C9B21B100419FCB /* ETAccountAddTableViewDescriptionCell.m */,
 			);
 			name = "Add Deal";
 			sourceTree = "<group>";
@@ -586,7 +581,6 @@
 				DF9597C51C03881D005856FD /* ETAccountGraphView.m in Sources */,
 				DF614C4C1BD0048F0015D662 /* ETAccountDealViewController.m in Sources */,
 				DFCF609D1BDDB3C70083F674 /* ETAccountAddTagViewController.m in Sources */,
-				DF338CFD1C9B21B100419FCB /* ETAccountAddTableViewDescriptionCell.m in Sources */,
 				DF337EAC1AD2F63E001CA285 /* MKMapView+ZoomLevel.m in Sources */,
 				DF337EA91AD2F63E001CA285 /* FMDatabase.m in Sources */,
 				DF5EE9941C7B614600E75C9F /* ETAccountDealRepeatViewController.m in Sources */,

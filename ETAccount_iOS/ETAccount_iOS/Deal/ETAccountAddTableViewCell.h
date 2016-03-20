@@ -35,7 +35,7 @@
 - (IBAction)changePlusMinus:(id)sender;
 
 @property (readwrite) NSInteger cellSection;
-@property (readonly) UITextField *titleTextField;
+@property (readonly) IBOutlet UITextField *titleTextField;
 @property (readwrite) UIButton *plusMinusButton;
 
 @property (assign, readwrite) id<ETAccountAddDealCellDelegate> addDealCellDelegate;

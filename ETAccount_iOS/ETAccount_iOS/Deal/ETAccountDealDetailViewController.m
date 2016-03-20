@@ -136,17 +136,21 @@
 
 #pragma mark Table view data source
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *CellIdentifier = @"AddCell";
-    
-    ETAccountAddTableViewCell *cell = (ETAccountAddTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    [cell setAddDealCellDelegate:self];
-    
-    if (cell == nil) {
-        cell = [[ETAccountAddTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-    
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(ETAccountAddTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+//    NSString *CellIdentifier = @"AddCell";
+//    
+//    ETAccountAddTableViewCell *cell = (ETAccountAddTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//    [cell setAddDealCellDelegate:self];
+//    
+//    if (cell == nil) {
+//        cell = [[ETAccountAddTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+//    }
+
     [cell setCellSection:indexPath.section];
+    if (indexPath.section == 4)
+        [cell initNotification];
     
     switch (indexPath.section) {
         case 0:
@@ -207,8 +211,6 @@
             
             break;
     }
-    
-    return cell;
 }
 
 @end

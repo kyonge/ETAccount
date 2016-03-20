@@ -216,7 +216,8 @@
 
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
-    NSLog(@"[self tag] : %d", [self tag]);
+    if (![[self titleTextField] isFirstResponder])
+        return;
 //    NSLog(@"%@", self);
     
     NSDictionary* info = [aNotification userInfo];

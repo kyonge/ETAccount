@@ -256,13 +256,11 @@
         [cell setTag:0];
         [cell setAddDealCellDelegate:self];
         
-        NSLog(@"%d !4 %@, %@", indexPath.section, CellIdentifier, cell);
+//        NSLog(@"%d !4 %@, %@", indexPath.section, CellIdentifier, cell);
         return cell;
     }
     else {
         NSString *CellIdentifierDescription = @"AddDescriptionCell";
-//    if (indexPath.section == 4) {
-//        ETAccountAddTableViewDescriptionCell *cell = [[ETAccountAddTableViewDescriptionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierDescription];
         ETAccountAddTableViewDescriptionCell *cell = (ETAccountAddTableViewDescriptionCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifierDescription];
         
         if (cell == nil) {
@@ -272,7 +270,7 @@
         [cell setTag:4];
         [cell setAddDealCellDelegate:self];
         
-        NSLog(@"%d 4 %@, %@", indexPath.section, CellIdentifierDescription, cell);
+//        NSLog(@"%d 4 %@, %@", indexPath.section, CellIdentifierDescription, cell);
         return cell;
     }
 }
