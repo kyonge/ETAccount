@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "ETAccountAddTableViewCell.h"
+#import "ETAccountAddTableViewDescriptionCell.h"
 #import "ETAccountAddAccountTableViewController.h"
 #import "ETAccountAddTagViewController.h"
 #import "ETAccountUtility.h"

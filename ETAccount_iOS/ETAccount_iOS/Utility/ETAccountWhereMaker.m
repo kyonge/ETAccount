@@ -63,18 +63,19 @@
                 NSString *tagQuerryString = [NSString stringWithFormat:@"SELECT Deal.id, Deal.tag_target_id, Tag_match.tag_id FROM Deal Deal JOIN Tag_match Tag_match ON Deal.tag_target_id = Tag_match.tag_target_id WHERE Tag_match.tag_id='%ld'", (long)tempItem];
                 NSArray *tagColumnArray = [NSArray arrayWithObjects:@"id", @"tag_target_id", @"tag_id", nil];
                 NSArray *tagTargetArray = [ETUtility selectDataWithQuerry:tagQuerryString FromFile:_DB WithColumn:tagColumnArray];
+//                NSLog(@"tagTargetArray : %@", tagTargetArray);
                 
                 if (noDateCondition) {
                     whereString = [NSString stringWithFormat:@"%@ (", whereString];
                     noDateCondition = NO;
                 }
                 else if ([filterArray indexOfObject:tempFilterDictionary] == 0)
-                    whereString = [NSString stringWithFormat:@"%@ AND (", whereString];
+                    whereString = [NSString stringWithFormat:@"%@ AND ((", whereString];
                 else
-                    whereString = [NSString stringWithFormat:@"%@ OR (", whereString];
+                    whereString = [NSString stringWithFormat:@"%@ OR ((", whereString];
                 
                 for (NSDictionary *tempTagTargetDictionary in tagTargetArray) {
-                    NSNumber *tempItem = [tempTagTargetDictionary objectForKey:@"tag_id"];
+                    NSNumber *tempItem = [tempTagTargetDictionary objectForKey:@"tag_target_id"];
                     whereString = [NSString stringWithFormat:@"%@ Deal.tag_target_id='%@' OR tag_target_id_1='%@' OR tag_target_id_2='%@' OR", whereString, tempItem, tempItem, tempItem];
                 }
                 whereString = [whereString substringToIndex:[whereString length] - 2];

@@ -245,15 +245,43 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *CellIdentifier = @"AddCell";
-    
-    ETAccountAddTableViewCell *cell = (ETAccountAddTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    [cell setAddDealCellDelegate:self];
-    if (cell == nil) {
-        cell = [[ETAccountAddTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    if (indexPath.section != 4) {
+        NSString *CellIdentifier = @"AddCell";
+        ETAccountAddTableViewCell *cell = (ETAccountAddTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        if (cell == nil) {
+            cell = [[ETAccountAddTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }
+        
+        [cell setTag:0];
+        [cell setAddDealCellDelegate:self];
+        
+        NSLog(@"%d !4 %@, %@", indexPath.section, CellIdentifier, cell);
+        return cell;
     }
-    
+    else {
+        NSString *CellIdentifierDescription = @"AddDescriptionCell";
+//    if (indexPath.section == 4) {
+//        ETAccountAddTableViewDescriptionCell *cell = [[ETAccountAddTableViewDescriptionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierDescription];
+        ETAccountAddTableViewDescriptionCell *cell = (ETAccountAddTableViewDescriptionCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifierDescription];
+        
+        if (cell == nil) {
+            cell = [[ETAccountAddTableViewDescriptionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierDescription];
+        }
+        
+        [cell setTag:4];
+        [cell setAddDealCellDelegate:self];
+        
+        NSLog(@"%d 4 %@, %@", indexPath.section, CellIdentifierDescription, cell);
+        return cell;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(ETAccountAddTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
     [cell setCellSection:indexPath.section];
+    if (indexPath.section == 4)
+        [cell initNotification];
     
     switch (indexPath.section) {
         case 0:
@@ -300,8 +328,6 @@
             [self setTagCell:cell];
             break;
     }
-    
-    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(nonnull NSIndexPath *)indexPath

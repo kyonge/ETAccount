@@ -166,7 +166,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddCell" id="MQT-l1-dzO" customClass="ETAccountAddTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="AddCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddCell" id="MQT-l1-dzO" customClass="ETAccountAddTableViewCell">
                                 <rect key="frame" x="0.0" y="114" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MQT-l1-dzO" id="Gv6-ae-niW">
@@ -223,6 +223,45 @@
                                     <outlet property="plusMinusButton" destination="9Zv-kx-PIA" id="oF1-TO-GJN"/>
                                     <outlet property="titleLabel" destination="Ga3-jS-zSs" id="l2o-6b-O6l"/>
                                     <outlet property="titleTextField" destination="6O5-DG-Mnh" id="xez-rx-d0K"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="AddDescriptionCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddDescriptionCell" id="WjZ-bT-wEK" customClass="ETAccountAddTableViewDescriptionCell">
+                                <rect key="frame" x="0.0" y="158" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WjZ-bT-wEK" id="kwQ-gq-IkQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xWh-pC-NHc">
+                                            <rect key="frame" x="8" y="11" width="584" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hMM-3T-2gt">
+                                            <rect key="frame" x="8" y="7" width="584" height="30"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                            <connections>
+                                                <action selector="closeKeyboard:" destination="WjZ-bT-wEK" eventType="editingDidEndOnExit" id="XbH-tw-FCs"/>
+                                                <outlet property="delegate" destination="WjZ-bT-wEK" id="ijl-5u-hem"/>
+                                            </connections>
+                                        </textField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="xWh-pC-NHc" secondAttribute="bottom" constant="11" id="E0z-ZJ-Cf6"/>
+                                        <constraint firstItem="xWh-pC-NHc" firstAttribute="top" secondItem="kwQ-gq-IkQ" secondAttribute="top" constant="11" id="R3O-8i-210"/>
+                                        <constraint firstItem="hMM-3T-2gt" firstAttribute="top" secondItem="kwQ-gq-IkQ" secondAttribute="top" constant="7" id="Zde-Go-Hq2"/>
+                                        <constraint firstAttribute="trailing" secondItem="hMM-3T-2gt" secondAttribute="trailing" constant="8" id="Zhu-wP-HBG"/>
+                                        <constraint firstItem="xWh-pC-NHc" firstAttribute="leading" secondItem="kwQ-gq-IkQ" secondAttribute="leading" constant="8" id="daR-QP-uej"/>
+                                        <constraint firstAttribute="bottom" secondItem="hMM-3T-2gt" secondAttribute="bottom" constant="6" id="eC5-Zh-AFV"/>
+                                        <constraint firstAttribute="trailing" secondItem="xWh-pC-NHc" secondAttribute="trailing" constant="8" id="hZ1-XW-7IS"/>
+                                        <constraint firstItem="hMM-3T-2gt" firstAttribute="leading" secondItem="kwQ-gq-IkQ" secondAttribute="leading" constant="8" id="vcR-b8-UAy"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="titleLabel" destination="xWh-pC-NHc" id="NBw-y9-TrP"/>
+                                    <outlet property="titleTextField" destination="hMM-3T-2gt" id="HbH-4F-I1g"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

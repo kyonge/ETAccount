@@ -189,10 +189,11 @@
     
     // ORDER BY
     querryString = [NSString stringWithFormat:@"%@ ORDER BY datetime(Deal.Date) DESC", querryString];
+//    NSLog(@"querryString : %@", querryString);
     
     NSArray *columnArray = [NSArray arrayWithObjects:@"id", @"tag_target_id", @"tag_target_id_1", @"tag_target_id_2", @"money", nil];
     NSArray *resultDataArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray];
-    //    NSLog(@"%@", resultDataArray);
+//    NSLog(@"%@", resultDataArray);
     
     for (NSDictionary *tempDataDictionary in resultDataArray)
     {

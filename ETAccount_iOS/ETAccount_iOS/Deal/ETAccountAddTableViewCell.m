@@ -25,6 +25,16 @@
     // Configure the view for the selected state
 }
 
+- (void)initNotification
+{
+    
+}
+
+- (void)removeNotification
+{
+    
+}
+
 - (void)setType:(ADD_DEAL_CELL_TYPE)type
 {
     switch (type) {
@@ -77,6 +87,11 @@
 - (void)doneNumberPad
 {
     [titleTextField resignFirstResponder];
+}
+
+- (void)setTextFieldTag:(NSInteger)tag
+{
+    [titleTextField setTag:tag];
 }
 
 - (void)setTitle:(NSString *)titleString
@@ -170,6 +185,55 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     [addDealCellDelegate didEndEditText:[textField text] CellIndex:cellSection];
+}
+
+@end
+
+
+@implementation ETAccountAddTableViewDescriptionCell
+
+- (void)initNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+}
+
+- (void)removeNotification
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardDidHideNotification object:nil];
+}
+
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    NSLog(@"[self tag] : %d", [self tag]);
+//    NSLog(@"%@", self);
+    
+    NSDictionary* info = [aNotification userInfo];
+//    NSLog(@"info : %@", info);
+    CGFloat animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+//    NSLog(@"%f", kbSize.height);
+    
+    [ETUtility AnimationView:[self window] toFrame:CGRectMake(0, -kbSize.height, DEVICE_SIZE.width, DEVICE_SIZE.height) toAlpha:1.0 inTime:animationDuration toTarget:self WithSelector:nil];
+}
+
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    CGFloat animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
+    
+    [ETUtility AnimationView:[self window] toFrame:CGRectMake(0, 0, DEVICE_SIZE.width, DEVICE_SIZE.height) toAlpha:1.0 inTime:animationDuration toTarget:self WithSelector:nil];
 }
 
 @end

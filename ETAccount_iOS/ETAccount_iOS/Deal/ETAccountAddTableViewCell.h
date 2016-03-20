@@ -24,6 +24,8 @@
     NSInteger datePickerIndex;
 }
 
+- (void)initNotification;
+- (void)removeNotification;
 - (void)setType:(ADD_DEAL_CELL_TYPE)type;
 - (void)setTitle:(NSString *)titleString;
 - (void)setPlaceholder:(NSString *)placeholderString;
@@ -46,5 +48,10 @@
 - (void)didEndEditText:(NSString *)insertedText CellIndex:(NSInteger)index;
 @optional
 - (void)selectAccessor:(STATISTIC_ACCESSOR)accessor;
+
+@end
+
+
+@interface ETAccountAddTableViewDescriptionCell : ETAccountAddTableViewCell;
 
 @end

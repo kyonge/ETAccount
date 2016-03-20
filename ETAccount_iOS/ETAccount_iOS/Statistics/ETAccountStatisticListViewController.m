@@ -24,7 +24,8 @@
 {
     [super viewDidAppear:animated];
     
-    [self loadStatisticsData];
+//    [self loadStatisticsData];
+    [self initStatistics];
 }
 
 - (void)didReceiveMemoryWarning {
