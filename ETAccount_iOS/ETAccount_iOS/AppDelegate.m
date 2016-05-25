@@ -20,6 +20,7 @@
     [ETUtility copyBundleToDocumentsWithFileName:@"ETAccount.sqlite"];
     
 //    [self copyData];
+    [self checkDB_ColorColumn];
     
     return YES;
 }
@@ -82,6 +83,31 @@
 //        NSLog(@"%@", querryString);
         
         [ETUtility runQuerry:querryString FromFile:_DB];
+    }
+}
+
+- (void)checkDB_ColorColumn
+{
+//    NSLog(@"%@", [ETUtility selectDataWithQuerry:@"SELECT name FROM Account LIMIT 1;" FromFile:_DB WithColumn:[NSArray arrayWithObject:@"name"]]);
+//    NSLog(@"%@", [ETUtility selectDataWithQuerry:@"SELECT color_r FROM Account LIMIT 1;" FromFile:_DB WithColumn:[NSArray arrayWithObject:@"name"]]);
+    
+    NSArray *colorColumnArray = [ETUtility selectDataWithQuerry:@"SELECT color_r FROM Account LIMIT 1;" FromFile:_DB WithColumn:[NSArray arrayWithObject:@"name"]];
+    if ([colorColumnArray count] == 0) {
+        NSLog(@"Create column");
+        [ETUtility runQuerry:@"ALTER TABLE Account ADD COLUMN color_r INTEGER" FromFile:_DB];
+        [ETUtility runQuerry:@"ALTER TABLE Account ADD COLUMN color_g INTEGER" FromFile:_DB];
+        [ETUtility runQuerry:@"ALTER TABLE Account ADD COLUMN color_b INTEGER" FromFile:_DB];
+        
+        NSArray *accountArray = [ETUtility selectDataWithQuerry:@"SELECT id FROM Account;" FromFile:_DB WithColumn:[NSArray arrayWithObject:@"id"]];
+        for (NSDictionary *tempDictionary in accountArray) {
+            NSArray *objectArray = [NSArray arrayWithObjects:
+                                    [NSString stringWithFormat:@"%d", arc4random() % 255],
+                                    [NSString stringWithFormat:@"%d", arc4random() % 255],
+                                    [NSString stringWithFormat:@"%d", arc4random() % 255], nil];
+            NSArray *keyArray = [NSArray arrayWithObjects:@"color_r", @"color_g", @"color_b", nil];
+            NSDictionary *dataDic = [NSDictionary dictionaryWithObjects:objectArray forKeys:keyArray];
+            [ETAccountDBManager updateToTable:@"Account" dataDictionary:dataDic ToId:[[tempDictionary objectForKey:@"id"] integerValue]];
+        }
     }
 }
 

@@ -27,6 +27,7 @@
 + (void)loadAndSetImageToImageView:(UIImageView *)targetImageView FromDocumentCacheAsynchronized:(NSString *)fileName;
 
 // NSArray 내에서 NSDictionary 탐색
+//+ (NSMutableArray *)reverseArrayWithMutableDictioanryObjects:(NSMutableArray *)originalArray;
 + (NSDictionary *)selectDictionaryWithValue:(id)value OfKey:(NSString *)key inArray:(NSArray *)array;
 + (NSInteger)indexOfDictionaryWithValue:(id)value OfKey:(NSString *)key inArray:(NSArray *)array;
 + (BOOL)doesArray:(NSArray *)targetArray hasDictionaryWithId:(NSInteger)targetId;

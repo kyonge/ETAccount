@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "ETAccountDealDetailViewController.h"
+#import "ETAccountGraphOptionViewController.h"
 
 #import "ETAccountStatisticDetailTableViewCell.h"
 #import "ETAccountEditStatisticViewController.h"
@@ -20,15 +21,20 @@
 #import "ETFormatter.h"
 #import "ETAccountWhereMaker.h"
 //#import "ETAccountGraphSharedData.h"
+#import "ETAccountStatisticsCalculator.h"
 
-@interface ETAccountStatisticDetailViewController : UITableViewController <ETAccountAddDealDelegate> {
+@interface ETAccountStatisticDetailViewController : UITableViewController <ETAccountAddDealDelegate, ETAccountGraphOptionDealDelegate> {
 //    IBOutlet ETAccountGraphView *graphView;
 //    ETAccountGraphView *graphView;
     
     IBOutlet UITableView *statisticTableView;
     NSDictionary *statisticDictionary;
-    NSMutableArray *tempGraphDataArray;
+    NSMutableArray *tempGraphDataArray, *tempGraphDailyDataArray;
+    NSMutableArray *tempGraphDailyDataArrayTillFrom;
+    NSMutableDictionary *tempGraphDataListDictionary;
+    NSMutableDictionary *tempGraphDataListDictionaryTillFrom;
     NSArray *resultArray, *resultAccountArray, *resultTagArray;
+    NSArray *resultAccountArrayTillFrom;
     NSString *whereString;
     
     NSInteger selectedRow;
@@ -36,6 +42,5 @@
 
 - (void)setStatisticDictionary:(NSDictionary *)inputDictionary;
 - (void)initStatistic;
-+ (NSMutableArray *)getResultOfAccounts:(NSString *)localWhereString Order:(NSString *)localOrderString;
 
 @end

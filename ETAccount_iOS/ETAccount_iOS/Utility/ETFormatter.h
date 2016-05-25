@@ -15,5 +15,6 @@
 + (NSString *)dateStringFromDateColumnFormat:(NSString *)tempDateColumn;
 + (NSDate *)dateFromDateSting:(NSString *)dateString;
 + (NSString *)moneyFormatFromString:(NSString *)moneyString;
++ (NSString *)dateStringAddedOneDay:(NSString *)originalDateString;
 
 @end

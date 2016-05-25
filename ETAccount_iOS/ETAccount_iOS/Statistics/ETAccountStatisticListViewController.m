@@ -80,7 +80,7 @@
             NSArray *columnArray = [NSArray arrayWithObjects:@"id", @"date_1", @"date_2", @"type", @"is_favorite", @"name", @"statistic_order", nil];
             NSDictionary *statisticDictionary = [[ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray] objectAtIndex:0];
             NSString *whereString = [ETAccountWhereMaker whereStringWithDictionary:statisticDictionary];
-            NSArray *resultAccountArray = [NSArray arrayWithArray:[ETAccountStatisticDetailViewController getResultOfAccounts:whereString Order:@"datetime(Deal.Date) DESC"]];
+            NSArray *resultAccountArray = [NSArray arrayWithArray:[ETAccountStatisticsCalculator getResultOfAccounts:whereString Order:@"datetime(Deal.Date) DESC" List:nil]];
             
             for (NSString *tempId in selectedArray) {
                 NSMutableDictionary *tempDictionary = [NSMutableDictionary dictionaryWithDictionary:[ETUtility selectDictionaryWithValue:tempId OfKey:@"id" inArray:resultAccountArray]];
@@ -141,6 +141,15 @@
     NSInteger targetStatisticId = [[dealDictionary objectForKey:@"id"] integerValue];
     if (![ETAccountDBManager deleteFromTable:@"Statistic" OfId:targetStatisticId]) {
         [ETUtility showAlert:@"ETAccount" Message:@"삭제하지 못했습니다." atViewController:self withBlank:NO];
+    }
+    
+    // GraphDatad에서 삭제
+    NSString *path = [ETUtility documentString:@"GraphData.plist"];
+    NSMutableArray *graphSaveDataArray = [NSMutableArray arrayWithContentsOfFile:path];
+
+    if ([ETUtility doesArray:graphSaveDataArray hasDictionaryWithId:targetStatisticId]) {
+        [graphSaveDataArray removeObject:[ETUtility selectDictionaryWithValue:[dealDictionary objectForKey:@"id"] OfKey:@"id" inArray:graphSaveDataArray]];
+        [graphSaveDataArray writeToFile:path atomically:YES];
     }
     
     [statisticArray removeObject:dealDictionary];

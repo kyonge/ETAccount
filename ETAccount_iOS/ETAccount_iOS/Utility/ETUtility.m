@@ -33,6 +33,8 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:fileName];
     
+//    NSLog(@"%@", documentPath);
+    
     return documentPath;
 }
 
@@ -176,6 +178,18 @@
 
 
 #pragma mark - NSArray 내에서 NSDictionary 탐색
+
+//+ (NSMutableArray *)reverseArrayWithMutableDictioanryObjects:(NSMutableArray *)originalArray
+//{
+//    NSMutableArray *resultArray = [NSMutableArray arrayWithCapacity:[originalArray count]];
+//    
+//    for (NSInteger index = [originalArray count] - 1; index > 0; index--) {
+//        NSLog(@"%@", [[originalArray objectAtIndex:index] class]);
+//        [resultArray addObject:[originalArray objectAtIndex:index]];
+//    }
+//    
+//    return resultArray;
+//}
 
 // NSArray 내에서 NSDictionary 탐색
 + (NSDictionary *)selectDictionaryWithValue:(id)value OfKey:(NSString *)key inArray:(NSArray *)array

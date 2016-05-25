@@ -67,8 +67,12 @@
 {
     //현재는 전체 로드 : 날짜순 조건 추가, 동적 로딩 추가
     
-    NSString *querryString = @"SELECT Deal.id, Deal.name, Deal.tag_target_id, Account_1.name account_1, Account_2.name account_2, money, description, Deal.date FROM Deal JOIN Account Account_1 ON Deal.account_id_1 = Account_1.id JOIN Account Account_2 ON Deal.account_id_2 = Account_2.id";
-    NSArray *columnArray = [NSArray arrayWithObjects:@"id", @"name", @"tag_target_id", @"account_1", @"account_2", @"money", @"description", @"date", nil];
+    NSString *querryString = @"SELECT Deal.id, Deal.name, Deal.tag_target_id, Account_1.name account_1, Account_1.color_r account_1_r, Account_1.color_g account_1_g, Account_1.color_b account_1_b, Account_2.name account_2, Account_2.color_r account_2_r, Account_2.color_g account_2_g, Account_2.color_b account_2_b, money, description, Deal.date FROM Deal JOIN Account Account_1 ON Deal.account_id_1 = Account_1.id JOIN Account Account_2 ON Deal.account_id_2 = Account_2.id";
+    NSArray *columnArray = [NSArray arrayWithObjects:
+                            @"id", @"name", @"tag_target_id",
+                            @"account_1", @"account_1_r", @"account_1_g", @"account_1_b",
+                            @"account_2", @"account_2_r", @"account_2_g", @"account_2_b",
+                            @"money", @"description", @"date", nil];
     
     if (isUntillToday)
         querryString = [NSString stringWithFormat:@"%@ WHERE Deal.date<=datetime('%@', '+1 day')", querryString, [[[ETFormatter dateStringForDeal:[NSDate date]] componentsSeparatedByString:@" "] objectAtIndex:0]];
@@ -197,7 +201,13 @@
     [[cell accountDateLabel] setText:finalDateString];
     [[cell accountNameLabel] setText:[tempAccountDictionary objectForKey:@"name"]];
     [[cell accountIncomeLabel] setText:[tempAccountDictionary objectForKey:@"account_1"]];
+    [[cell accountIncomeLabel] setTextColor:[UIColor colorWithRed:[[tempAccountDictionary objectForKey:@"account_1_r"] floatValue] / 255.0
+                                                            green:[[tempAccountDictionary objectForKey:@"account_1_g"] floatValue] / 255.0
+                                                             blue:[[tempAccountDictionary objectForKey:@"account_1_b"] floatValue] / 255.0 alpha:1.0]];
     [[cell accountExpenseLabel] setText:[tempAccountDictionary objectForKey:@"account_2"]];
+    [[cell accountExpenseLabel] setTextColor:[UIColor colorWithRed:[[tempAccountDictionary objectForKey:@"account_2_r"] floatValue] / 255.0
+                                                             green:[[tempAccountDictionary objectForKey:@"account_2_g"] floatValue] / 255.0
+                                                              blue:[[tempAccountDictionary objectForKey:@"account_2_b"] floatValue] / 255.0 alpha:1.0]];
     [[cell accountPriceLabel] setText:[NSString stringWithFormat:@"%@", [ETFormatter moneyFormatFromString:[tempAccountDictionary objectForKey:@"money"]]]];
 }
 

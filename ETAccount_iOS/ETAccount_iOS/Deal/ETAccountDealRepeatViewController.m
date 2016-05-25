@@ -163,6 +163,7 @@
     for (NSInteger index = 1; index < divideCount; index++) {
         NSString *tempDealNameString = [NSString stringWithFormat:@"%@ (%ld/%ld)", dealNameString, (long)index + 1, (long)divideCount];
         NSInteger tag_target = [ETAccountUtility getTagFromViewController:self];
+        [super saveTagsWithTargetId:tag_target];
         
         NSTimeInterval timeInterval = [self timeIntervalWithIndex:index];
         NSDate *tempDate = [initDealDate dateByAddingTimeInterval:timeInterval];
@@ -200,6 +201,7 @@
         if ([displaySwitch isOn])
             tempDealNameString = [NSString stringWithFormat:@"%@ %ld)", dealNameString, (long)index + 1];
         NSInteger tag_target = [ETAccountUtility getTagFromViewController:self];
+        [super saveTagsWithTargetId:tag_target];
         
         NSTimeInterval timeInterval = [self timeIntervalWithIndex:index];
         NSDate *tempDate = [initDealDate dateByAddingTimeInterval:timeInterval];

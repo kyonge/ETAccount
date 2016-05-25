@@ -73,4 +73,74 @@
     return [numberFormatter stringFromNumber: [NSNumber numberWithInteger:money]];
 }
 
++ (NSString *)dateStringAddedOneDay:(NSString *)originalDateString
+{
+    NSDate *originalDate = [ETFormatter dateFromDateSting:originalDateString];
+    NSDate *resultDate = [originalDate dateByAddingTimeInterval:60 * 60 * 24];
+    
+    return [ETFormatter dateStringForDeal:resultDate];
+    
+//    NSArray *originalDate_1Array = [[[originalDateString componentsSeparatedByString:@" "] objectAtIndex:0] componentsSeparatedByString:@"-"];
+//    NSInteger yearInteger = [[originalDate_1Array objectAtIndex:0] integerValue];
+//    NSInteger monthInteger = [[originalDate_1Array objectAtIndex:1] integerValue];
+//    NSInteger dayInteger = [[originalDate_1Array objectAtIndex:2] integerValue];
+//    
+//    NSInteger newYearInteger = 0, newMonthInteger = 0, newDayInteger = 0;
+//    
+//    if (monthInteger == 1 || monthInteger == 3 || monthInteger == 5 || monthInteger == 7 || monthInteger == 8 || monthInteger == 10 || monthInteger == 12) {
+//        if (dayInteger == 31) {
+//            if (monthInteger == 12) {
+//                newYearInteger = yearInteger + 1;
+//                newMonthInteger = 1;
+//            }
+//            else {
+//                newYearInteger = yearInteger;
+//                newMonthInteger = monthInteger + 1;
+//            }
+//            newDayInteger = 1;
+//        }
+//        else {
+//            newYearInteger = yearInteger;
+//            newMonthInteger = monthInteger;
+//            newDayInteger = dayInteger + 1;
+//        }
+//    }
+//    else if (monthInteger == 4 || monthInteger == 6 || monthInteger == 9 || monthInteger == 11) {
+//        if (dayInteger == 30) {
+//            newYearInteger = yearInteger;
+//            newMonthInteger = monthInteger + 1;
+//            newDayInteger = 1;
+//        }
+//        else {
+//            newYearInteger = yearInteger;
+//            newMonthInteger = monthInteger;
+//            newDayInteger = dayInteger + 1;
+//        }
+//    }
+//    else if (monthInteger == 2) {
+//        NSInteger lastDay = 28;
+//        if ((yearInteger % 4 == 0 && yearInteger % 100 != 0) || yearInteger % 400 == 0) {
+//            lastDay = 29;
+//        }
+//        if (dayInteger == lastDay) {
+//            newMonthInteger = 3;
+//            newDayInteger = 1;
+//        }
+//        else {
+//            newMonthInteger = monthInteger;
+//            newDayInteger = dayInteger + 1;
+//        }
+//        newYearInteger = yearInteger;
+//    }
+//    else {
+//        newYearInteger = yearInteger;
+//        newMonthInteger = monthInteger;
+//        newDayInteger = dayInteger + 1;
+//    }
+//    
+//    NSString *resultString = [NSString stringWithFormat:@"%ld-%ld-%ld 00:00", (long)newYearInteger, (long)newMonthInteger, (long)newDayInteger];
+//    
+//    return resultString;
+}
+
 @end

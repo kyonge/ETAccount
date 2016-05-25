@@ -12,11 +12,6 @@
 
 #import "ETAccountGraphInnerView.h"
 
-typedef enum : NSUInteger {
-    ETACCOUNT_GRAPH_TYPE_DEFAULT,
-    ETACCOUNT_GRAPH_TYPE_EACH_TOTAL,
-} ETACCOUNT_GRAPH_TYPE;
-
 @interface ETAccountGraphView : UIView <UIScrollViewDelegate> {
     ETAccountGraphInnerView *innerView;
 //    UIView *innerView;
@@ -38,7 +33,10 @@ typedef enum : NSUInteger {
 - (void)closeInnerView;
 
 @property (readwrite) ETACCOUNT_GRAPH_TYPE graphType;
+@property (readwrite) ETACCOUNT_GRAPH_KIND graphKind;
 @property (readwrite, strong) NSMutableArray *globalDataArray;
+@property (readwrite, strong) NSMutableArray *globalFullDateArray;
+@property (readwrite, strong) NSMutableArray *globalFullDateArrayTillFrom;
 //@property (readwrite, strong) NSMutableDictionary *globalDataDictionary;
 @property (readwrite) NSString *firstDate, *lastDate;
 @property (readwrite) NSInteger biggestCost, smallestCost;

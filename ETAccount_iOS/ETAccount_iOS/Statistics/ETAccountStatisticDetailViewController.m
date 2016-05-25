@@ -21,6 +21,13 @@
         tempGraphDataArray = [NSMutableArray array];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [statisticTableView reloadData];
+}
+
 - (void)viewDidDisappear:(BOOL)animated
 {
     [[ETAccountGraphView sharedView] closeInnerView];
@@ -39,6 +46,10 @@
                                             DateString:[statisticDictionary objectForKey:@"date_1"]
                                          EndDateString:[statisticDictionary objectForKey:@"date_2"]
                                            StatisticId:[[statisticDictionary objectForKey:@"id"] integerValue]];
+    }
+    else if ([[segue identifier] isEqualToString:@"ETAccountGraphOptionSegue"]) {
+        ETAccountGraphOptionViewController *optionViewController = (ETAccountGraphOptionViewController *)[segue destinationViewController];
+        [optionViewController setGraphOptionDelegate:self];
     }
     else if ([[segue identifier] isEqualToString:@"ETAccountDetailStatisticItemSegue"]) {
         NSDictionary *selectedDeal = [resultArray objectAtIndex:selectedRow];
@@ -83,59 +94,63 @@
     
     // 조건
     whereString = [ETAccountWhereMaker whereStringWithDictionary:statisticDictionary];
-    querryString = @"SELECT Deal.id, Deal.name, Deal.tag_target_id, Account_1.name account_1, Account_1.tag_target_id tag_target_id_1, Account_2.name account_2, Account_2.tag_target_id tag_target_id_2, money, description, Deal.date FROM Deal JOIN Account Account_1 ON Deal.account_id_1 = Account_1.id JOIN Account Account_2 ON Deal.account_id_2 = Account_2.id ";
+    NSString *whereStringTillFrom;
+    
+    querryString = @"SELECT Deal.id, Deal.name, Deal.tag_target_id, Account_1.name account_1, Account_1.color_r account_1_r, Account_1.color_g account_1_g, Account_1.color_b account_1_b, Account_1.tag_target_id tag_target_id_1, Account_2.name account_2, Account_2.color_r account_2_r, Account_2.color_g account_2_g, Account_2.color_b account_2_b,Account_2.tag_target_id tag_target_id_2, money, description, Deal.date FROM Deal JOIN Account Account_1 ON Deal.account_id_1 = Account_1.id JOIN Account Account_2 ON Deal.account_id_2 = Account_2.id ";
+    NSString *querryStringTillFrom;
+    
+    if (![[statisticDictionary objectForKey:@"date_1"] isEqualToString:@"~"]) {
+        NSMutableDictionary *statisticDictionaryTillFrom = [statisticDictionary mutableCopy];
+        NSString *originalDate_1String = [statisticDictionary objectForKey:@"date_1"];
+        
+//        NSLog(@"date_1 : %@", [statisticDictionary objectForKey:@"date_1"]);
+//        NSLog(@"date_1 + one day : %@", [ETFormatter dateStringAddedOneDay:originalDate_1String]);
+        
+        [statisticDictionaryTillFrom setValue:@"~" forKey:@"date_1"];
+//        [statisticDictionaryTillFrom setValue:[ETFormatter dateStringAddedOneDay:originalDate_1String] forKey:@"date_2"];
+        [statisticDictionaryTillFrom setValue:originalDate_1String forKey:@"date_2"];
+        
+        whereStringTillFrom = [ETAccountWhereMaker whereStringWithDictionary:statisticDictionaryTillFrom];
+        querryStringTillFrom = [NSString stringWithFormat:@"%@ %@",querryString, whereStringTillFrom];
+    }
+    
     querryString = [NSString stringWithFormat:@"%@ %@",querryString, whereString];
     
     // ORDER BY
     querryString = [NSString stringWithFormat:@"%@ ORDER BY datetime(Deal.Date) DESC", querryString];
+    if (querryStringTillFrom)
+        querryStringTillFrom = [NSString stringWithFormat:@"%@ ORDER BY datetime(Deal.Date) DESC", querryStringTillFrom];
 //    NSLog(@"querryString : %@", querryString);
     
     // Deal SELECT
-    columnArray = [NSArray arrayWithObjects:@"id", @"name", @"tag_target_id", @"account_1", @"tag_target_id_1", @"account_2", @"tag_target_id_2", @"money", @"description", @"date", nil];
+    columnArray = [NSArray arrayWithObjects:
+                   @"id", @"name", @"tag_target_id",
+                   @"account_1", @"account_1_r", @"account_1_g", @"account_1_b", @"tag_target_id_1",
+                   @"account_2", @"account_2_r", @"account_2_g", @"account_2_b", @"tag_target_id_2",
+                   @"money", @"description", @"date", nil];
     resultArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray];
+    NSMutableArray *resultArrayTillFrom;
+    if (querryStringTillFrom)
+        resultArrayTillFrom = [ETUtility selectDataWithQuerry:querryStringTillFrom FromFile:_DB WithColumn:columnArray];
+    
+    tempGraphDataListDictionary = [NSMutableDictionary dictionary];
+    tempGraphDataListDictionaryTillFrom = [NSMutableDictionary dictionary];
 //    NSLog(@"%@", resultArray);
     
-//    resultAccountArray = [NSArray arrayWithArray:[self getResultOfAccount]];
-    resultAccountArray = [NSArray arrayWithArray:[ETAccountStatisticDetailViewController getResultOfAccounts:whereString Order:@"datetime(Deal.Date) DESC"]];
+    resultAccountArray = [NSArray arrayWithArray:[ETAccountStatisticsCalculator getResultOfAccounts:whereString Order:@"datetime(Deal.Date) DESC" List:tempGraphDataListDictionary]];
+    if (resultArrayTillFrom)
+        resultAccountArrayTillFrom = [NSArray arrayWithArray:[ETAccountStatisticsCalculator getResultOfAccounts:whereStringTillFrom Order:@"datetime(Deal.Date) DESC" List:tempGraphDataListDictionaryTillFrom]];
+//    NSLog(@"whereString : %@", whereString);
+//    NSLog(@"whereStringTillFrom : %@", whereStringTillFrom);
+//    NSLog(@"tempGraphDataListDictionaryTillFrom : %@", tempGraphDataListDictionaryTillFrom);
+    
     resultTagArray = [NSArray arrayWithArray:[self getResultOfTags]];
+//    NSLog(@"tempGraphDataListDictionary : %@", tempGraphDataListDictionary);
     
     [statisticTableView reloadData];
     
     [self loadGraphData];
-}
-
-+ (NSMutableArray *)getResultOfAccounts:(NSString *)localWhereString Order:(NSString *)localOrderString
-{
-    NSString *querryString = @"SELECT Deal.id, Deal.tag_target_id, Account_1.id account_1, Account_1.name account_1_name, Account_1.tag_target_id tag_target_id_1, Account_2.id account_2, Account_2.name account_2_name, Account_2.tag_target_id tag_target_id_2, money, Deal.date FROM Deal JOIN Account Account_1 ON Deal.account_id_1 = Account_1.id JOIN Account Account_2 ON Deal.account_id_2 = Account_2.id ";
-    querryString = [NSString stringWithFormat:@"%@ %@",querryString, localWhereString];
-    
-    // ORDER BY
-    querryString = [NSString stringWithFormat:@"%@ ORDER BY %@", querryString, localOrderString];
-    
-    NSArray *columnArray = [NSArray arrayWithObjects:@"id", @"tag_target_id", @"account_1", @"account_1_name", @"tag_target_id_1", @"account_2", @"account_2_name", @"tag_target_id_2", @"money", @"date", nil];
-    NSArray *resultDataArray = [ETUtility selectDataWithQuerry:querryString FromFile:_DB WithColumn:columnArray];
-//    NSLog(@"%@", resultDataArray);
-    
-    NSMutableArray *tempResultArray = [NSMutableArray array];
-    
-    for (NSDictionary *tempDataDictionary in resultDataArray)
-    {
-        NSInteger dealId = [[tempDataDictionary objectForKey:@"id"] integerValue];
-        NSInteger tempId_1 = [[tempDataDictionary objectForKey:@"account_1"] integerValue];
-        NSString *tempName_1 = [tempDataDictionary objectForKey:@"account_1_name"];
-        NSInteger tempId_2 = [[tempDataDictionary objectForKey:@"account_2"] integerValue];
-        NSString *tempName_2 = [tempDataDictionary objectForKey:@"account_2_name"];
-        NSInteger tempMoney = [[tempDataDictionary objectForKey:@"money"] integerValue];
-        NSString *tempDate = [tempDataDictionary objectForKey:@"date"];
-        
-//        NSLog(@"%@", tempDataDictionary);
-        
-        [ETAccountStatisticDetailViewController addMoneyWithDealId:dealId Id:tempId_1 Name:tempName_1 Money:tempMoney Date:tempDate To:tempResultArray Is1:YES];
-        [ETAccountStatisticDetailViewController addMoneyWithDealId:dealId Id:tempId_2 Name:tempName_2 Money:tempMoney Date:tempDate To:tempResultArray Is1:NO];
-    }
-    
-//    NSLog(@"%@", tempResultArray);
-    return tempResultArray;
+//    NSLog(@"%@", tempGraphDataArray);
 }
 
 - (NSMutableArray *)getResultOfTags
@@ -174,9 +189,9 @@
         NSInteger tempMoney = [[tempDataDictionary objectForKey:@"money"] integerValue];
         NSString *tempDate = [tempDataDictionary objectForKey:@"date"];
 
-        if (tempTagId > 0) [ETAccountStatisticDetailViewController addMoneyWithDealId:dealId Id:tempTagId Name:tempTag Money:tempMoney Date:tempDate To:tempResultArray Is1:YES];
-        if (tempTagId_1 > 0) [ETAccountStatisticDetailViewController addMoneyWithDealId:dealId Id:tempTagId_1 Name:tempTag_1 Money:tempMoney Date:tempDate To:tempResultArray Is1:YES];
-        if (tempTagId_2 > 0) [ETAccountStatisticDetailViewController addMoneyWithDealId:dealId Id:tempTagId_2 Name:tempTag_2 Money:tempMoney Date:tempDate To:tempResultArray Is1:NO];
+        if (tempTagId > 0) [ETAccountStatisticsCalculator addMoneyWithDealId:dealId Id:tempTagId Name:tempTag Color:nil Money:tempMoney Date:tempDate To:tempResultArray List:nil Is1:YES];
+        if (tempTagId_1 > 0) [ETAccountStatisticsCalculator addMoneyWithDealId:dealId Id:tempTagId_1 Name:tempTag_1 Color:nil Money:tempMoney Date:tempDate To:tempResultArray List:nil Is1:YES];
+        if (tempTagId_2 > 0) [ETAccountStatisticsCalculator addMoneyWithDealId:dealId Id:tempTagId_2 Name:tempTag_2 Color:nil Money:tempMoney Date:tempDate To:tempResultArray List:nil Is1:NO];
     }
     
 //    NSLog(@"%@", tempResultArray);
@@ -203,31 +218,6 @@
     }
 }
 
-+ (void)addMoneyWithDealId:(NSInteger)dealId Id:(NSInteger)tempId Name:(NSString *)tempName Money:(NSInteger)tempMoney Date:(NSString *)tempDate To:(NSMutableArray *)tempResultArray Is1:(BOOL)is1
-{
-    if (tempId < 0)
-        return;
-    
-    if (!is1)
-        tempMoney *= -1;
-    
-    NSArray *keyArray = [NSArray arrayWithObjects:@"dealId", @"id", @"name", @"money", @"date", nil];
-    if (!tempDate)
-        tempDate = @" ";
-    
-    if (![ETUtility doesArray:tempResultArray hasDictionaryWithId:tempId]) {
-        NSArray *tempObjectArray = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%ld", (long)dealId], [NSString stringWithFormat:@"%ld", (long)tempId], tempName, [NSString stringWithFormat:@"%ld", (long)tempMoney], tempDate, nil];
-        NSDictionary *tempAccountDataDictionary = [NSDictionary dictionaryWithObjects:tempObjectArray forKeys:keyArray];
-        [tempResultArray addObject:tempAccountDataDictionary];
-    }
-    else {
-        NSMutableDictionary *tempAccountDataDictionary = [NSMutableDictionary dictionaryWithDictionary:[ETUtility selectDictionaryWithValue:[NSString stringWithFormat:@"%ld", (long)tempId] OfKey:@"id" inArray:tempResultArray]];
-        NSInteger tempIndex = [tempResultArray indexOfObject:tempAccountDataDictionary];
-        [tempAccountDataDictionary setValue:[NSString stringWithFormat:@"%ld", (long)([[tempAccountDataDictionary objectForKey:@"money"] integerValue] + tempMoney)] forKey:@"money"];
-        [tempResultArray replaceObjectAtIndex:tempIndex withObject:tempAccountDataDictionary];
-    }
-}
-
 
 #pragma mark - 그래프
 
@@ -240,21 +230,26 @@
     
     NSMutableArray *tempGraphIdDataArray = [NSMutableArray array];
     for (NSDictionary *tempDataDictionary in tempGraphDataArray) {
-        [tempGraphIdDataArray addObject:[tempDataDictionary objectForKey:@"id"]];
+        if ([[tempDataDictionary allKeys] containsObject:@"id"])
+            [tempGraphIdDataArray addObject:[tempDataDictionary objectForKey:@"id"]];
     }
     
     NSMutableDictionary *selectedDictionary;
     NSString *statisticsId = [statisticDictionary objectForKey:@"id"];
     NSString *graphTypeString = [NSString stringWithFormat:@"%ld", (long)[[ETAccountGraphView sharedView] graphType]];
+    NSString *graphKindString = [NSString stringWithFormat:@"%ld", (long)[[ETAccountGraphView sharedView] graphKind]];
+    
     if ([ETUtility doesArray:graphSaveDataArray hasDictionaryWithId:[statisticsId integerValue]]) {
         selectedDictionary = [NSMutableDictionary dictionaryWithDictionary:[ETUtility selectDictionaryWithValue:statisticsId OfKey:@"id" inArray:graphSaveDataArray]];
         NSInteger selectedIndex = [graphSaveDataArray indexOfObject:selectedDictionary];
         [selectedDictionary setObject:tempGraphIdDataArray forKey:@"selectedArray"];
+        [selectedDictionary setObject:graphTypeString forKey:@"type"];
+        [selectedDictionary setObject:graphKindString forKey:@"kind"];
         [graphSaveDataArray replaceObjectAtIndex:selectedIndex withObject:selectedDictionary];
     }
     else {
-        selectedDictionary = [NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:statisticsId, graphTypeString, tempGraphIdDataArray, nil]
-                                                                forKeys:[NSArray arrayWithObjects:@"id", @"type", @"selectedArray", nil]];
+        selectedDictionary = [NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:statisticsId, graphTypeString, graphKindString, tempGraphIdDataArray, nil]
+                                                                forKeys:[NSArray arrayWithObjects:@"id", @"type", @"kind", @"selectedArray", nil]];
         [graphSaveDataArray addObject:selectedDictionary];
     }
     [graphSaveDataArray writeToFile:path atomically:YES];
@@ -266,21 +261,36 @@
     NSMutableArray *graphSaveDataArray = [NSMutableArray arrayWithContentsOfFile:path];
     
     tempGraphDataArray = [NSMutableArray array];
+    tempGraphDailyDataArray = [NSMutableArray array];
+    tempGraphDailyDataArrayTillFrom = [NSMutableArray array];
     
     if ([ETUtility doesArray:graphSaveDataArray hasDictionaryWithId:[[statisticDictionary objectForKey:@"id"] integerValue]]) {
         NSString *statisticsId = [statisticDictionary objectForKey:@"id"];
         NSDictionary *selectedDictionary = [ETUtility selectDictionaryWithValue:statisticsId OfKey:@"id" inArray:graphSaveDataArray];
         NSArray *selectedArray = [selectedDictionary objectForKey:@"selectedArray"];
         
-        for (NSString *tempId in selectedArray) {
-            NSMutableDictionary *tempDictionary = [NSMutableDictionary dictionaryWithDictionary:[ETUtility selectDictionaryWithValue:tempId OfKey:@"id" inArray:resultAccountArray]];
-            CGFloat red = arc4random() % 255 / 255.0, green = arc4random() % 255 / 255.0, blue = arc4random() % 255 / 255.0;
-            UIColor *tempColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
-            [tempDictionary setObject:tempColor forKey:@"color"];
-            [tempGraphDataArray addObject:tempDictionary];
-        }
+        [[ETAccountGraphView sharedView] setGraphType:[[selectedDictionary objectForKey:@"type"] integerValue]];
+        [[ETAccountGraphView sharedView] setGraphKind:[[selectedDictionary objectForKey:@"kind"] integerValue]];
         
-        [[ETAccountGraphView sharedView] setGraphType:[[selectedDictionary objectForKey:@"graphTypeString"] integerValue]];
+        for (NSString *tempId in selectedArray) {
+            NSMutableDictionary *tempItemDictionary = [NSMutableDictionary dictionaryWithDictionary:[ETUtility selectDictionaryWithValue:tempId OfKey:@"id" inArray:resultAccountArray]];
+            [tempGraphDataArray addObject:tempItemDictionary];
+            
+            if ([[ETAccountGraphView sharedView] graphType] == ETACCOUNT_GRAPH_TYPE_DAILY_FLOW) {
+                NSMutableArray *tempItemArray = [tempGraphDataListDictionary objectForKey:tempId];
+                tempItemArray = [[[tempItemArray reverseObjectEnumerator] allObjects] mutableCopy];
+//                tempItemArray = [ETUtility reverseArrayWithMutableDictioanryObjects:tempItemArray];
+                [tempGraphDailyDataArray addObject:tempItemArray];
+                
+                NSMutableArray *tempItemArrayTillFrom = [tempGraphDataListDictionaryTillFrom objectForKey:tempId];
+//                NSLog(@"tempItemArrayTillFrom : %@", tempItemArrayTillFrom);
+                tempItemArrayTillFrom = [[[tempItemArrayTillFrom reverseObjectEnumerator] allObjects] mutableCopy];
+                if (!tempItemArrayTillFrom || [tempItemArrayTillFrom count] == 0)
+                    [tempGraphDailyDataArrayTillFrom addObject:[NSArray array]];
+                else
+                    [tempGraphDailyDataArrayTillFrom addObject:tempItemArrayTillFrom];
+            }
+        }
     }
     
     [statisticTableView reloadData];
@@ -292,61 +302,58 @@
     if ([[[cell graphView] subviews] count] == 0)
         [[cell graphView] addSubview:[ETAccountGraphView sharedView]];
     
-#pragma mark - GRAPH_TYPE
-    [[ETAccountGraphView sharedView] setGraphType:ETACCOUNT_GRAPH_TYPE_EACH_TOTAL];
-    
-    switch ([[ETAccountGraphView sharedView] graphType]) {
-        case ETACCOUNT_GRAPH_TYPE_DEFAULT:
-            break;
-            
-        case ETACCOUNT_GRAPH_TYPE_EACH_TOTAL:
-//            <#statements#>
-            break;
-            
-        default:
-            break;
-    }
-    
-    NSString *firstDate, *lastDate;
-    NSInteger biggest = 0, smallest = 0;
-    
-    if ([tempGraphDataArray count] > 0) {
-        smallest = [[[tempGraphDataArray objectAtIndex:0] objectForKey:@"smallest"] integerValue];
-        firstDate = [[tempGraphDataArray objectAtIndex:0] objectForKey:@"earliest"];
-        lastDate = [[tempGraphDataArray objectAtIndex:0] objectForKey:@"latest"];
-    }
-
-    for (NSDictionary *tempDictionary in tempGraphDataArray) {
-        NSInteger tempBiggest = [[tempDictionary objectForKey:@"biggest"] integerValue];
-        NSInteger tempSmallest = [[tempDictionary objectForKey:@"smallest"] integerValue];
-        
-        if (tempBiggest > biggest)
-            biggest = tempBiggest;
-        if (tempSmallest < smallest)
-            smallest = tempSmallest;
-        
-        NSString *tempFirstDate = [tempDictionary objectForKey:@"earliest"];
-        NSString *tempLastDate = [tempDictionary objectForKey:@"latest"];
-        
-        if ([ETFormatter dateFromDateSting:firstDate] > [ETFormatter dateFromDateSting:tempFirstDate])
-            firstDate = [NSString stringWithString:tempFirstDate];
-        if ([ETFormatter dateFromDateSting:lastDate] < [ETFormatter dateFromDateSting:tempLastDate])
-            lastDate = [NSString stringWithString:tempLastDate];
-    }
-    
     if ([tempGraphDataArray count] == 0) {
         [[ETAccountGraphView sharedView] closeInnerView];
         
         return;
     }
     
-    [[ETAccountGraphView sharedView] setGlobalDataArray:tempGraphDataArray];
-    [[ETAccountGraphView sharedView] setFirstDate:firstDate];
-    [[ETAccountGraphView sharedView] setLastDate:lastDate];
-    [[ETAccountGraphView sharedView] setBiggestCost:biggest];
-    [[ETAccountGraphView sharedView] setSmallestCost:smallest];
+    if ([[ETAccountGraphView sharedView] graphType] == ETACCOUNT_GRAPH_TYPE_DAILY_FLOW) {
+        NSString *firstDate, *lastDate;
+        
+        for (NSMutableArray *tempItemArray in tempGraphDailyDataArray) {
+//            NSLog(@"tempItemArray : %@", tempItemArray);
+            NSDate *tempFirstDate, *tempLastDate;
+            if ([tempItemArray count] > 0 ) {
+                tempFirstDate = [ETFormatter dateFromDateSting:[[tempItemArray objectAtIndex:0] objectForKey:@"date"]];
+                tempLastDate = [ETFormatter dateFromDateSting:[[tempItemArray lastObject] objectForKey:@"date"]];
+                
+                if (!firstDate || (firstDate && [ETFormatter dateFromDateSting:firstDate] > tempFirstDate))
+                    firstDate = [ETFormatter dateStringForDeal:tempFirstDate];
+                if (!lastDate || (lastDate && [ETFormatter dateFromDateSting:lastDate] < tempLastDate))
+                    lastDate = [ETFormatter dateStringForDeal:tempLastDate];
+            }
+        }
+        
+//        NSLog(@"%@ ~ %@", firstDate, lastDate);
+        [[ETAccountGraphView sharedView] setFirstDate:firstDate];
+        [[ETAccountGraphView sharedView] setLastDate:lastDate];
+    }
     
-    NSLog(@"initInnerView");
+//    switch ([[ETAccountGraphView sharedView] graphType]) {
+////        case ETACCOUNT_GRAPH_TYPE_DEFAULT:
+////            break;
+//            
+//        case ETACCOUNT_GRAPH_TYPE_EACH_TOTAL: {
+//            NSLog(@"init Sum for Item InnerView");
+//            
+//            break;
+//        }
+//            
+//        case ETACCOUNT_GRAPH_TYPE_DAILY_FLOW: {
+//            NSLog(@"init List for Daily Flow");
+//            NSLog(@"tempGraphDataArray : %@", tempGraphDataArray);
+//            break;
+//        }
+//            
+//        default:
+//            break;
+//    }
+    
+    [[ETAccountGraphView sharedView] setGlobalDataArray:tempGraphDataArray];
+    [[ETAccountGraphView sharedView] setGlobalFullDateArray:tempGraphDailyDataArray];
+    [[ETAccountGraphView sharedView] setGlobalFullDateArrayTillFrom:tempGraphDailyDataArrayTillFrom];
+    
     [[ETAccountGraphView sharedView] initInnerView];
 }
 
@@ -430,29 +437,44 @@
         return [resultTagArray count];
     else if (section == 3)
         return [resultArray count];
-    else return 1;
+    else return 2;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0)
-        return [[self view] frame].size.width;
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0)
+            return [[self view] frame].size.width;
+        else return 60;
+    }
     else if (indexPath.section == 3)
         return 60;
-    else return 44;
+    else return 60;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        NSString *CellIdentifier = @"ETAccountStatisticResultGraphTableViewCellIdentifier";
-        
-        ETAccountGraphTableViewCell *cell = (ETAccountGraphTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (cell == nil) {
-            cell = [[ETAccountGraphTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        if (indexPath.row == 0) {
+            NSString *CellIdentifier = @"ETAccountStatisticResultGraphTableViewCellIdentifier";
+            
+            ETAccountGraphTableViewCell *cell = (ETAccountGraphTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (cell == nil) {
+                cell = [[ETAccountGraphTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            }
+            
+            return cell;
         }
-        
-        return cell;
+        else {
+            NSString *CellIdentifier = @"GraphOptionCellIdentifier";
+            
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            }
+            
+            return cell;
+        }
     }
     else if (indexPath.section == 1 || indexPath.section == 2) {
         NSString *CellIdentifier = @"ETAccountStatisticResultSummaryTableViewCellIdentifier";
@@ -523,7 +545,7 @@
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0)
+    if (indexPath.section == 0 && indexPath.row == 0)
         return NO;
     else if (indexPath.section == 3)
         selectedRow = indexPath.row;
@@ -535,6 +557,9 @@
 {
     switch (indexPath.section) {
         case 0:
+            if (indexPath.row == 1) {
+                
+            }
 //            [cell setType:ADD_DEAL_CELL_TYPE_BUTTON];
 //            [cell setTitle:@"날짜"];
             break;
@@ -567,25 +592,37 @@
             
             // 합
             NSString *selectedId = [NSString stringWithFormat:@"%ld", (long)[[tableView cellForRowAtIndexPath:indexPath] tag]];
-//            NSLog(@"selectedId : %@", selectedId);
             
             if ([ETUtility doesArray:tempGraphDataArray hasDictionaryWithId:selectedId WithKey:@"id"]) {
                 [tempGraphDataArray removeObject:[ETUtility selectDictionaryWithValue:selectedId OfKey:@"id" inArray:tempGraphDataArray]];
             } else {
                 // 합
                 NSMutableDictionary *tempDictionary = [NSMutableDictionary dictionaryWithDictionary:[ETUtility selectDictionaryWithValue:selectedId OfKey:@"id" inArray:resultAccountArray]];
-                CGFloat red = arc4random() % 255 / 255.0, green = arc4random() % 255 / 255.0, blue = arc4random() % 255 / 255.0;
-                UIColor *tempColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
-//                [tempDictionary setObject:[NSString stringWithFormat:@"%f %f %f", red, green, blue] forKey:@"color"];
-                [tempDictionary setObject:tempColor forKey:@"color"];
+//                CGFloat red = arc4random() % 255 / 255.0, green = arc4random() % 255 / 255.0, blue = arc4random() % 255 / 255.0;
+//                UIColor *tempColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
+////                [tempDictionary setObject:[NSString stringWithFormat:@"%f %f %f", red, green, blue] forKey:@"color"];
+//                [tempDictionary setObject:tempColor forKey:@"color"];
                 [tempGraphDataArray addObject:tempDictionary];
             }
-            
-//            NSLog(@"tempGraphDataArray : %@", tempGraphDataArray);
-            
 //            [[graphCell graphViewController] refreshGraph];
             
             [self saveGraphData];
+            
+            break;
+            
+//            switch ([[ETAccountGraphView sharedView] graphType]) {
+//                case ETACCOUNT_GRAPH_TYPE_EACH_TOTAL: {
+//                    
+//                }
+//                    
+//                case ETACCOUNT_GRAPH_TYPE_DAILY_FLOW: {
+//                    
+//                    break;
+//                }
+//                    
+//                default:
+//                    break;
+//            }
             
             break;
         }
@@ -622,6 +659,24 @@
 - (void)didAddDeal
 {
     [self initStatistic];
+}
+
+#pragma mark ETAccountGraphOptionDelegate
+
+- (void)didTypeChanged:(ETACCOUNT_GRAPH_TYPE)type
+{
+    [[ETAccountGraphView sharedView] setGraphType:type];
+    [self saveGraphData];
+    
+    [statisticTableView reloadData];
+}
+
+- (void)didKindChanged:(ETACCOUNT_GRAPH_KIND)kind
+{
+    [[ETAccountGraphView sharedView] setGraphKind:kind];
+    [self saveGraphData];
+    
+    [statisticTableView reloadData];
 }
 
 @end

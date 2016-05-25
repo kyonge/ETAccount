@@ -220,14 +220,18 @@
                 [cell setPlaceholder:@"시작"];
                 if (!dealDateString || [dealDateString isEqualToString:@"(null)"] || [dealDateString length] == 0)
                     [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:YES DatePickerIndex:0 DateString:@""];
-                else [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:NO DatePickerIndex:0 DateString:dealDateString];
+                else {
+                    [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:NO DatePickerIndex:0 DateString:dealDateString];
+                }
                 [cell setButtonTag:ACCESSOR_DATE_1];
             }
             else if (indexPath.row == 1) {
                 [cell setPlaceholder:@"종료"];
                 if (!endDateString || [endDateString isEqualToString:@"(null)"] || [endDateString length] == 0)
                     [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:YES DatePickerIndex:1 DateString:@""];
-                else [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:NO DatePickerIndex:1 DateString:endDateString];
+                else {
+                    [cell setDatePicker:UIDatePickerModeDate WithCurrentTime:NO DatePickerIndex:1 DateString:endDateString];
+                }
                 [cell setButtonTag:ACCESSOR_DATE_2];
             }
             
@@ -296,7 +300,12 @@
             break;
             
         case 10:
-            dealDateString = insertedText;
+            if ([insertedText isEqualToString:@"~"])
+                dealDateString = insertedText;
+            else {
+                dealDateString = [NSString stringWithFormat:@"%@ 00:00", [insertedText substringToIndex:10]];
+                NSLog(@"dealDateString : %@", dealDateString);
+            }
             break;
             
         case 11:

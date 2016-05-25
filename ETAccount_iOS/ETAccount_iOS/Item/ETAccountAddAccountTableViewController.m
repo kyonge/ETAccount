@@ -92,12 +92,15 @@
 
 - (BOOL)saveAccountWithTargetId11:(NSInteger)targetId1 TargetId2:(NSInteger)targetId2 Name:(NSString *)accountName Order:(NSInteger)accountOrder
 {
-    NSArray *keyArray = [NSArray arrayWithObjects:@"name", @"tag_target_id", @"auto_target_id", @"account_order", nil];
+    NSArray *keyArray = [NSArray arrayWithObjects:@"name", @"tag_target_id", @"auto_target_id", @"account_order", @"color_r", @"color_g", @"color_b", nil];
     NSArray *objectsArray = [NSArray arrayWithObjects:
                              [NSString stringWithFormat:@"'%@'", accountName],
                              [NSString stringWithFormat:@"'%ld'", (long)targetId1],
                              [NSString stringWithFormat:@"'%ld'", (long)targetId2],
-                             [NSString stringWithFormat:@"'%ld'", (long)accountOrder], nil];
+                             [NSString stringWithFormat:@"'%ld'", (long)accountOrder],
+                             [NSString stringWithFormat:@"%d", arc4random() % 255],
+                             [NSString stringWithFormat:@"%d", arc4random() % 255],
+                             [NSString stringWithFormat:@"%d", arc4random() % 255], nil];
     
     NSDictionary *dataDic = [NSDictionary dictionaryWithObjects:objectsArray forKeys:keyArray];
     

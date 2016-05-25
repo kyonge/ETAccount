@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eOm-rG-bjx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eOm-rG-bjx">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -780,7 +780,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="IdH-VV-APU">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="IdH-VV-APU">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -822,6 +822,12 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="IdH-VV-APU" secondAttribute="trailing" id="O5o-we-I5R"/>
+                            <constraint firstItem="IdH-VV-APU" firstAttribute="leading" secondItem="ZsQ-88-6Ic" secondAttribute="leading" id="YwI-qD-hWG"/>
+                            <constraint firstItem="IdH-VV-APU" firstAttribute="top" secondItem="ZsQ-88-6Ic" secondAttribute="top" id="jlW-JP-jUK"/>
+                            <constraint firstItem="F7r-l2-X9g" firstAttribute="top" secondItem="IdH-VV-APU" secondAttribute="bottom" id="rSe-he-nvd"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="필터 추가" id="AxC-Wd-vie">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="Hx6-NE-wlN">
@@ -870,8 +876,27 @@
                                     <outlet property="graphView" destination="czg-Gq-ROv" id="5ap-rA-Q8Q"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ETAccountStatisticResultSummaryTableViewCellIdentifier" id="hi4-Wm-2sF" customClass="ETAccountStatisticDetailTableViewCell">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GraphOptionCellIdentifier" id="ApS-69-33O">
                                 <rect key="frame" x="0.0" y="174" width="600" height="60"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ApS-69-33O" id="WL3-eZ-63C">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="59"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Graph Option" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ITR-7G-h2R">
+                                            <rect key="frame" x="8" y="19" width="584" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="cR8-vR-vC1" kind="show" identifier="ETAccountGraphOptionSegue" id="nSm-64-KIF"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ETAccountStatisticResultSummaryTableViewCellIdentifier" id="hi4-Wm-2sF" customClass="ETAccountStatisticDetailTableViewCell">
+                                <rect key="frame" x="0.0" y="234" width="600" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hi4-Wm-2sF" id="jBG-C3-Yhk">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="59"/>
@@ -909,7 +934,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ETAccountStatisticResultDataListTableViewCellIdentifier" id="rBa-uO-8Lb" customClass="ETAccountTableViewCell">
-                                <rect key="frame" x="0.0" y="234" width="600" height="60"/>
+                                <rect key="frame" x="0.0" y="294" width="600" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rBa-uO-8Lb" id="yWT-6T-IIu">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="59"/>
@@ -1172,7 +1197,136 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RNw-Wm-Kdz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1973" y="1361"/>
+            <point key="canvasLocation" x="1966" y="1361"/>
+        </scene>
+        <!--Graph Option-->
+        <scene sceneID="PKC-Bx-8Xh">
+            <objects>
+                <viewController title="Graph Option" id="cR8-vR-vC1" customClass="ETAccountGraphOptionViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="g9J-wA-fmr"/>
+                        <viewControllerLayoutGuide type="bottom" id="dXs-u3-8oE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="07g-yp-dfG">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Rhd-Oe-ofp">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ETAccountGraphOptionCellIdentifier" id="Hqg-8s-WOp" customClass="ETAccountGraphOptionCell">
+                                        <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hqg-8s-WOp" id="DNb-mV-XG4">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a3g-bj-zAk">
+                                                    <rect key="frame" x="8" y="11" width="527" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ena-6T-Epd">
+                                                    <rect key="frame" x="543" y="6" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="N8e-Zk-3HD"/>
+                                                    </constraints>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="a3g-bj-zAk" firstAttribute="top" secondItem="DNb-mV-XG4" secondAttribute="top" constant="11" id="4aP-Xk-LAw"/>
+                                                <constraint firstAttribute="bottom" secondItem="ena-6T-Epd" secondAttribute="bottom" constant="6" id="6Qr-T3-pxn"/>
+                                                <constraint firstItem="ena-6T-Epd" firstAttribute="leading" secondItem="a3g-bj-zAk" secondAttribute="trailing" constant="8" id="SPk-Iq-rrf"/>
+                                                <constraint firstItem="ena-6T-Epd" firstAttribute="top" secondItem="DNb-mV-XG4" secondAttribute="top" constant="6" id="TLI-Se-1Zc"/>
+                                                <constraint firstAttribute="bottom" secondItem="a3g-bj-zAk" secondAttribute="bottom" constant="11" id="TZE-ZG-veO"/>
+                                                <constraint firstItem="a3g-bj-zAk" firstAttribute="leading" secondItem="DNb-mV-XG4" secondAttribute="leading" constant="8" id="Wiq-eX-Gly"/>
+                                                <constraint firstAttribute="trailing" secondItem="ena-6T-Epd" secondAttribute="trailing" constant="8" id="tbs-dk-Okg"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="optionNameLabel" destination="a3g-bj-zAk" id="r4S-Cn-nnI"/>
+                                            <outlet property="optionSwitch" destination="ena-6T-Epd" id="qGo-SM-1eN"/>
+                                            <segue destination="J4Z-Ya-pNG" kind="show" identifier="ETAccountGraphOptionDetailSegue" id="PVg-cP-LbI"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="cR8-vR-vC1" id="n51-KP-mo4"/>
+                                    <outlet property="delegate" destination="cR8-vR-vC1" id="dgw-QC-934"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Rhd-Oe-ofp" secondAttribute="trailing" id="az5-vM-dpO"/>
+                            <constraint firstItem="dXs-u3-8oE" firstAttribute="top" secondItem="Rhd-Oe-ofp" secondAttribute="bottom" id="tsX-a7-qhD"/>
+                            <constraint firstItem="Rhd-Oe-ofp" firstAttribute="top" secondItem="07g-yp-dfG" secondAttribute="top" id="yXt-cO-I92"/>
+                            <constraint firstItem="Rhd-Oe-ofp" firstAttribute="leading" secondItem="07g-yp-dfG" secondAttribute="leading" id="yad-hV-JOc"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="그래프 옵션" id="7SB-c5-0KG">
+                        <barButtonItem key="rightBarButtonItem" title="OK" id="JJj-EI-9Bk">
+                            <connections>
+                                <action selector="saveOption:" destination="cR8-vR-vC1" id="jcw-rD-V13"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="optionListTableView" destination="Rhd-Oe-ofp" id="QHY-qS-rBb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jYA-Iw-f2b" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1966" y="2080"/>
+        </scene>
+        <!--Account Graph Option Detail View Controller-->
+        <scene sceneID="dac-je-5ug">
+            <objects>
+                <viewController id="J4Z-Ya-pNG" customClass="ETAccountGraphOptionDetailViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sSW-mf-OW0"/>
+                        <viewControllerLayoutGuide type="bottom" id="ttb-Nw-JVc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5ZM-6M-fp0">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fzc-gS-sQC">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="cgJ-bi-H5u">
+                                        <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cgJ-bi-H5u" id="6Df-91-bxn">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="J4Z-Ya-pNG" id="R4a-cu-wrw"/>
+                                    <outlet property="delegate" destination="J4Z-Ya-pNG" id="5qm-8f-uFT"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ttb-Nw-JVc" firstAttribute="top" secondItem="fzc-gS-sQC" secondAttribute="bottom" id="bHF-U4-VTU"/>
+                            <constraint firstItem="fzc-gS-sQC" firstAttribute="top" secondItem="5ZM-6M-fp0" secondAttribute="top" id="enn-AO-PiI"/>
+                            <constraint firstItem="fzc-gS-sQC" firstAttribute="leading" secondItem="5ZM-6M-fp0" secondAttribute="leading" id="nST-FL-74M"/>
+                            <constraint firstAttribute="trailing" secondItem="fzc-gS-sQC" secondAttribute="trailing" id="rbR-QY-mZ2"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="optionDetailTableViewController" destination="fzc-gS-sQC" id="jAb-BS-zYa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mMW-As-CW0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2697" y="2080"/>
         </scene>
         <!--Filter-->
         <scene sceneID="pFJ-ia-mNA">

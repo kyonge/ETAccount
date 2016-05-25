@@ -19,14 +19,19 @@
 {
     datePicker = [[UIDatePicker alloc] init];
     [datePicker setDatePickerMode:datePickerMode];
-    if (isCurrentTime)
-        [datePicker setDate:[NSDate date]];
+    if (isCurrentTime) {
+        NSDate *todayDate = [NSDate date];
+        NSString *todayDateString = [ETFormatter dateStringForDeal:todayDate];
+        todayDateString = [NSString stringWithFormat:@"%@ 00:00", [todayDateString substringToIndex:10]];
+        
+        [datePicker setDate:[ETFormatter dateFromDateSting:todayDateString]];
+    }
     else {
-        if (![dateString isEqualToString:@"~"])
+        if (![dateString isEqualToString:@"~"]) {
             [datePicker setDate:[ETFormatter dateFromDateSting:dateString]];
+        }
         else {
             //날짜 설정 안한 경우
-//            [datePicker setDate:[NSDate dateWithTimeIntervalSince1970:0]];
             [titleTextField setText:dateString];
         }
     }
@@ -58,7 +63,9 @@
 
 - (void)acceptDatepicker
 {
-    [titleTextField setText:[NSString stringWithFormat:@"%@", [ETFormatter dateStringForDeal:[datePicker date]]]];
+    NSString *todayDateString = [NSString stringWithFormat:@"%@ 00:00", [[ETFormatter dateStringForDeal:[datePicker date]] substringToIndex:10]];
+    [titleTextField setText:todayDateString];
+//    [titleTextField setText:[NSString stringWithFormat:@"%@", [ETFormatter dateStringForDeal:[datePicker date]]]];
     [addDealCellDelegate didEndEditText:[titleTextField text] CellIndex:10 + datePickerIndex];
     
     [self cancelDatePicker];
