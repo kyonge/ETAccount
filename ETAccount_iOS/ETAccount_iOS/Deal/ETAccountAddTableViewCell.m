@@ -214,7 +214,7 @@
                                                     name:UIKeyboardDidHideNotification object:nil];
 }
 
-- (void)keyboardWasShown:(NSNotification*)aNotification
+- (void)keyboardWasShown:(NSNotification *)aNotification
 {
     if (![[self titleTextField] isFirstResponder])
         return;
@@ -229,7 +229,7 @@
     [ETUtility AnimationView:[self window] toFrame:CGRectMake(0, -kbSize.height, DEVICE_SIZE.width, DEVICE_SIZE.height) toAlpha:1.0 inTime:animationDuration toTarget:self WithSelector:nil];
 }
 
-- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+- (void)keyboardWillBeHidden:(NSNotification *)aNotification
 {
     NSDictionary* info = [aNotification userInfo];
     CGFloat animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
